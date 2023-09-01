@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.LanguageCode | default "en" }}" data-theme="light">
+    <head>
+        <title>{{ .Site.Title }} • {{ .Site.Params.tagline }}</title>
+        <meta charset="{{ .Site.Params.charset }}">
+        <meta name="viewport" content="{{ .Site.Params.viewport }}">
+        <meta name="description" content="{{ .Site.Params.description }}">
+        <meta name="keywords" content="{{ .Site.Params.keywords }}">
+        <meta name="author" content="{{ .Site.Params.author }}">
+        <link rel="stylesheet" href="{{ "/vendor/fontawesome/css/all.css" | absURL }}">
+        <link rel="stylesheet" href="{{ "/vendor/picocss/css/pico.css"    | absURL }}">
+        <link rel="stylesheet" href="{{ "/vendor/aym-js/css/all.css"      | absURL }}">
+        <link rel="stylesheet" href="{{ "/assets/css/index.css"           | absURL }}">
+        {{- partial "opengraph.html" . -}}
+    </head>
+    <body>
+        {{- partial "header.html"   . -}}
+        {{- partial "homepage.html" . -}}
+        {{- partial "footer.html"   . -}}
+        <script type="module" src="{{ "/vendor/aym-js/js/all.js" | absURL }}"></script>
+        <script type="module" src="{{ "/assets/js/index.js"      | absURL }}"></script>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+<!-- player -->
+<div id="aymPlayer">
+    <fieldset id="aymPlaybackControls">
+        <legend>Playback</legend>
+        <div class="grid">
+            <p id="aymTitle">AYM Player</p>
+        </div>
+        <div class="grid">
+            <button id="aymPlay"><i class="{{ .Site.Params.Icons.Play }}"></i><br>{{ .Site.Params.Labels.Play }}</button>
+            <button id="aymStop"><i class="{{ .Site.Params.Icons.Stop }}"></i><br>{{ .Site.Params.Labels.Stop }}</button>
+            <button id="aymPrev"><i class="{{ .Site.Params.Icons.Prev }}"></i><br>{{ .Site.Params.Labels.Prev }}</button>
+            <button id="aymNext"><i class="{{ .Site.Params.Icons.Next }}"></i><br>{{ .Site.Params.Labels.Next }}</button>
+        </div>
+        <div class="grid">
+            <input id="aymSeek" type="range">
+        </div>
+    </fieldset>
+    <fieldset id="aymOutputControls">
+        <legend>Output</legend>
+        <div class="grid">
+            <input id="aymGain" type="range">
+        </div>
+        <div class="grid">
+            <button id="aymMuteA"><i class="{{ .Site.Params.Icons.MuteA }}"></i><br>{{ .Site.Params.Labels.MuteA }}</button>
+            <button id="aymMuteB"><i class="{{ .Site.Params.Icons.MuteB }}"></i><br>{{ .Site.Params.Labels.MuteB }}</button>
+            <button id="aymMuteC"><i class="{{ .Site.Params.Icons.MuteC }}"></i><br>{{ .Site.Params.Labels.MuteC }}</button>
+        </div>
+    </fieldset>
+    <fieldset id="aymEmulationControls">
+        <legend>Emulation</legend>
+        <div class="grid">
+            <button id="aymPower"><i class="{{ .Site.Params.Icons.Power }}"></i><br>{{ .Site.Params.Labels.Power }}</button>
+            <button id="aymReset"><i class="{{ .Site.Params.Icons.Reset }}"></i><br>{{ .Site.Params.Labels.Reset }}</button>
+            <button id="aymPause"><i class="{{ .Site.Params.Icons.Pause }}"></i><br>{{ .Site.Params.Labels.Pause }}</button>
+        </div>
+    </fieldset>
+</div>

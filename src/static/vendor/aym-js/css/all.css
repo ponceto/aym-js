@@ -1,0 +1,55 @@
+/*
+ * all.css - Copyright (c) 2001-2023 - Olivier Poncet
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#aymPlayer {
+    border-radius: var(--border-radius);
+    max-width: 768px;
+    font-size: small;
+    margin: 0 auto;
+    padding: 1em;
+}
+
+#aymPlaybackControls button {
+    padding: 0.5em;
+    font-size: small;
+}
+
+#aymOutputControls button {
+    padding: 0.5em;
+    font-size: small;
+}
+
+#aymEmulationControls button {
+    padding: 0.5em;
+    font-size: small;
+}
+
+#aymTitle {
+    background: #739e1b;
+    color: #1e3c0b;
+    border: 1px solid #84a81b;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-family: monospace;
+    font-size: normal;
+    font-weight: bold;
+}
+
+button.is-toggled {
+    background: darkred;
+    border-color: red;
+}
