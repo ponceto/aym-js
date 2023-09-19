@@ -21,10 +21,16 @@
 
 body > header {
     background: black;
+    background-image: url('/assets/images/header.jpg');
+    background-position: center;
+    background-size: cover;
 }
 
 body > footer {
     background: black;
+    background-image: url('/assets/images/footer.jpg');
+    background-position: center;
+    background-size: cover;
 }
 
 body > header h1 {
