@@ -75,11 +75,6 @@ class AYM_ToneGenerator {
     }
 
     clock() {
-        if(this.period == 0) {
-            this.counter &= 0;
-            this.phase   &= 0;
-            return;
-        }
         if(++this.counter >= this.period) {
             this.counter &= 0;
             this.phase   ^= 1;
@@ -114,7 +109,7 @@ class AYM_NoiseGenerator {
 
     clock() {
         if(++this.counter >= this.period) {
-            this.counter = 0;
+            this.counter &= 0;
             const lfsr = this.phase;
             const bit0 = (lfsr << 16);
             const bit3 = (lfsr << 13);
@@ -147,14 +142,14 @@ class AYM_EnvelopeGenerator {
 
         const ramp_up = () => {
             this.level = ((this.level + 1) & 0x0f);
-            if(this.level == 0) {
+            if(this.level == 0x0f) {
                 this.phase ^= 1;
             }
         };
 
         const ramp_down = () => {
             this.level = ((this.level - 1) & 0x0f);
-            if(this.level == 0) {
+            if(this.level == 0x00) {
                 this.phase ^= 1;
             }
         };
@@ -211,9 +206,9 @@ class AYM_EnvelopeGenerator {
     }
 
     set_shape(value) {
-        this.shape  = value;
-        this.phase &= 0;
-        this.level &= 0;
+        this.shape = value;
+        this.phase = 0;
+        this.level = ((this.shape & 0x04) != 0 ? 0x00 : 0x0f);
     }
 
     get_level() {
@@ -302,6 +297,7 @@ export class AYM_Emulator {
         this.master_clock = 1000000;
         this.clock_divide = 0;
         this.dac          = AY_DAC;
+        this.reset();
     }
 
     reset() {
@@ -314,6 +310,11 @@ export class AYM_Emulator {
         this.mixer.reset();
         this.master_clock |= 0;
         this.clock_divide &= 0;
+        for(let index = 0; index < 16; ++index) {
+            this.set_register_index(index);
+            this.set_register_value(0);
+            this.set_register_index(0);
+        }
     }
 
     clock() {

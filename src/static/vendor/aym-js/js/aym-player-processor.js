@@ -51,6 +51,7 @@ export class AYM_PlayerProcessor extends AudioWorkletProcessor {
         this.port.onmessage = (message) => {
             this.recvMessage(message);
         };
+        this.setChipMasterClock(1000000);
     }
 
     sendMessage(type = null, data = null) {
