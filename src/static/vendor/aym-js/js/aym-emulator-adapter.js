@@ -181,6 +181,72 @@ export class AYM_EmulatorAdapter {
         this.set_noise_period(period);
     }
 
+    set_channel0_sound(enabled) {
+        let mixer_configuration = this.get_register(0x07, 0x00);
+        if((enabled | 0) != 0) {
+            mixer_configuration &= ~0x01;
+        }
+        else {
+            mixer_configuration |=  0x01;
+        }
+        this.set_register(0x07, mixer_configuration);
+    }
+
+    set_channel1_sound(enabled) {
+        let mixer_configuration = this.get_register(0x07, 0x00);
+        if((enabled | 0) != 0) {
+            mixer_configuration &= ~0x02;
+        }
+        else {
+            mixer_configuration |=  0x02;
+        }
+        this.set_register(0x07, mixer_configuration);
+    }
+
+    set_channel2_sound(enabled) {
+        let mixer_configuration = this.get_register(0x07, 0x00);
+        if((enabled | 0) != 0) {
+            mixer_configuration &= ~0x04;
+        }
+        else {
+            mixer_configuration |=  0x04;
+        }
+        this.set_register(0x07, mixer_configuration);
+    }
+
+    set_channel0_noise(enabled) {
+        let mixer_configuration = this.get_register(0x07, 0x00);
+        if((enabled | 0) != 0) {
+            mixer_configuration &= ~0x08;
+        }
+        else {
+            mixer_configuration |=  0x08;
+        }
+        this.set_register(0x07, mixer_configuration);
+    }
+
+    set_channel1_noise(enabled) {
+        let mixer_configuration = this.get_register(0x07, 0x00);
+        if((enabled | 0) != 0) {
+            mixer_configuration &= ~0x10;
+        }
+        else {
+            mixer_configuration |=  0x10;
+        }
+        this.set_register(0x07, mixer_configuration);
+    }
+
+    set_channel2_noise(enabled) {
+        let mixer_configuration = this.get_register(0x07, 0x00);
+        if((enabled | 0) != 0) {
+            mixer_configuration &= ~0x20;
+        }
+        else {
+            mixer_configuration |=  0x20;
+        }
+        this.set_register(0x07, mixer_configuration);
+    }
+
     set_test(test) {
         switch(test) {
             case 'sound-only':
