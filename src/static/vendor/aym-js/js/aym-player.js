@@ -90,7 +90,7 @@ export class AYM_Player {
     }
 
     async recvTitle(title) {
-        this.view.setTitle(title);
+        this.view.setDisplay(title);
     }
 
     async recvSeek(seek) {

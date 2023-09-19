@@ -24,7 +24,7 @@ import { AYM_Utils } from './aym-utils.js';
 export class AYM_PlayerView {
     constructor(controller) {
         this.controller = controller;
-        this.aymTitle   = null;
+        this.aymDisplay = null;
         this.aymPlay    = null;
         this.aymStop    = null;
         this.aymPrev    = null;
@@ -78,7 +78,7 @@ export class AYM_PlayerView {
         this.enableMuteC();
         this.enableReset();
         this.enablePause();
-        this.setTitle('AYM·Player is On');
+        this.setDisplay('AYM·Player is On');
     }
 
     async powerOff() {
@@ -93,11 +93,11 @@ export class AYM_PlayerView {
         this.disablePrev();
         this.disableStop();
         this.disablePlay();
-        this.setTitle('AYM·Player is Off');
+        this.setDisplay('AYM·Player is Off');
     }
 
     bind() {
-        this.bindTitle();
+        this.bindDisplay();
         this.bindPlay();
         this.bindStop();
         this.bindPrev();
@@ -112,9 +112,9 @@ export class AYM_PlayerView {
         this.bindPause();
     }
 
-    bindTitle() {
-        if(this.aymTitle == null) {
-            this.aymTitle = this.getElementById('aymTitle');
+    bindDisplay() {
+        if(this.aymDisplay == null) {
+            this.aymDisplay = this.getElementById('aymDisplay');
         }
     }
 
@@ -380,8 +380,8 @@ export class AYM_PlayerView {
         }
     }
 
-    setTitle(title) {
-        this.setInnerText(this.aymTitle, title);
+    setDisplay(message) {
+        this.setInnerText(this.aymDisplay, message);
     }
 
     setSeekValue(seek) {

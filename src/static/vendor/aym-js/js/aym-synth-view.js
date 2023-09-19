@@ -24,7 +24,7 @@ import { AYM_Utils } from './aym-utils.js';
 export class AYM_SynthView {
     constructor(controller) {
         this.controller = controller;
-        this.aymTitle   = null;
+        this.aymDisplay = null;
         this.aymGain    = null;
         this.aymMuteA   = null;
         this.aymMuteB   = null;
@@ -68,7 +68,7 @@ export class AYM_SynthView {
         this.enableMuteC();
         this.enableReset();
         this.enablePause();
-        this.setTitle('AYM·Synth is On');
+        this.setDisplay('AYM·Synth is On');
     }
 
     async powerOff() {
@@ -78,11 +78,11 @@ export class AYM_SynthView {
         this.disableMuteB();
         this.disableMuteA();
         this.disableGain();
-        this.setTitle('AYM·Synth is Off');
+        this.setDisplay('AYM·Synth is Off');
     }
 
     bind() {
-        this.bindTitle();
+        this.bindDisplay();
         this.bindGain();
         this.bindMuteA();
         this.bindMuteB();
@@ -92,9 +92,9 @@ export class AYM_SynthView {
         this.bindPause();
     }
 
-    bindTitle() {
-        if(this.aymTitle == null) {
-            this.aymTitle = this.getElementById('aymTitle');
+    bindDisplay() {
+        if(this.aymDisplay == null) {
+            this.aymDisplay = this.getElementById('aymDisplay');
         }
     }
 
@@ -261,8 +261,8 @@ export class AYM_SynthView {
         }
     }
 
-    setTitle(title) {
-        this.setInnerText(this.aymTitle, title);
+    setDisplay(message) {
+        this.setInnerText(this.aymDisplay, message);
     }
 
     getGainValue() {
