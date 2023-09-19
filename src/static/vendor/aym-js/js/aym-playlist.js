@@ -16,6 +16,7 @@
  */
 
 import { Music as Antiriad      } from './musics/antiriad.js';
+import { Music as AxelF         } from './musics/axel-f.js';
 import { Music as BurninRubber  } from './musics/burnin-rubber.js';
 import { Music as Cauldron1     } from './musics/cauldron1.js';
 import { Music as Cauldron2     } from './musics/cauldron2.js';
@@ -34,6 +35,7 @@ import { Music as Sorcery       } from './musics/sorcery.js';
 
 const Playlist = [
     Antiriad,
+    AxelF,
     BurninRubber,
     Cauldron1,
     Cauldron2,
