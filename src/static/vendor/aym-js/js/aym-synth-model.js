@@ -1,5 +1,5 @@
 /*
- * aym-player-model.js - Copyright (c) 2001-2023 - Olivier Poncet
+ * aym-synth-model.js - Copyright (c) 2001-2023 - Olivier Poncet
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,10 +18,10 @@
 import { AYM_Utils } from './aym-utils.js';
 
 // ---------------------------------------------------------------------------
-// AYM_PlayerModel
+// AYM_SynthModel
 // ---------------------------------------------------------------------------
 
-export class AYM_PlayerModel {
+export class AYM_SynthModel {
     constructor(controller) {
         this.controller = controller;
         this.waContext  = null;
@@ -45,7 +45,7 @@ export class AYM_PlayerModel {
     async createContext() {
         if(this.waContext == null) {
             this.waContext = new AudioContext();
-            await this.waContext.audioWorklet.addModule('/vendor/aym-js/js/aym-player-processor.js');
+            await this.waContext.audioWorklet.addModule('/vendor/aym-js/js/aym-synth-processor.js');
         }
     }
 
@@ -81,7 +81,7 @@ export class AYM_PlayerModel {
                 outputChannelCount: [2],
                 processorOptions: audioWorkletProcessorOptions,
             };
-            this.waWorklet = new AudioWorkletNode(this.waContext, 'aym-player-processor', audioWorkletNodeOptions);
+            this.waWorklet = new AudioWorkletNode(this.waContext, 'aym-synth-processor', audioWorkletNodeOptions);
             this.waWorklet.connect(this.waGain);
             this.waWorklet.port.onmessage = (message) => {
                 this.recvMessage(message);
@@ -120,24 +120,6 @@ export class AYM_PlayerModel {
         const payload = message.data;
 
         switch(payload.message_type) {
-            case 'Title':
-                this.controller.recvTitle(payload.message_data);
-                break;
-            case 'Seek':
-                this.controller.recvSeek(payload.message_data);
-                break;
-            case 'Playing':
-                this.controller.recvPlaying();
-                break;
-            case 'Stopped':
-                this.controller.recvStopped();
-                break;
-            case 'Changed':
-                this.controller.recvChanged();
-                break;
-            case 'Unchanged':
-                this.controller.recvUnchanged();
-                break;
             case 'Paused':
                 this.controller.recvPaused();
                 break;
@@ -165,26 +147,6 @@ export class AYM_PlayerModel {
             default:
                 break;
         }
-    }
-
-    sendPlay() {
-        this.sendMessage('Play');
-    }
-
-    sendStop() {
-        this.sendMessage('Stop');
-    }
-
-    sendPrev() {
-        this.sendMessage('Prev');
-    }
-
-    sendNext() {
-        this.sendMessage('Next');
-    }
-
-    sendSeek(seek) {
-        this.sendMessage('Seek', seek);
     }
 
     sendReset() {

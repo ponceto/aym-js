@@ -1,5 +1,5 @@
 /*
- * all.js - Copyright (c) 2001-2023 - Olivier Poncet
+ * all-synth.js - Copyright (c) 2001-2023 - Olivier Poncet
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -15,13 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { AYM_Player } from './aym-player.js';
+import { AYM_Synth } from './aym-synth.js';
 
 // ---------------------------------------------------------------------------
-// aym_player
+// aym_synth
 // ---------------------------------------------------------------------------
 
-const aym_player = new AYM_Player();
+const aym_synth = new AYM_Synth();
 
 // ---------------------------------------------------------------------------
 // End-Of-File

@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#aymPlayer {
+#aymPlayer, #aymSynth {
     border-radius: var(--border-radius);
     max-width: 768px;
     font-size: small;

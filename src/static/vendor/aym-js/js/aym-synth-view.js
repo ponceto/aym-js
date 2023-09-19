@@ -1,5 +1,5 @@
 /*
- * aym-player-view.js - Copyright (c) 2001-2023 - Olivier Poncet
+ * aym-synth-view.js - Copyright (c) 2001-2023 - Olivier Poncet
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,18 +18,13 @@
 import { AYM_Utils } from './aym-utils.js';
 
 // ---------------------------------------------------------------------------
-// AYM_PlayerView
+// AYM_SynthView
 // ---------------------------------------------------------------------------
 
-export class AYM_PlayerView {
+export class AYM_SynthView {
     constructor(controller) {
         this.controller = controller;
         this.aymTitle   = null;
-        this.aymPlay    = null;
-        this.aymStop    = null;
-        this.aymPrev    = null;
-        this.aymNext    = null;
-        this.aymSeek    = null;
         this.aymGain    = null;
         this.aymMuteA   = null;
         this.aymMuteB   = null;
@@ -67,18 +62,13 @@ export class AYM_PlayerView {
     }
 
     async powerOn() {
-        this.enablePlay();
-        this.disableStop();
-        this.enablePrev();
-        this.enableNext();
-        this.enableSeek();
         this.enableGain();
         this.enableMuteA();
         this.enableMuteB();
         this.enableMuteC();
         this.enableReset();
         this.enablePause();
-        this.setTitle('AYM·Player is On');
+        this.setTitle('AYM·Synth is On');
     }
 
     async powerOff() {
@@ -88,21 +78,11 @@ export class AYM_PlayerView {
         this.disableMuteB();
         this.disableMuteA();
         this.disableGain();
-        this.disableSeek();
-        this.disableNext();
-        this.disablePrev();
-        this.disableStop();
-        this.disablePlay();
-        this.setTitle('AYM·Player is Off');
+        this.setTitle('AYM·Synth is Off');
     }
 
     bind() {
         this.bindTitle();
-        this.bindPlay();
-        this.bindStop();
-        this.bindPrev();
-        this.bindNext();
-        this.bindSeek();
         this.bindGain();
         this.bindMuteA();
         this.bindMuteB();
@@ -115,49 +95,6 @@ export class AYM_PlayerView {
     bindTitle() {
         if(this.aymTitle == null) {
             this.aymTitle = this.getElementById('aymTitle');
-        }
-    }
-
-    bindPlay() {
-        if(this.aymPlay == null) {
-            this.aymPlay = this.getElementById('aymPlay');
-            this.aymPlay.disabled = true;
-            this.aymPlay.addEventListener('click', async () => { await this.controller.onClickPlay(); });
-        }
-    }
-
-    bindStop() {
-        if(this.aymStop == null) {
-            this.aymStop = this.getElementById('aymStop');
-            this.aymStop.disabled = true;
-            this.aymStop.addEventListener('click', async () => { await this.controller.onClickStop(); });
-        }
-    }
-
-    bindPrev() {
-        if(this.aymPrev == null) {
-            this.aymPrev = this.getElementById('aymPrev');
-            this.aymPrev.disabled = true;
-            this.aymPrev.addEventListener('click', async () => { await this.controller.onClickPrev(); });
-        }
-    }
-
-    bindNext() {
-        if(this.aymNext == null) {
-            this.aymNext = this.getElementById('aymNext');
-            this.aymNext.disabled = true;
-            this.aymNext.addEventListener('click', async () => { await this.controller.onClickNext(); });
-        }
-    }
-
-    bindSeek() {
-        if(this.aymSeek == null) {
-            this.aymSeek = this.getElementById('aymSeek');
-            this.aymSeek.disabled = true;
-            this.aymSeek.min = 0;
-            this.aymSeek.max = 1000;
-            this.aymSeek.value = 0;
-            this.aymSeek.addEventListener('input', async () => { await this.controller.onInputSeek(); });
         }
     }
 
@@ -220,46 +157,6 @@ export class AYM_PlayerView {
         }
     }
 
-    enablePlay() {
-        this.enableElement(this.aymPlay);
-    }
-
-    disablePlay() {
-        this.disableElement(this.aymPlay);
-    }
-
-    enableStop() {
-        this.enableElement(this.aymStop);
-    }
-
-    disableStop() {
-        this.disableElement(this.aymStop);
-    }
-
-    enablePrev() {
-        this.enableElement(this.aymPrev);
-    }
-
-    disablePrev() {
-        this.disableElement(this.aymPrev);
-    }
-
-    enableNext() {
-        this.enableElement(this.aymNext);
-    }
-
-    disableNext() {
-        this.disableElement(this.aymNext);
-    }
-
-    enableSeek() {
-        this.enableElement(this.aymSeek);
-    }
-
-    disableSeek() {
-        this.disableElement(this.aymSeek);
-    }
-
     enableGain() {
         this.enableElement(this.aymGain);
     }
@@ -316,22 +213,6 @@ export class AYM_PlayerView {
         this.disableElement(this.aymPause);
     }
 
-    setPlaying() {
-        this.disablePlay();
-        this.enableStop();
-    }
-
-    setStopped() {
-        this.disableStop();
-        this.enablePlay();
-    }
-
-    setChanged() {
-    }
-
-    setUnchanged() {
-    }
-
     setMutedA() {
         if(this.aymMuteA != null) {
             this.aymMuteA.className = 'is-toggled';
@@ -382,25 +263,6 @@ export class AYM_PlayerView {
 
     setTitle(title) {
         this.setInnerText(this.aymTitle, title);
-    }
-
-    setSeekValue(seek) {
-        const val = ((seek * 1000.0) | 0);
-        const min = 0;
-        const max = 1000;
-        if(this.aymSeek != null) {
-            this.aymSeek.value = AYM_Utils.clamp_int(val, min, max);
-        }
-    }
-
-    getSeekValue() {
-        let   val = 0;
-        const min = 0;
-        const max = 1000;
-        if(this.aymSeek != null) {
-            val = (this.aymSeek.value | 0);
-        }
-        return AYM_Utils.clamp_int(val, min, max) / +max;
     }
 
     getGainValue() {
