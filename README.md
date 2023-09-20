@@ -93,7 +93,7 @@ make serve
 
 ### DEPLOY
 
-The `make deploy` command calls the `bin/hugo-serve.sh` script in order to deploy the project on your server.
+The `make deploy` command calls the `bin/hugo-deploy.sh` script in order to deploy the project on your server.
 
 After running this command, the project will be available on your server.
 
