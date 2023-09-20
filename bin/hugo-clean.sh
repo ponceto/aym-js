@@ -23,7 +23,6 @@
 prefix="$(pwd)"
 bindir="${prefix}/bin"
 srcdir="${prefix}/src"
-loglevel='debug'
 
 # ----------------------------------------------------------------------------
 # debug

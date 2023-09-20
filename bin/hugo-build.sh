@@ -23,7 +23,6 @@
 prefix="$(pwd)"
 bindir="${prefix}/bin"
 srcdir="${prefix}/src"
-loglevel='debug'
 
 # ----------------------------------------------------------------------------
 # debug
@@ -41,7 +40,7 @@ cd "${srcdir}"                                                       || exit 1
 # build
 # ----------------------------------------------------------------------------
 
-hugo --logLevel "${loglevel}" --cleanDestinationDir                  || exit 1
+hugo --verbose --cleanDestinationDir                                 || exit 1
 
 # ----------------------------------------------------------------------------
 # cleanup
