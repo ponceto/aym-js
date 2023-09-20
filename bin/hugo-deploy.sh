@@ -20,6 +20,15 @@
 # some useful variables
 # ----------------------------------------------------------------------------
 
+prefix="$(pwd)"
+bindir="${prefix}/bin"
+srcdir="${prefix}/src"
+loglevel='debug'
+
+# ----------------------------------------------------------------------------
+# some useful variables
+# ----------------------------------------------------------------------------
+
 SSH='ssh'
 SSH_OPTS='-t'
 SSH_HOSTS='aym-js-emaxilde-net'
