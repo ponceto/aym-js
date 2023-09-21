@@ -5,7 +5,15 @@
             <p>{{ .Site.Params.description }}</p>
         </section>
         <section>
+            {{ .Content }}
+        </section>
+    </article>
+    <article>
+        <section>
             {{ partial "synth.html" . }}
         </section>
+    </article>
+    <article>
+        {{ partial "menu.html" . }}
     </article>
 </main>

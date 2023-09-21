@@ -174,6 +174,14 @@ export class AYM_SynthModel {
             this.waGain.gain.value = AYM_Utils.clamp_flt(gain, 0.0, 1.0);
         }
     }
+
+    sendNoteOn(channel, frequency, amplitude) {
+        this.sendMessage('NoteOn', { channel: channel, frequency: frequency, amplitude: amplitude });
+    }
+
+    sendNoteOff(channel, frequency, amplitude) {
+        this.sendMessage('NoteOff', { channel: channel });
+    }
 }
 
 // ---------------------------------------------------------------------------
