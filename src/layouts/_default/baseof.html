@@ -13,8 +13,9 @@
         {{- partial "opengraph.html" . -}}
     </head>
     <body>
-        {{ block "header" . }}{{ end }}
-        {{ block "main"   . }}{{ end }}
-        {{ block "footer" . }}{{ end }}
+        {{ block "header"  . }}{{ end }}
+        {{ block "navbar"  . }}{{ end }}
+        {{ block "content" . }}{{ end }}
+        {{ block "footer"  . }}{{ end }}
     </body>
 </html>

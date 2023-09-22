@@ -14,9 +14,10 @@
         {{- partial "opengraph.html" . -}}
     </head>
     <body>
-        {{- partial "header.html"   . -}}
-        {{- partial "homepage.html" . -}}
-        {{- partial "footer.html"   . -}}
+        {{- partial "header.html"  . -}}
+        {{- partial "navbar.html"  . -}}
+        {{- partial "content.html" . -}}
+        {{- partial "footer.html"  . -}}
         <script type="module" src="{{ "/vendor/aym-js/js/all-player.js" | absURL }}"></script>
         <script type="module" src="{{ "/assets/js/index.js"             | absURL }}"></script>
     </body>

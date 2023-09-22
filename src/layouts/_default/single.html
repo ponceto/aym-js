@@ -2,10 +2,12 @@
 {{ partial "header.html" . }}
 {{ end }}
 
-{{ define "main" }}
-<section class="container">
-    <div>{{ .Content }}</div>
-</section>
+{{ define "navbar" }}
+{{ partial "navbar.html" . }}
+{{ end }}
+
+{{ define "content" }}
+{{- partial "content.html" . -}}
 {{ end }}
 
 {{ define "footer" }}

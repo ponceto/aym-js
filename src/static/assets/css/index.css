@@ -33,6 +33,13 @@ body > footer {
     background-size: cover;
 }
 
+body > nav {
+    background: var(--card-background-color);
+    box-shadow: var(--card-box-shadow);
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
 body > header h1 {
     color: white;
 }
