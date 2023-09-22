@@ -10,7 +10,7 @@ draft: false
 
 AYM·Synth is a AY-3-8910 / YM2149 virtual instrument based on WebMIDI.
 
-Just connect your MIDI instrument, click `Power` and enjoy playing some music with a chiptune style!
+Simply connect your MIDI instrument, click `Power` and enjoy playing music with chiptune style!
 
 ---
 

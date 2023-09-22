@@ -8,6 +8,8 @@ draft: false
 
 AYM·JS is a sound chip emulator written in JavaScript and designed to emulate the AY-3-8910 PSG (Programmable Sound Generator) and the YM2149 SSG (Software-Controlled Sound Generator).
 
+Just put on your headphones, click `Power` and enjoy listening to old chiptune music from the 80s!
+
 ---
 
 {{< player >}}

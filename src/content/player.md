@@ -10,7 +10,7 @@ draft: false
 
 AYM·Player is a player for AY-3-8910 / YM2149 musics.
 
-Just put your headphone, click `Power` and enjoy listening some old chiptune musics from the 80's!
+Just put on your headphones, click `Power` and enjoy listening to old chiptune music from the 80s!
 
 ---
 
