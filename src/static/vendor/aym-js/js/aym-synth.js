@@ -179,14 +179,13 @@ export class AYM_SynthMIDI {
     onSuccess(midi)
     {
         const registerInput = (input) => {
-            console.log('MIDI-In', input);
             input.onmidimessage = (message) => {
                 this.onMessage(message);
             };
         };
 
         const registerOutput = (output) => {
-            console.log('MIDI-Out', output);
+            /* do nothing */
         };
 
         const getInputs = () => {
@@ -296,19 +295,11 @@ export class AYM_Synth {
         this.model.sendPause();
     }
 
-    getVoice(note) {
-        const count = this.voice.length;
-        for(let index = 0; index < count; ++index) {
-            if(this.voice[index] == note) {
-                return index;
-            }
-        }
-        return -1;
-    }
-
     async onNoteOn(channel, note, velocity)
     {
-        const voice = this.getVoice(-1);
+        const voice = this.voice.findIndex((element) => {
+            return element == -1;
+        });
         if(voice >= 0) {
             this.voice[voice] = note;
             this.model.sendNoteOn(voice, (MIDI_NOTES[note] | 0), (velocity >> 3));
@@ -317,7 +308,9 @@ export class AYM_Synth {
 
     async onNoteOff(channel, note, velocity)
     {
-        const voice = this.getVoice(note);
+        const voice = this.voice.findIndex((element) => {
+            return element == note;
+        });
         if(voice >= 0) {
             this.voice[voice] = -1;
             this.model.sendNoteOff(voice, (MIDI_NOTES[note] | 0), (velocity >> 3));
