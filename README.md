@@ -140,7 +140,7 @@ Full Font Awesome Free license: https://fontawesome.com/license/free.
 
 ### PICO·CSS
 
-This project is bundled with fontawesome, a tiny and elegant css library.
+This project is bundled with pico·css, a tiny and elegant css library.
 
 ```
 MIT License
