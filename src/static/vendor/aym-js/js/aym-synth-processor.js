@@ -57,11 +57,8 @@ export class AYM_SynthProcessor extends AudioWorkletProcessor {
         const payload = message.data;
 
         switch(payload.message_type) {
-            case 'NoteOn':
-                this.recvNoteOn(payload.message_data);
-                break;
-            case 'NoteOff':
-                this.recvNoteOff(payload.message_data);
+            case 'State':
+                this.recvState();
                 break;
             case 'Reset':
                 this.recvReset();
@@ -78,64 +75,41 @@ export class AYM_SynthProcessor extends AudioWorkletProcessor {
             case 'MuteC':
                 this.recvMuteC();
                 break;
-            default:
+            case 'NoteOn':
+                this.recvNoteOn(payload.message_data);
                 break;
-        }
-    }
-
-    recvNoteOn(data) {
-        const adapter   = this.chip_adapter;
-        const frequency = (data.frequency | 0);
-        const amplitude = (data.amplitude | 0);
-        switch(data.channel | 0) {
-            case 0:
-                adapter.set_channel0_frequency(frequency);
-                adapter.set_channel0_amplitude(amplitude, false);
-                adapter.set_channel0_sound(true);
-                adapter.set_channel0_noise(false);
-                break;
-            case 1:
-                adapter.set_channel1_frequency(frequency);
-                adapter.set_channel1_amplitude(amplitude, false);
-                adapter.set_channel1_sound(true);
-                adapter.set_channel1_noise(false);
-                break;
-            case 2:
-                adapter.set_channel2_frequency(frequency);
-                adapter.set_channel2_amplitude(amplitude, false);
-                adapter.set_channel2_sound(true);
-                adapter.set_channel2_noise(false);
+            case 'NoteOff':
+                this.recvNoteOff(payload.message_data);
                 break;
             default:
                 break;
         }
     }
 
-    recvNoteOff(data) {
-        const adapter   = this.chip_adapter;
-        const frequency = 0;
-        const amplitude = 0;
-        switch(data.channel | 0) {
-            case 0:
-                adapter.set_channel0_frequency(frequency);
-                adapter.set_channel0_amplitude(amplitude, false);
-                adapter.set_channel0_sound(false);
-                adapter.set_channel0_noise(false);
-                break;
-            case 1:
-                adapter.set_channel1_frequency(frequency);
-                adapter.set_channel1_amplitude(amplitude, false);
-                adapter.set_channel1_sound(false);
-                adapter.set_channel1_noise(false);
-                break;
-            case 2:
-                adapter.set_channel2_frequency(frequency);
-                adapter.set_channel2_amplitude(amplitude, false);
-                adapter.set_channel2_sound(false);
-                adapter.set_channel2_noise(false);
-                break;
-            default:
-                break;
+    recvState() {
+        if((this.chip_flags & AYM_FLAG_PAUSE) != 0) {
+            this.sendPaused();
+        }
+        else {
+            this.sendResumed();
+        }
+        if((this.chip_flags & AYM_FLAG_MUTEA) != 0) {
+            this.sendMutedA();
+        }
+        else {
+            this.sendUnmutedA();
+        }
+        if((this.chip_flags & AYM_FLAG_MUTEB) != 0) {
+            this.sendMutedB();
+        }
+        else {
+            this.sendUnmutedB();
+        }
+        if((this.chip_flags & AYM_FLAG_MUTEC) != 0) {
+            this.sendMutedC();
+        }
+        else {
+            this.sendUnmutedC();
         }
     }
 
@@ -184,6 +158,62 @@ export class AYM_SynthProcessor extends AudioWorkletProcessor {
         else {
             this.chip_flags &= ~AYM_FLAG_MUTEC;
             this.sendUnmutedC();
+        }
+    }
+
+    recvNoteOn(data) {
+        const adapter   = this.chip_adapter;
+        const frequency = (data.frequency | 0);
+        const amplitude = (data.amplitude | 0);
+        switch(data.channel | 0) {
+            case 0:
+                adapter.set_channel0_frequency(frequency);
+                adapter.set_channel0_amplitude(amplitude, false);
+                adapter.set_channel0_sound(true);
+                adapter.set_channel0_noise(false);
+                break;
+            case 1:
+                adapter.set_channel1_frequency(frequency);
+                adapter.set_channel1_amplitude(amplitude, false);
+                adapter.set_channel1_sound(true);
+                adapter.set_channel1_noise(false);
+                break;
+            case 2:
+                adapter.set_channel2_frequency(frequency);
+                adapter.set_channel2_amplitude(amplitude, false);
+                adapter.set_channel2_sound(true);
+                adapter.set_channel2_noise(false);
+                break;
+            default:
+                break;
+        }
+    }
+
+    recvNoteOff(data) {
+        const adapter   = this.chip_adapter;
+        const frequency = (data.frequency & 0);
+        const amplitude = (data.amplitude & 0);
+        switch(data.channel | 0) {
+            case 0:
+                adapter.set_channel0_frequency(frequency);
+                adapter.set_channel0_amplitude(amplitude, false);
+                adapter.set_channel0_sound(false);
+                adapter.set_channel0_noise(false);
+                break;
+            case 1:
+                adapter.set_channel1_frequency(frequency);
+                adapter.set_channel1_amplitude(amplitude, false);
+                adapter.set_channel1_sound(false);
+                adapter.set_channel1_noise(false);
+                break;
+            case 2:
+                adapter.set_channel2_frequency(frequency);
+                adapter.set_channel2_amplitude(amplitude, false);
+                adapter.set_channel2_sound(false);
+                adapter.set_channel2_noise(false);
+                break;
+            default:
+                break;
         }
     }
 

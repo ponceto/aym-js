@@ -18,6 +18,13 @@
 import { AYM_Utils } from './aym-utils.js';
 
 // ---------------------------------------------------------------------------
+// Some useful constants
+// ---------------------------------------------------------------------------
+
+const AYM_CHIP0 = 0;
+const AYM_CHIP1 = 1;
+
+// ---------------------------------------------------------------------------
 // AYM_SynthView
 // ---------------------------------------------------------------------------
 
@@ -26,9 +33,14 @@ export class AYM_SynthView {
         this.controller = controller;
         this.aymDisplay = null;
         this.aymGain    = null;
+        this.aymChip0   = null;
         this.aymMuteA   = null;
         this.aymMuteB   = null;
         this.aymMuteC   = null;
+        this.aymChip1   = null;
+        this.aymMuteD   = null;
+        this.aymMuteE   = null;
+        this.aymMuteF   = null;
         this.aymPower   = null;
         this.aymReset   = null;
         this.aymPause   = null;
@@ -63,9 +75,14 @@ export class AYM_SynthView {
 
     async powerOn() {
         this.enableGain();
+        this.enableChip0();
         this.enableMuteA();
         this.enableMuteB();
         this.enableMuteC();
+        this.enableChip1();
+        this.enableMuteD();
+        this.enableMuteE();
+        this.enableMuteF();
         this.enableReset();
         this.enablePause();
         this.setDisplay('AYM·Synth is On');
@@ -74,9 +91,14 @@ export class AYM_SynthView {
     async powerOff() {
         this.disablePause();
         this.disableReset();
+        this.disableMuteF();
+        this.disableMuteE();
+        this.disableMuteD();
+        this.disableChip1();
         this.disableMuteC();
         this.disableMuteB();
         this.disableMuteA();
+        this.disableChip0();
         this.disableGain();
         this.setDisplay('AYM·Synth is Off');
     }
@@ -84,9 +106,14 @@ export class AYM_SynthView {
     bind() {
         this.bindDisplay();
         this.bindGain();
+        this.bindChip0();
         this.bindMuteA();
         this.bindMuteB();
         this.bindMuteC();
+        this.bindChip1();
+        this.bindMuteD();
+        this.bindMuteE();
+        this.bindMuteF();
         this.bindPower();
         this.bindReset();
         this.bindPause();
@@ -106,6 +133,14 @@ export class AYM_SynthView {
             this.aymGain.max = 1000;
             this.aymGain.value = 500;
             this.aymGain.addEventListener('input', async () => { await this.controller.onInputGain(); });
+        }
+    }
+
+    bindChip0() {
+        if(this.aymChip0 == null) {
+            this.aymChip0 = this.getElementById('aymChip0');
+            this.aymChip0.disabled = true;
+            this.aymChip0.addEventListener('click', async () => { await this.controller.onClickChip0(); });
         }
     }
 
@@ -130,6 +165,38 @@ export class AYM_SynthView {
             this.aymMuteC = this.getElementById('aymMuteC');
             this.aymMuteC.disabled = true;
             this.aymMuteC.addEventListener('click', async () => { await this.controller.onClickMuteC(); });
+        }
+    }
+
+    bindChip1() {
+        if(this.aymChip1 == null) {
+            this.aymChip1 = this.getElementById('aymChip1');
+            this.aymChip1.disabled = true;
+            this.aymChip1.addEventListener('click', async () => { await this.controller.onClickChip1(); });
+        }
+    }
+
+    bindMuteD() {
+        if(this.aymMuteD == null) {
+            this.aymMuteD = this.getElementById('aymMuteD');
+            this.aymMuteD.disabled = true;
+            this.aymMuteD.addEventListener('click', async () => { await this.controller.onClickMuteD(); });
+        }
+    }
+
+    bindMuteE() {
+        if(this.aymMuteE == null) {
+            this.aymMuteE = this.getElementById('aymMuteE');
+            this.aymMuteE.disabled = true;
+            this.aymMuteE.addEventListener('click', async () => { await this.controller.onClickMuteE(); });
+        }
+    }
+
+    bindMuteF() {
+        if(this.aymMuteF == null) {
+            this.aymMuteF = this.getElementById('aymMuteF');
+            this.aymMuteF.disabled = true;
+            this.aymMuteF.addEventListener('click', async () => { await this.controller.onClickMuteF(); });
         }
     }
 
@@ -165,6 +232,14 @@ export class AYM_SynthView {
         this.disableElement(this.aymGain);
     }
 
+    enableChip0() {
+        this.enableElement(this.aymChip0);
+    }
+
+    disableChip0() {
+        this.disableElement(this.aymChip0);
+    }
+
     enableMuteA() {
         this.enableElement(this.aymMuteA);
     }
@@ -187,6 +262,38 @@ export class AYM_SynthView {
 
     disableMuteC() {
         this.disableElement(this.aymMuteC);
+    }
+
+    enableChip1() {
+        this.enableElement(this.aymChip1);
+    }
+
+    disableChip1() {
+        this.disableElement(this.aymChip1);
+    }
+
+    enableMuteD() {
+        this.enableElement(this.aymMuteD);
+    }
+
+    disableMuteD() {
+        this.disableElement(this.aymMuteD);
+    }
+
+    enableMuteE() {
+        this.enableElement(this.aymMuteE);
+    }
+
+    disableMuteE() {
+        this.disableElement(this.aymMuteE);
+    }
+
+    enableMuteF() {
+        this.enableElement(this.aymMuteF);
+    }
+
+    disableMuteF() {
+        this.disableElement(this.aymMuteF);
     }
 
     enablePower() {
@@ -213,51 +320,81 @@ export class AYM_SynthView {
         this.disableElement(this.aymPause);
     }
 
-    setMutedA() {
-        if(this.aymMuteA != null) {
-            this.aymMuteA.className = 'is-toggled';
-        }
-    }
-
-    setUnmutedA() {
-        if(this.aymMuteA != null) {
-            this.aymMuteA.className = '';
-        }
-    }
-
-    setMutedB() {
-        if(this.aymMuteB != null) {
-            this.aymMuteB.className = 'is-toggled';
-        }
-    }
-
-    setUnmutedB() {
-        if(this.aymMuteB != null) {
-            this.aymMuteB.className = '';
-        }
-    }
-
-    setMutedC() {
-        if(this.aymMuteC != null) {
-            this.aymMuteC.className = 'is-toggled';
-        }
-    }
-
-    setUnmutedC() {
-        if(this.aymMuteC != null) {
-            this.aymMuteC.className = '';
-        }
-    }
-
-    setPaused() {
+    setPaused(chip_id) {
         if(this.aymPause != null) {
             this.aymPause.className = 'is-toggled';
         }
+        if((chip_id == AYM_CHIP0) && (this.aymChip0 != null)) {
+            this.aymChip0.className = 'is-toggled';
+        }
+        if((chip_id == AYM_CHIP1) && (this.aymChip1 != null)) {
+            this.aymChip1.className = 'is-toggled';
+        }
     }
 
-    setResumed() {
+    setResumed(chip_id) {
         if(this.aymPause != null) {
             this.aymPause.className = '';
+        }
+        if((chip_id == AYM_CHIP0) && (this.aymChip0 != null)) {
+            this.aymChip0.className = '';
+        }
+        if((chip_id == AYM_CHIP1) && (this.aymChip1 != null)) {
+            this.aymChip1.className = '';
+        }
+    }
+
+    setMutedA(chip_id) {
+        if((chip_id == AYM_CHIP0) && (this.aymMuteA != null)) {
+            this.aymMuteA.className = 'is-toggled';
+        }
+        if((chip_id == AYM_CHIP1) && (this.aymMuteD != null)) {
+            this.aymMuteD.className = 'is-toggled';
+        }
+    }
+
+    setUnmutedA(chip_id) {
+        if((chip_id == AYM_CHIP0) && (this.aymMuteA != null)) {
+            this.aymMuteA.className = '';
+        }
+        if((chip_id == AYM_CHIP1) && (this.aymMuteD != null)) {
+            this.aymMuteD.className = '';
+        }
+    }
+
+    setMutedB(chip_id) {
+        if((chip_id == AYM_CHIP0) && (this.aymMuteB != null)) {
+            this.aymMuteB.className = 'is-toggled';
+        }
+        if((chip_id == AYM_CHIP1) && (this.aymMuteE != null)) {
+            this.aymMuteE.className = 'is-toggled';
+        }
+    }
+
+    setUnmutedB(chip_id) {
+        if((chip_id == AYM_CHIP0) && (this.aymMuteB != null)) {
+            this.aymMuteB.className = '';
+        }
+        if((chip_id == AYM_CHIP1) && (this.aymMuteE != null)) {
+            this.aymMuteE.className = '';
+        }
+    }
+
+    setMutedC(chip_id) {
+        if((chip_id == AYM_CHIP0) && (this.aymMuteC != null)) {
+            this.aymMuteC.className = 'is-toggled';
+        }
+        if((chip_id == AYM_CHIP1) && (this.aymMuteF != null)) {
+            this.aymMuteF.className = 'is-toggled';
+        }
+    }
+
+    setUnmutedC(chip_id) {
+        if((chip_id == AYM_CHIP0) && (this.aymMuteC != null)) {
+            this.aymMuteC.className = '';
+        }
+        if((chip_id == AYM_CHIP1) && (this.aymMuteF != null)) {
+            this.aymMuteF.className = '';
         }
     }
 

@@ -25,10 +25,13 @@ import { AYM_SynthMIDI  } from './aym-synth-midi.js';
 
 export class AYM_Synth {
     constructor() {
-        this.model  = new AYM_SynthModel(this);
-        this.view   = new AYM_SynthView(this);
-        this.midi   = new AYM_SynthMIDI(this);
-        this.voices = [-1, -1, -1];
+        this.model = new AYM_SynthModel(this);
+        this.view  = new AYM_SynthView(this);
+        this.midi  = new AYM_SynthMIDI(this);
+        this.note_to_voice = new Int8Array(127)
+        this.note_to_voice.fill(-1);
+        this.voice_to_note = new Int8Array(6)
+        this.voice_to_note.fill(-1);
     }
 
     async onLoadWindow() {
@@ -38,6 +41,10 @@ export class AYM_Synth {
     async onInputGain() {
         const gain = this.view.getGainValue();
         this.model.setGain(gain);
+    }
+
+    async onClickChip0() {
+        /* do nothing */
     }
 
     async onClickMuteA() {
@@ -50,6 +57,22 @@ export class AYM_Synth {
 
     async onClickMuteC() {
         this.model.sendMuteC();
+    }
+
+    async onClickChip1() {
+        /* do nothing */
+    }
+
+    async onClickMuteD() {
+        this.model.sendMuteD();
+    }
+
+    async onClickMuteE() {
+        this.model.sendMuteE();
+    }
+
+    async onClickMuteF() {
+        this.model.sendMuteF();
     }
 
     async onClickPower() {
@@ -66,7 +89,8 @@ export class AYM_Synth {
     }
 
     async onClickReset() {
-        this.voices.fill(-1);
+        this.note_to_voice.fill(-1);
+        this.voice_to_note.fill(-1);
         this.model.sendReset();
     }
 
@@ -74,50 +98,56 @@ export class AYM_Synth {
         this.model.sendPause();
     }
 
-    async recvPaused() {
-        this.view.setPaused();
+    async recvPaused(chip_id) {
+        this.view.setPaused(chip_id);
     }
 
-    async recvResumed() {
-        this.view.setResumed();
+    async recvResumed(chip_id) {
+        this.view.setResumed(chip_id);
     }
 
-    async recvMutedA() {
-        this.view.setMutedA();
+    async recvMutedA(chip_id) {
+        this.view.setMutedA(chip_id);
     }
 
-    async recvUnmutedA() {
-        this.view.setUnmutedA();
+    async recvUnmutedA(chip_id) {
+        this.view.setUnmutedA(chip_id);
     }
 
-    async recvMutedB() {
-        this.view.setMutedB();
+    async recvMutedB(chip_id) {
+        this.view.setMutedB(chip_id);
     }
 
-    async recvUnmutedB() {
-        this.view.setUnmutedB();
+    async recvUnmutedB(chip_id) {
+        this.view.setUnmutedB(chip_id);
     }
 
-    async recvMutedC() {
-        this.view.setMutedC();
+    async recvMutedC(chip_id) {
+        this.view.setMutedC(chip_id);
     }
 
-    async recvUnmutedC() {
-        this.view.setUnmutedC();
+    async recvUnmutedC(chip_id) {
+        this.view.setUnmutedC(chip_id);
+    }
+
+    midiVoiceOf(note) {
+        const voice = this.note_to_voice[note];
+
+        if(voice < 0) {
+            return this.voice_to_note.findIndex((entry) => {
+                return entry == -1;
+            });
+        }
+        return voice;
     }
 
     midiNoteOn(channel, note, velocity)
     {
-        let voice = this.voices.findIndex((entry) => {
-            return entry == note;
-        });
-        if(voice < 0) {
-            voice = this.voices.findIndex((entry) => {
-                return entry == -1;
-            });
-        }
+        const voice = this.midiVoiceOf(note);
+
         if(voice >= 0) {
-            this.voices[voice] = note;
+            this.note_to_voice[note]  = voice;
+            this.voice_to_note[voice] = note;
             const frequency = this.midi.convertNoteToFrequency(note);
             const amplitude = this.midi.convertVelocityToAmplitude(velocity);
             this.model.sendNoteOn(voice, ((frequency | 0) >> 0), ((amplitude | 0) >> 3));
@@ -126,11 +156,11 @@ export class AYM_Synth {
 
     midiNoteOff(channel, note, velocity)
     {
-        let voice = this.voices.findIndex((entry) => {
-            return entry == note;
-        });
+        const voice = this.midiVoiceOf(note);
+
         if(voice >= 0) {
-            this.voices[voice] = -1;
+            this.note_to_voice[note]  = -1;
+            this.voice_to_note[voice] = -1;
             const frequency = 0;
             const amplitude = 0;
             this.model.sendNoteOff(voice, (frequency >> 0), (amplitude >> 3));
