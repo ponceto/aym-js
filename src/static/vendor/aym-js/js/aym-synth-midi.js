@@ -309,8 +309,7 @@ export class AYM_SynthMIDI {
         /* do nothing */
     }
 
-    onSuccess(midi)
-    {
+    onSuccess(midi) {
         const registerInput = (input) => {
             input.onmidimessage = (message) => {
                 this.onMessage(message);
@@ -345,13 +344,11 @@ export class AYM_SynthMIDI {
         this.outputs = getOutputs();
     }
 
-    onFailure(midi)
-    {
-        console.log('WebMIDI is not supported in this browser.');
+    onFailure(midi) {
+        this.listener.midiIsNotSupported();
     }
 
-    onMessage(message)
-    {
+    onMessage(message) {
         const command = (message.data[0] >> 4);
         switch(command) {
             case 0x8: /* note off */

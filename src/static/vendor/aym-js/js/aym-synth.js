@@ -141,8 +141,7 @@ export class AYM_Synth {
         return voice;
     }
 
-    midiNoteOn(channel, note, velocity)
-    {
+    midiNoteOn(channel, note, velocity) {
         const voice = this.midiVoiceOf(note);
 
         if(voice >= 0) {
@@ -154,8 +153,7 @@ export class AYM_Synth {
         }
     }
 
-    midiNoteOff(channel, note, velocity)
-    {
+    midiNoteOff(channel, note, velocity) {
         const voice = this.midiVoiceOf(note);
 
         if(voice >= 0) {
@@ -165,6 +163,10 @@ export class AYM_Synth {
             const amplitude = 0;
             this.model.sendNoteOff(voice, (frequency >> 0), (amplitude >> 3));
         }
+    }
+
+    midiIsNotSupported() {
+        this.view.setDisplay('Web MIDI is not supported or authorized!');
     }
 }
 
