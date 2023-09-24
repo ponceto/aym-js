@@ -58,6 +58,10 @@ export class AYM_Player {
         this.model.setGain(gain);
     }
 
+    async onClickChip0() {
+        /* do nothing */
+    }
+
     async onClickMuteA() {
         this.model.sendMuteA();
     }

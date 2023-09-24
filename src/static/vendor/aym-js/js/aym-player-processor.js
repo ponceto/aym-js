@@ -62,20 +62,8 @@ export class AYM_PlayerProcessor extends AudioWorkletProcessor {
         const payload = message.data;
 
         switch(payload.message_type) {
-            case 'Play':
-                this.recvPlay();
-                break;
-            case 'Stop':
-                this.recvStop();
-                break;
-            case 'Prev':
-                this.recvPrev();
-                break;
-            case 'Next':
-                this.recvNext();
-                break;
-            case 'Seek':
-                this.recvSeek(payload.message_data);
+            case 'State':
+                this.recvState();
                 break;
             case 'Reset':
                 this.recvReset();
@@ -92,8 +80,98 @@ export class AYM_PlayerProcessor extends AudioWorkletProcessor {
             case 'MuteC':
                 this.recvMuteC();
                 break;
+            case 'Play':
+                this.recvPlay();
+                break;
+            case 'Stop':
+                this.recvStop();
+                break;
+            case 'Prev':
+                this.recvPrev();
+                break;
+            case 'Next':
+                this.recvNext();
+                break;
+            case 'Seek':
+                this.recvSeek(payload.message_data);
+                break;
             default:
                 break;
+        }
+    }
+
+    recvState() {
+        if((this.chip_flags & AYM_FLAG_PAUSE) != 0) {
+            this.sendPaused();
+        }
+        else {
+            this.sendResumed();
+        }
+        if((this.chip_flags & AYM_FLAG_MUTEA) != 0) {
+            this.sendMutedA();
+        }
+        else {
+            this.sendUnmutedA();
+        }
+        if((this.chip_flags & AYM_FLAG_MUTEB) != 0) {
+            this.sendMutedB();
+        }
+        else {
+            this.sendUnmutedB();
+        }
+        if((this.chip_flags & AYM_FLAG_MUTEC) != 0) {
+            this.sendMutedC();
+        }
+        else {
+            this.sendUnmutedC();
+        }
+    }
+
+    recvReset() {
+        this.chip_flags |= AYM_FLAG_RESET;
+    }
+
+    recvPause() {
+        if((this.chip_flags & AYM_FLAG_PAUSE) == 0) {
+            this.chip_flags |= AYM_FLAG_PAUSE;
+            this.sendPaused();
+        }
+        else {
+            this.chip_flags &= ~AYM_FLAG_PAUSE;
+            this.sendResumed();
+        }
+    }
+
+    recvMuteA() {
+        if((this.chip_flags & AYM_FLAG_MUTEA) == 0) {
+            this.chip_flags |= AYM_FLAG_MUTEA;
+            this.sendMutedA();
+        }
+        else {
+            this.chip_flags &= ~AYM_FLAG_MUTEA;
+            this.sendUnmutedA();
+        }
+    }
+
+    recvMuteB() {
+        if((this.chip_flags & AYM_FLAG_MUTEB) == 0) {
+            this.chip_flags |= AYM_FLAG_MUTEB;
+            this.sendMutedB();
+        }
+        else {
+            this.chip_flags &= ~AYM_FLAG_MUTEB;
+            this.sendUnmutedB();
+        }
+    }
+
+    recvMuteC() {
+        if((this.chip_flags & AYM_FLAG_MUTEC) == 0) {
+            this.chip_flags |= AYM_FLAG_MUTEC;
+            this.sendMutedC();
+        }
+        else {
+            this.chip_flags &= ~AYM_FLAG_MUTEC;
+            this.sendUnmutedC();
         }
     }
 
@@ -163,54 +241,6 @@ export class AYM_PlayerProcessor extends AudioWorkletProcessor {
         const music_count = this.music_count;
         if((music_index > 0) && (music_count > 0)) {
             this.music_index = (((music_count * seek) | 0) % music_count);
-        }
-    }
-
-    recvReset() {
-        this.chip_flags |= AYM_FLAG_RESET;
-    }
-
-    recvPause() {
-        if((this.chip_flags & AYM_FLAG_PAUSE) == 0) {
-            this.chip_flags |= AYM_FLAG_PAUSE;
-            this.sendPaused();
-        }
-        else {
-            this.chip_flags &= ~AYM_FLAG_PAUSE;
-            this.sendResumed();
-        }
-    }
-
-    recvMuteA() {
-        if((this.chip_flags & AYM_FLAG_MUTEA) == 0) {
-            this.chip_flags |= AYM_FLAG_MUTEA;
-            this.sendMutedA();
-        }
-        else {
-            this.chip_flags &= ~AYM_FLAG_MUTEA;
-            this.sendUnmutedA();
-        }
-    }
-
-    recvMuteB() {
-        if((this.chip_flags & AYM_FLAG_MUTEB) == 0) {
-            this.chip_flags |= AYM_FLAG_MUTEB;
-            this.sendMutedB();
-        }
-        else {
-            this.chip_flags &= ~AYM_FLAG_MUTEB;
-            this.sendUnmutedB();
-        }
-    }
-
-    recvMuteC() {
-        if((this.chip_flags & AYM_FLAG_MUTEC) == 0) {
-            this.chip_flags |= AYM_FLAG_MUTEC;
-            this.sendMutedC();
-        }
-        else {
-            this.chip_flags &= ~AYM_FLAG_MUTEC;
-            this.sendUnmutedC();
         }
     }
 

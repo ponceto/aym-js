@@ -31,6 +31,7 @@ export class AYM_PlayerView {
         this.aymNext    = null;
         this.aymSeek    = null;
         this.aymGain    = null;
+        this.aymChip0   = null;
         this.aymMuteA   = null;
         this.aymMuteB   = null;
         this.aymMuteC   = null;
@@ -73,6 +74,7 @@ export class AYM_PlayerView {
         this.enableNext();
         this.enableSeek();
         this.enableGain();
+        this.enableChip0();
         this.enableMuteA();
         this.enableMuteB();
         this.enableMuteC();
@@ -87,6 +89,7 @@ export class AYM_PlayerView {
         this.disableMuteC();
         this.disableMuteB();
         this.disableMuteA();
+        this.disableChip0();
         this.disableGain();
         this.disableSeek();
         this.disableNext();
@@ -104,6 +107,7 @@ export class AYM_PlayerView {
         this.bindNext();
         this.bindSeek();
         this.bindGain();
+        this.bindChip0();
         this.bindMuteA();
         this.bindMuteB();
         this.bindMuteC();
@@ -169,6 +173,14 @@ export class AYM_PlayerView {
             this.aymGain.max = 1000;
             this.aymGain.value = 500;
             this.aymGain.addEventListener('input', async () => { await this.controller.onInputGain(); });
+        }
+    }
+
+    bindChip0() {
+        if(this.aymChip0 == null) {
+            this.aymChip0 = this.getElementById('aymChip0');
+            this.aymChip0.disabled = true;
+            this.aymChip0.addEventListener('click', async () => { await this.controller.onClickChip0(); });
         }
     }
 
@@ -268,6 +280,14 @@ export class AYM_PlayerView {
         this.disableElement(this.aymGain);
     }
 
+    enableChip0() {
+        this.enableElement(this.aymChip0);
+    }
+
+    disableChip0() {
+        this.disableElement(this.aymChip0);
+    }
+
     enableMuteA() {
         this.enableElement(this.aymMuteA);
     }
@@ -327,9 +347,11 @@ export class AYM_PlayerView {
     }
 
     setChanged() {
+        /* do nothing */
     }
 
     setUnchanged() {
+        /* do nothing */
     }
 
     setMutedA() {
@@ -372,11 +394,17 @@ export class AYM_PlayerView {
         if(this.aymPause != null) {
             this.aymPause.className = 'is-toggled';
         }
+        if(this.aymChip0 != null) {
+            this.aymChip0.className = 'is-toggled';
+        }
     }
 
     setResumed() {
         if(this.aymPause != null) {
             this.aymPause.className = '';
+        }
+        if(this.aymChip0 != null) {
+            this.aymChip0.className = '';
         }
     }
 

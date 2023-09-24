@@ -34,6 +34,7 @@ export class AYM_PlayerModel {
         await this.createGain();
         await this.createWorklet();
         await this.controller.onInputGain();
+        await this.sendState();
     }
 
     async powerOff() {
@@ -120,24 +121,6 @@ export class AYM_PlayerModel {
         const payload = message.data;
 
         switch(payload.message_type) {
-            case 'Title':
-                this.controller.recvTitle(payload.message_data);
-                break;
-            case 'Seek':
-                this.controller.recvSeek(payload.message_data);
-                break;
-            case 'Playing':
-                this.controller.recvPlaying();
-                break;
-            case 'Stopped':
-                this.controller.recvStopped();
-                break;
-            case 'Changed':
-                this.controller.recvChanged();
-                break;
-            case 'Unchanged':
-                this.controller.recvUnchanged();
-                break;
             case 'Paused':
                 this.controller.recvPaused();
                 break;
@@ -162,29 +145,31 @@ export class AYM_PlayerModel {
             case 'UnmutedC':
                 this.controller.recvUnmutedC();
                 break;
+            case 'Title':
+                this.controller.recvTitle(payload.message_data);
+                break;
+            case 'Seek':
+                this.controller.recvSeek(payload.message_data);
+                break;
+            case 'Playing':
+                this.controller.recvPlaying();
+                break;
+            case 'Stopped':
+                this.controller.recvStopped();
+                break;
+            case 'Changed':
+                this.controller.recvChanged();
+                break;
+            case 'Unchanged':
+                this.controller.recvUnchanged();
+                break;
             default:
                 break;
         }
     }
 
-    sendPlay() {
-        this.sendMessage('Play');
-    }
-
-    sendStop() {
-        this.sendMessage('Stop');
-    }
-
-    sendPrev() {
-        this.sendMessage('Prev');
-    }
-
-    sendNext() {
-        this.sendMessage('Next');
-    }
-
-    sendSeek(seek) {
-        this.sendMessage('Seek', seek);
+    sendState() {
+        this.sendMessage('State');
     }
 
     sendReset() {
@@ -205,6 +190,26 @@ export class AYM_PlayerModel {
 
     sendMuteC() {
         this.sendMessage('MuteC');
+    }
+
+    sendPlay() {
+        this.sendMessage('Play');
+    }
+
+    sendStop() {
+        this.sendMessage('Stop');
+    }
+
+    sendPrev() {
+        this.sendMessage('Prev');
+    }
+
+    sendNext() {
+        this.sendMessage('Next');
+    }
+
+    sendSeek(seek) {
+        this.sendMessage('Seek', seek);
     }
 
     setGain(gain) {
