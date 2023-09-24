@@ -15,11 +15,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-:root {
-  --spacing: 0.5rem;
-}
-
 body > header {
+    padding-top: calc(var(--block-spacing-vertical) / 2.0);
+    padding-bottom: calc(var(--block-spacing-vertical) / 2.0);
     background: black;
     background-image: url('/assets/images/header.jpg');
     background-position: center;
@@ -27,6 +25,8 @@ body > header {
 }
 
 body > footer {
+    padding-top: calc(var(--block-spacing-vertical) / 2.0);
+    padding-bottom: calc(var(--block-spacing-vertical) / 2.0);
     background: black;
     background-image: url('/assets/images/footer.jpg');
     background-position: center;
@@ -38,6 +38,22 @@ body > nav {
     box-shadow: var(--card-box-shadow);
     padding-left: 1em;
     padding-right: 1em;
+}
+
+body > main {
+    padding-top: calc(var(--block-spacing-vertical) / 2.0);
+    padding-bottom: calc(var(--block-spacing-vertical) / 2.0);
+}
+
+body > main > article {
+    margin-top: calc(var(--block-spacing-vertical) / 2.0);
+    margin-bottom: calc(var(--block-spacing-vertical) / 2.0);
+    padding-top: calc(var(--block-spacing-vertical) / 2.0);
+    padding-bottom: calc(var(--block-spacing-vertical) / 2.0);
+}
+
+body > main > article > section {
+    margin-bottom: calc(var(--block-spacing-vertical) / 2.0);
 }
 
 body > header h1 {
