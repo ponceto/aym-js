@@ -362,53 +362,10 @@ export class AYM_PlayerProcessor extends AudioWorkletProcessor {
             return this.channel_c;
         };
 
-        const clockMusic = () => {
-            if((this.music != null) && (this.music_index >= 0)) {
-                this.music_ticks += this.music_clock;
-                if(this.music_ticks >= this.chip_clock) {
-                    this.music_ticks -= this.chip_clock;
-                    const frame = this.music.frames[this.music_index];
-                    for(let index = 0; index < 14; ++index) {
-                        const value = frame[index];
-                        if((index == 13) && (value == 0xff)) {
-                            continue;
-                        }
-                        this.chip.set_register_index(index);
-                        this.chip.set_register_value(value);
-                    }
-                    if((this.music_index % this.music_clock) == 0) {
-                        this.sendSeek((+this.music_index / +this.music_count));
-                    }
-                    this.music_index = ((this.music_index + 1) | 0);
-                    if(this.music_index >= this.music_count) {
-                        this.recvNext();
-                        if(this.music_index >= this.music_count) {
-                            this.recvStop();
-                        }
-                    }
-                }
-            }
-        };
-
-        const clockChip = () => {
-            while(this.chip_ticks < this.chip_clock) {
-                this.chip_ticks += sampleRate;
-                this.chip.clock();
-                clockMusic();
-            }
-            this.chip_ticks -= this.chip_clock;
-        };
-
         const samples   = numSamples();
         const channel_a = getChannelA(samples);
         const channel_b = getChannelB(samples);
         const channel_c = getChannelC(samples);
-        for(let sample = 0; sample < samples; ++sample) {
-            channel_a[sample] = this.chip.get_channel0();
-            channel_b[sample] = this.chip.get_channel1();
-            channel_c[sample] = this.chip.get_channel2();
-            clockChip();
-        }
 
         const mixMono = (channel) => {
             for(let sample = 0; sample < samples; ++sample) {
@@ -450,17 +407,60 @@ export class AYM_PlayerProcessor extends AudioWorkletProcessor {
             }
         };
 
-        for(const output of outputs) {
-            if(output.length >= 2) {
-                mixStereo(output[0], output[1]);
-                continue;
+        const clockMusic = () => {
+            if((this.music != null) && (this.music_index >= 0)) {
+                this.music_ticks += this.music_clock;
+                if(this.music_ticks >= this.chip_clock) {
+                    this.music_ticks -= this.chip_clock;
+                    const frame = this.music.frames[this.music_index];
+                    for(let index = 0; index < 14; ++index) {
+                        const value = frame[index];
+                        if((index == 13) && (value == 0xff)) {
+                            continue;
+                        }
+                        this.chip.set_register_index(index);
+                        this.chip.set_register_value(value);
+                    }
+                    if((this.music_index % this.music_clock) == 0) {
+                        this.sendSeek((+this.music_index / +this.music_count));
+                    }
+                    this.music_index = ((this.music_index + 1) | 0);
+                    if(this.music_index >= this.music_count) {
+                        this.recvNext();
+                        if(this.music_index >= this.music_count) {
+                            this.recvStop();
+                        }
+                    }
+                }
             }
-            if(output.length >= 1) {
-                mixMono(output[0]);
-                continue;
+        };
+
+        const clockChip = () => {
+            for(let sample = 0; sample < samples; ++sample) {
+                channel_a[sample] = this.chip.get_channel0();
+                channel_b[sample] = this.chip.get_channel1();
+                channel_c[sample] = this.chip.get_channel2();
+                while(this.chip_ticks < this.chip_clock) {
+                    this.chip_ticks += sampleRate;
+                    this.chip.clock();
+                    clockMusic();
+                }
+                this.chip_ticks -= this.chip_clock;
             }
-        }
-        return true;
+            for(const output of outputs) {
+                if(output.length >= 2) {
+                    mixStereo(output[0], output[1]);
+                    continue;
+                }
+                if(output.length >= 1) {
+                    mixMono(output[0]);
+                    continue;
+                }
+            }
+            return true;
+        };
+
+        return clockChip();
     }
 }
 
