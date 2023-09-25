@@ -130,7 +130,7 @@ export class AYM_Synth {
         this.view.setUnmutedC(chip_id);
     }
 
-    midiVoiceOf(note) {
+    midiNoteToVoice(note) {
         const voice = this.note_to_voice[note];
 
         if(voice < 0) {
@@ -142,7 +142,7 @@ export class AYM_Synth {
     }
 
     midiNoteOn(channel, note, velocity) {
-        const voice = this.midiVoiceOf(note);
+        const voice = this.midiNoteToVoice(note);
 
         if(voice >= 0) {
             this.note_to_voice[note]  = voice;
@@ -154,14 +154,14 @@ export class AYM_Synth {
     }
 
     midiNoteOff(channel, note, velocity) {
-        const voice = this.midiVoiceOf(note);
+        const voice = this.midiNoteToVoice(note);
 
         if(voice >= 0) {
             this.note_to_voice[note]  = -1;
             this.voice_to_note[voice] = -1;
             const frequency = 0;
             const amplitude = 0;
-            this.model.sendNoteOff(voice, (frequency >> 0), (amplitude >> 3));
+            this.model.sendNoteOff(voice, ((frequency | 0) >> 0), ((amplitude | 0) >> 3));
         }
     }
 

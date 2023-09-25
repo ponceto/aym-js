@@ -15,6 +15,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { AYM_Utils } from './aym-utils.js';
+
 // ---------------------------------------------------------------------------
 // MIDI note/frequency conversion table
 // ---------------------------------------------------------------------------
@@ -290,10 +292,10 @@ const MIDI_VELOCITY_TO_AMPLITUDE = [
 // ---------------------------------------------------------------------------
 
 export class AYM_SynthMIDI {
-    constructor(listener) {
-        this.listener = listener;
-        this.inputs   = null;
-        this.outputs  = null;
+    constructor(controller) {
+        this.controller = controller;
+        this.inputs     = null;
+        this.outputs    = null;
     }
 
     async powerOn() {
@@ -323,9 +325,7 @@ export class AYM_SynthMIDI {
         const getInputs = () => {
             const inputs = midi.inputs;
             inputs.forEach((input) => {
-                if(input.name.startsWith('Midi Through') == false) {
-                    registerInput(input);
-                }
+                registerInput(input);
             });
             return inputs;
         };
@@ -333,9 +333,7 @@ export class AYM_SynthMIDI {
         const getOutputs = () => {
             const outputs = midi.outputs;
             outputs.forEach((output) => {
-                if(output.name.startsWith('Midi Through') == false) {
-                    registerOutput(output);
-                }
+                registerOutput(output);
             });
             return outputs;
         };
@@ -345,52 +343,81 @@ export class AYM_SynthMIDI {
     }
 
     onFailure(midi) {
-        this.listener.midiIsNotSupported();
+        this.controller.midiIsNotSupported();
+    }
+
+    onNoteOff(message) {
+        const channel  = (message.data[0] & 0x0f);
+        const note     = (message.data[1] & 0xff);
+        const velocity = (message.data[2] & 0xff);
+        const note_min = 16;
+        const note_max = 111;
+        if((note >= note_min) && (note <= note_max)) {
+            this.controller.midiNoteOff(channel, note, velocity);
+        }
+    }
+
+    onNoteOn(message) {
+        const channel  = (message.data[0] & 0x0f);
+        const note     = (message.data[1] & 0xff);
+        const velocity = (message.data[2] & 0xff);
+        const note_min = 16;
+        const note_max = 111;
+        if((note >= note_min) && (note <= note_max)) {
+            if(velocity == 0) {
+                this.controller.midiNoteOff(channel, note, 127);
+            }
+            else {
+                this.controller.midiNoteOn(channel, note, velocity);
+            }
+        }
+    }
+
+    onAftertouch(message) {
+    }
+
+    onControlChange(message) {
+    }
+
+    onProgramChange(message) {
+    }
+
+    onChannelPressure(message) {
+    }
+
+    onPitchBend(message) {
+    }
+
+    onSystemControl(message) {
     }
 
     onMessage(message) {
         const command = (message.data[0] >> 4);
+
         switch(command) {
             case 0x8: /* note off */
-                {
-                    const channel  = (message.data[0] & 0x0f);
-                    const note     = (message.data[1] & 0xff);
-                    const velocity = (message.data[2] & 0xff);
-                    const note_min = 16;
-                    const note_max = 111;
-                    if((note >= note_min) && (note <= note_max)) {
-                        this.listener.midiNoteOff(channel, note, velocity);
-                    }
-                }
+                this.onNoteOff(message);
                 break;
             case 0x9: /* note on */
-                {
-                    const channel  = (message.data[0] & 0x0f);
-                    const note     = (message.data[1] & 0xff);
-                    const velocity = (message.data[2] & 0xff);
-                    const note_min = 16;
-                    const note_max = 111;
-                    if((note >= note_min) && (note <= note_max)) {
-                        if(velocity == 0) {
-                            this.listener.midiNoteOff(channel, note, 127);
-                        }
-                        else {
-                            this.listener.midiNoteOn(channel, note, velocity);
-                        }
-                    }
-                }
+                this.onNoteOn(message);
                 break;
             case 0xa: /* aftertouch */
+                this.onAftertouch(message);
                 break;
             case 0xb: /* control change */
+                this.onControlChange(message);
                 break;
             case 0xc: /* program change */
+                this.onProgramChange(message);
                 break;
             case 0xd: /* channel pressure */
+                this.onChannelPressure(message);
                 break;
             case 0xe: /* pitch bend */
+                this.onPitchBend(message);
                 break;
             case 0xf: /* system control */
+                this.onSystemControl(message);
                 break;
             default:
                 break;
@@ -398,25 +425,19 @@ export class AYM_SynthMIDI {
     }
 
     convertNoteToFrequency(value) {
-        let index = (value | 0);
-        if(index < 0) {
-            index = 0;
-        }
-        if(index > 127) {
-            index = 127;
-        }
-        return MIDI_NOTE_TO_FREQUENCY[index];
+        const min = 0;
+        const max = 127;
+        const val = AYM_Utils.clamp_int(value, min, max);
+
+        return MIDI_NOTE_TO_FREQUENCY[val];
     }
 
     convertVelocityToAmplitude(value) {
-        let index = (value | 0);
-        if(index < 0) {
-            index = 0;
-        }
-        if(index > 127) {
-            index = 127;
-        }
-        return MIDI_VELOCITY_TO_AMPLITUDE[index];
+        const min = 0;
+        const max = 127;
+        const val = AYM_Utils.clamp_int(value, min, max);
+
+        return MIDI_VELOCITY_TO_AMPLITUDE[val];
     }
 }
 
