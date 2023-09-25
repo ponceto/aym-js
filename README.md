@@ -128,7 +128,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 ### FONTAWESOME
 
-This project is bundled with fontawesome, an icon library and toolkit.
+This project is distributed with [fontawesome](https://fontawesome.com/), an icon library and toolkit.
 
 ```
 Font Awesome Free License
@@ -140,7 +140,7 @@ Full Font Awesome Free license: https://fontawesome.com/license/free.
 
 ### PICO·CSS
 
-This project is bundled with pico·css, a tiny and elegant css library.
+This project is distributed with [pico·css](https://picocss.com/), a tiny and elegant css library.
 
 ```
 MIT License
