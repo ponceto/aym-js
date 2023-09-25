@@ -80,3 +80,42 @@ body > main > article img {
     padding: 1em;
     text-align: center;
 }
+
+#aymPlayer, #aymSynth {
+    border-radius: var(--border-radius);
+    max-width: 768px;
+    font-size: small;
+    margin: 0 auto;
+    padding: 1em;
+}
+
+#aymPlaybackControls button {
+    padding: 0.5em;
+    font-size: small;
+}
+
+#aymOutputControls button {
+    padding: 0.5em;
+    font-size: small;
+}
+
+#aymEmulationControls button {
+    padding: 0.5em;
+    font-size: small;
+}
+
+#aymDisplay {
+    background: #739e1b;
+    color: #1e3c0b;
+    border: 1px solid #84a81b;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-family: monospace;
+    font-size: normal;
+    font-weight: bold;
+}
+
+button.is-toggled {
+    background: darkred;
+    border-color: red;
+}
