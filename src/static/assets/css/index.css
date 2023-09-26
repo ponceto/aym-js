@@ -126,8 +126,12 @@ button.is-toggled {
     border-color: red;
 }
 
+[data-theme=light],
+:root:not([data-theme=dark]) {
+  --primary: hsl(200, 85%, 35%);
+}
+
 a, [role=link] {
-  --color: #0a66c2;
   font-weight: bold;
 }
 
