@@ -111,9 +111,9 @@ body > main > article img {
 }
 
 #aymDisplay {
-    background: #739e1b;
-    color: #1e3c0b;
-    border: 1px solid #84a81b;
+    background: hsl(80, 60%, 60%);
+    color: hsl(80, 65%, 20%);
+    border: 1px solid hsl(80, 80%, 35%);
     border-radius: var(--border-radius);
     text-align: center;
     font-family: monospace;
