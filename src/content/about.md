@@ -44,11 +44,13 @@ It was commonly used in home computers like the Atari ST and was also used in so
 
 ### Internal block diagram
 
+The AY-3-8910 / YM2149 is basically a state machine with a few simple functional blocks consisting of counters, comparators and some fairly simple logic.
+
 ![Internal block diagram](/assets/images/internal-block-diagram.png)
 
 ### Internal control registers
 
-The AY-3-8910 / YM2149 is controlled via 16 internal registers. Each of the 16 registers is also readable so that the microprocessor can determine current state or stored data values.
+The AY-3-8910 / YM2149 is controlled via 16 internal registers. Each of the 16 registers is also readable so that the microprocessor can determine current state or stored data values. Only one register is accessible at a time using a register latch.
 
 ![Internal control registers](/assets/images/internal-control-registers.png)
 
