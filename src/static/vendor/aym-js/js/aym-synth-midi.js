@@ -318,11 +318,7 @@ export class AYM_SynthMIDI {
             };
         };
 
-        const registerOutput = (output) => {
-            /* do nothing */
-        };
-
-        const getInputs = () => {
+        const registerInputs = () => {
             const inputs = midi.inputs;
             inputs.forEach((input) => {
                 registerInput(input);
@@ -330,7 +326,11 @@ export class AYM_SynthMIDI {
             return inputs;
         };
 
-        const getOutputs = () => {
+        const registerOutput = (output) => {
+            /* do nothing */
+        };
+
+        const registerOutputs = () => {
             const outputs = midi.outputs;
             outputs.forEach((output) => {
                 registerOutput(output);
@@ -338,8 +338,8 @@ export class AYM_SynthMIDI {
             return outputs;
         };
 
-        this.inputs  = getInputs();
-        this.outputs = getOutputs();
+        this.inputs  = registerInputs();
+        this.outputs = registerOutputs();
     }
 
     onFailure(midi) {
@@ -374,49 +374,55 @@ export class AYM_SynthMIDI {
     }
 
     onAftertouch(message) {
+        /* TODO */
     }
 
     onControlChange(message) {
+        /* TODO */
     }
 
     onProgramChange(message) {
+        /* TODO */
     }
 
     onChannelPressure(message) {
+        /* TODO */
     }
 
     onPitchBend(message) {
+        /* TODO */
     }
 
     onSystemControl(message) {
+        /* TODO */
     }
 
     onMessage(message) {
         const command = (message.data[0] >> 4);
 
         switch(command) {
-            case 0x8: /* note off */
+            case 0x8:
                 this.onNoteOff(message);
                 break;
-            case 0x9: /* note on */
+            case 0x9:
                 this.onNoteOn(message);
                 break;
-            case 0xa: /* aftertouch */
+            case 0xa:
                 this.onAftertouch(message);
                 break;
-            case 0xb: /* control change */
+            case 0xb:
                 this.onControlChange(message);
                 break;
-            case 0xc: /* program change */
+            case 0xc:
                 this.onProgramChange(message);
                 break;
-            case 0xd: /* channel pressure */
+            case 0xd:
                 this.onChannelPressure(message);
                 break;
-            case 0xe: /* pitch bend */
+            case 0xe:
                 this.onPitchBend(message);
                 break;
-            case 0xf: /* system control */
+            case 0xf:
                 this.onSystemControl(message);
                 break;
             default:
