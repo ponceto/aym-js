@@ -9,7 +9,7 @@ draft: false
 ---
 ## AYM·PLAYER
 
-AYM·Player is a [AY-3-8910 / YM2149](https://en.wikipedia.org/wiki/General_Instrument_AY-3-8910) music player.
+AYM·Player is a [AY-3-8910 / YM2149](/about/) music player.
 
 The player is made up of one emulated chip and is capable of playing AY/YM musics.
 
