@@ -127,6 +127,7 @@ button.is-toggled {
 }
 
 a, [role=link] {
-  --color: #1758a6;
+  --color: #0a66c2;
+  font-weight: bold;
 }
 
