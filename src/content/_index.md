@@ -7,7 +7,7 @@ draft: false
 ---
 ## AYM·JS - A soundchip emulator written in JavaScript
 
-AYM·JS is a sound chip emulator written in JavaScript and designed to emulate the [AY-3-8910 PSG](/about/) (Programmable Sound Generator) and the [YM2149 SSG](/about/) (Software-Controlled Sound Generator).
+AYM·JS is a sound chip emulator written in JavaScript and designed to emulate the [AY-3-8910 PSG](/about/#the-ay-3-8910) (Programmable Sound Generator) and the [YM2149 SSG](/about/#the-ym2149) (Software-Controlled Sound Generator).
 
 ### The player
 
