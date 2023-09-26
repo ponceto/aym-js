@@ -15,6 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+[data-theme=light],
+:root:not([data-theme=dark]) {
+  --primary: hsl(195, 85%, 35%);
+}
+
 body > header {
     padding-top: calc(var(--block-spacing-vertical) / 2.0);
     padding-bottom: calc(var(--block-spacing-vertical) / 2.0);
