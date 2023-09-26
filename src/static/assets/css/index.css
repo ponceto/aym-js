@@ -127,6 +127,6 @@ button.is-toggled {
 }
 
 a, [role=link] {
-  --color: hsl(200, 100%, 25%);
+  --color: #336699;
 }
 
