@@ -38,6 +38,7 @@ body > nav {
     box-shadow: var(--card-box-shadow);
     padding-left: 1em;
     padding-right: 1em;
+    overflow: auto;
 }
 
 body > main {
