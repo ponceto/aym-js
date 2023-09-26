@@ -12,13 +12,13 @@
             <button id="aymNext"><i class="{{ .Site.Params.Icons.Next }}"></i><br>{{ .Site.Params.Labels.Next }}</button>
         </div>
         <div class="grid">
-            <input id="aymSeek" type="range">
+            <div><label for="aymSeek">Seek</label><input id="aymSeek" type="range"></div>
         </div>
     </fieldset>
     <fieldset id="aymOutputControls">
         <legend>Output</legend>
         <div class="grid">
-            <input id="aymGain" type="range">
+            <div><label for="aymGain">Gain</label><input id="aymGain" type="range"></div>
         </div>
         <div class="grid">
             <button id="aymChip0"><i class="{{ .Site.Params.Icons.Chip0 }}"></i><br>{{ .Site.Params.Labels.Chip0 }}</button>
