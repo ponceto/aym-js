@@ -78,7 +78,12 @@ body > main > article img {
     border: 1px solid lightgrey;
     border-radius: var(--border-radius);
     padding: 1em;
-    text-align: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+    width: max-content;
+    height: auto;
 }
 
 #aymPlayer, #aymSynth {
