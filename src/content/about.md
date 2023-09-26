@@ -10,7 +10,7 @@ draft: false
 
 ### The AY-3-8910
 
-The AY-3-8910 is a programmable sound generator (PSG) integrated circuit that was commonly used in various home computers and video game systems during the late 1970s and 1980s. It was manufactured by General Instrument and was known for its ability to produce simple audio tones and noise, making it suitable for generating music and sound effects in early video games and computer systems.
+The AY-3-8910 is a Programmable Sound Generator (PSG) integrated circuit that was commonly used in various home computers and video game systems during the late 1970s and 1980s. It was manufactured by General Instrument and was known for its ability to produce simple audio tones and noise, making it suitable for generating music and sound effects in early video games and computer systems.
 
 ![AY-3-8910 die](/assets/images/ay-3-8910-die.jpg)
 
@@ -34,11 +34,21 @@ It was commonly interfaced with microcontrollers and computers of the era, such 
 
 ### The YM2149
 
-The YM2149 is essentially the same chip as the AY-3-8910. Il was produced under licence by Yamaha Music with some minor differences and improvements.
+The YM2149 is a Software-Controlled Sound Generator (SSG) integrated circuit and is basically the same chip as the AY-3-8910. Il was produced under licence by Yamaha Music with some minor differences and improvements.
 
 The main difference is essentially on the envelope generator which internally uses a 5 bits counter instead of 4 bits counter on the AY-3-8910, allowing a smoother volume ramping. This results in twice the steps and then counts up twice as fast, but you can adjust the clock divider by dividing it by two by wiring the /SEL pin to the ground. The other difference is that on the AY, unused bits in registers always read as 0 even if you had written 1 to them before, but on the YM, the register values can be read back as written.
 
 Much like the AY-3-8910, the YM2149 played a significant role in early video game music and sound effects, contributing to the nostalgia and iconic sound of that era.
 
 It was commonly used in home computers like the Atari ST and was also used in some arcade machines and video game consoles.
+
+### Internal block diagram
+
+![Internal block diagram](/assets/images/internal-block-diagram.png)
+
+### Internal control registers
+
+The AY-3-8910 / YM2149 is controlled via 16 internal registers. Each of the 16 registers is also readable so that the microprocessor can determine current state or stored data values.
+
+![Internal control registers](/assets/images/internal-control-registers.png)
 
