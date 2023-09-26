@@ -1,9 +1,10 @@
 ---
-title: "AYM·Synth, the AY/YM virtual synthetizer"
+title: "AYM·Synth • The AY/YM virtual synthetizer"
 date: 2023-09-21T12:00:00+02:00
 lastmod: 2023-09-24T12:00:00+02:00
-layout: "aym-synth"
+author: Olivier Poncet
 images: ["/assets/images/aym-js-banner.jpg"]
+layout: "aym-synth"
 draft: false
 ---
 ## AYM·SYNTH

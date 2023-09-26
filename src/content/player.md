@@ -1,9 +1,10 @@
 ---
-title: "AYM·Player, the AY/YM music player"
+title: "AYM·Player • The AY/YM music player"
 date: 2023-09-21T12:00:00+02:00
 lastmod: 2023-09-24T12:00:00+02:00
-layout: "aym-player"
+author: Olivier Poncet
 images: ["/assets/images/aym-js-banner.jpg"]
+layout: "aym-player"
 draft: false
 ---
 ## AYM·PLAYER
