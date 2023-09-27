@@ -82,11 +82,15 @@ class AYM_ToneGenerator {
     }
 
     set_coarse_tune(value) {
-        this.period = ((this.period & 0x00ff) | ((value & 0xff) << 8));
+        const msb = ((value & 0xff) << 8);
+        const lsb = (this.period & (0xff << 0));
+        this.period = (msb | lsb);
     }
 
     set_fine_tune(value) {
-        this.period = ((this.period & 0xff00) | ((value & 0xff) << 0));
+        const msb = (this.period & (0xff << 8));
+        const lsb = ((value & 0xff) << 0);
+        this.period = (msb | lsb);
     }
 }
 
@@ -120,11 +124,15 @@ class AYM_NoiseGenerator {
     }
 
     set_coarse_tune(value) {
-        this.period = ((this.period & 0x00ff) | ((value & 0xff) << 8));
+        const msb = ((value & 0xff) << 9);
+        const lsb = (this.period & (0xff << 1));
+        this.period = (msb | lsb);
     }
 
     set_fine_tune(value) {
-        this.period = ((this.period & 0xff00) | ((value & 0xff) << 0));
+        const msb = (this.period & (0xff << 9));
+        const lsb = ((value & 0xff) << 1);
+        this.period = (msb | lsb);
     }
 }
 
@@ -141,21 +149,21 @@ class AYM_EnvelopeGenerator {
         this.level   = 0;
 
         const ramp_up = () => {
-            this.level = ((this.level + 1) & 0x0f);
-            if(this.level == 0x0f) {
+            this.level = ((this.level + 1) & 0x1f);
+            if(this.level == 0x1f) {
                 this.phase ^= 1;
             }
         };
 
         const ramp_down = () => {
-            this.level = ((this.level - 1) & 0x0f);
+            this.level = ((this.level - 1) & 0x1f);
             if(this.level == 0x00) {
                 this.phase ^= 1;
             }
         };
 
         const hold_up = () => {
-            this.level = 0x0f;
+            this.level = 0x1f;
         };
 
         const hold_down = () => {
@@ -198,21 +206,25 @@ class AYM_EnvelopeGenerator {
     }
 
     set_coarse_tune(value) {
-        this.period = ((this.period & 0x00ff) | ((value & 0xff) << 8));
+        const msb = ((value & 0xff) << 8);
+        const lsb = (this.period & (0xff << 0));
+        this.period = (msb | lsb);
     }
 
     set_fine_tune(value) {
-        this.period = ((this.period & 0xff00) | ((value & 0xff) << 0));
+        const msb = (this.period & (0xff << 8));
+        const lsb = ((value & 0xff) << 0);
+        this.period = (msb | lsb);
     }
 
     set_shape(value) {
         this.shape = value;
         this.phase = 0;
-        this.level = ((this.shape & 0x04) != 0 ? 0x00 : 0x0f);
+        this.level = ((this.shape & 0x04) != 0 ? 0x00 : 0x1f);
     }
 
     get_level() {
-        return this.level;
+        return (this.level >> 1);
     }
 }
 
@@ -320,27 +332,26 @@ export class AYM_Emulator {
     clock() {
         const clk_div = (this.clock_divide = ((this.clock_divide + 1) & 0xff));
         if((clk_div & 0x07) == 0) {
-            if(this.tone2.period == this.tone0.period) {
-                this.tone2.counter = this.tone0.counter;
-                this.tone2.phase   = this.tone0.phase;
-            }
-            if(this.tone1.period == this.tone2.period) {
-                this.tone1.counter = this.tone2.counter;
-                this.tone1.phase   = this.tone2.phase;
-            }
-            if(this.tone0.period == this.tone1.period) {
-                this.tone0.counter = this.tone1.counter;
-                this.tone0.phase   = this.tone1.phase;
-            }
+            this.fixup_tones();
             this.tone0.clock();
             this.tone1.clock();
             this.tone2.clock();
-        }
-        if((clk_div & 0x0f) == 0) {
             this.noise.clock();
             this.envel.clock();
             this.mixer.clock(this.envel);
         }
+    }
+
+    fixup_tones() {
+        const fixup = (lhs, rhs) => {
+            if((lhs.period == rhs.period) && (lhs.counter != rhs.counter)) {
+                lhs.counter = rhs.counter;
+                lhs.phase   = rhs.phase;
+            }
+        };
+        fixup(this.tone0, this.tone1);
+        fixup(this.tone0, this.tone2);
+        fixup(this.tone1, this.tone0);
     }
 
     set_register_index(reg_index) {
