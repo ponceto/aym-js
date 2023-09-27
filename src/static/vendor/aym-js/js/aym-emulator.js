@@ -351,7 +351,7 @@ export class AYM_Emulator {
         };
         fixup(this.tone0, this.tone1);
         fixup(this.tone0, this.tone2);
-        fixup(this.tone1, this.tone0);
+        fixup(this.tone1, this.tone2);
     }
 
     set_register_index(reg_index) {
