@@ -15,6 +15,43 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+:root {
+  --font-size: 14px;
+}
+
+@media (min-width: 576px) {
+  :root {
+    --font-size: 15px;
+  }
+}
+
+@media (min-width: 768px) {
+  :root {
+    --font-size: 15px;
+  }
+}
+
+@media (min-width: 992px) {
+  :root {
+    --font-size: 16px;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    --font-size: 16px;
+  }
+}
+
+[data-theme=light],
+:root:not([data-theme=dark]) {
+  --primary: hsl(200, 85%, 35%);
+}
+
+a, [role=link] {
+  font-weight: bold;
+}
+
 body > header {
     padding-top: calc(var(--block-spacing-vertical) / 2.0);
     padding-bottom: calc(var(--block-spacing-vertical) / 2.0);
@@ -125,13 +162,3 @@ button.is-toggled {
     background: darkred;
     border-color: red;
 }
-
-[data-theme=light],
-:root:not([data-theme=dark]) {
-  --primary: hsl(200, 85%, 35%);
-}
-
-a, [role=link] {
-  font-weight: bold;
-}
-
