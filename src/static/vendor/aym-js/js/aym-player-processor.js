@@ -304,6 +304,7 @@ export class AYM_PlayerProcessor extends AudioWorkletProcessor {
 
     setChipMasterClock(master_clock) {
         this.chip_clock = this.chip.set_master_clock(master_clock);
+        this.chip.reset();
     }
 
     hasReset() {
