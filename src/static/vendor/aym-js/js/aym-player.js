@@ -93,6 +93,10 @@ export class AYM_Player {
         this.model.sendPause();
     }
 
+    async onClickAnalyse() {
+        this.view.render();
+    }
+
     async recvTitle(title) {
         this.view.setDisplay(title);
     }

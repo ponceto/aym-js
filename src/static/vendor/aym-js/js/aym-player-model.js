@@ -25,12 +25,14 @@ export class AYM_PlayerModel {
     constructor(controller) {
         this.controller = controller;
         this.waContext  = null;
+        this.waAnalyser = null;
         this.waGain     = null;
         this.waWorklet  = null;
     }
 
     async powerOn() {
         await this.createContext();
+        await this.createAnalyser();
         await this.createGain();
         await this.createWorklet();
         await this.controller.onInputGain();
@@ -40,6 +42,7 @@ export class AYM_PlayerModel {
     async powerOff() {
         await this.destroyWorklet();
         await this.destroyGain();
+        await this.destroyAnalyser();
         await this.destroyContext();
     }
 
@@ -57,10 +60,24 @@ export class AYM_PlayerModel {
         }
     }
 
+    async createAnalyser() {
+        if(this.waAnalyser == null) {
+            this.waAnalyser = this.waContext.createAnalyser();
+            this.waAnalyser.connect(this.waContext.destination);
+        }
+    }
+
+    async destroyAnalyser() {
+        if(this.waAnalyser != null) {
+            this.waAnalyser.disconnect();
+            this.waAnalyser = null;
+        }
+    }
+
     async createGain() {
         if(this.waGain == null) {
             this.waGain = new GainNode(this.waContext);
-            this.waGain.connect(this.waContext.destination);
+            this.waGain.connect(this.waAnalyser);
         }
     }
 

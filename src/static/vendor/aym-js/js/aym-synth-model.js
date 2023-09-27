@@ -32,6 +32,7 @@ export class AYM_SynthModel {
     constructor(controller) {
         this.controller = controller;
         this.waContext  = null;
+        this.waAnalyser = null;
         this.waGain     = null;
         this.waWorklet0 = null;
         this.waWorklet1 = null;
@@ -39,6 +40,7 @@ export class AYM_SynthModel {
 
     async powerOn() {
         await this.createContext();
+        await this.createAnalyser();
         await this.createGain();
         await this.createWorklets();
         await this.controller.onInputGain();
@@ -48,6 +50,7 @@ export class AYM_SynthModel {
     async powerOff() {
         await this.destroyWorklets();
         await this.destroyGain();
+        await this.destroyAnalyser();
         await this.destroyContext();
     }
 
@@ -65,10 +68,24 @@ export class AYM_SynthModel {
         }
     }
 
+    async createAnalyser() {
+        if(this.waAnalyser == null) {
+            this.waAnalyser = this.waContext.createAnalyser();
+            this.waAnalyser.connect(this.waContext.destination);
+        }
+    }
+
+    async destroyAnalyser() {
+        if(this.waAnalyser != null) {
+            this.waAnalyser.disconnect();
+            this.waAnalyser = null;
+        }
+    }
+
     async createGain() {
         if(this.waGain == null) {
             this.waGain = new GainNode(this.waContext);
-            this.waGain.connect(this.waContext.destination);
+            this.waGain.connect(this.waAnalyser);
         }
     }
 

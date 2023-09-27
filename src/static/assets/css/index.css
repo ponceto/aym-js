@@ -147,6 +147,11 @@ body > main > article img {
     font-size: small;
 }
 
+#aymAnalyserControls button {
+    padding: 0.5em;
+    font-size: small;
+}
+
 #aymDisplay {
     background: hsl(80, 60%, 60%);
     color: hsl(80, 65%, 20%);
@@ -156,6 +161,12 @@ body > main > article img {
     font-family: monospace;
     font-size: normal;
     font-weight: bold;
+}
+
+#aymCanvas {
+    border: 1px solid lightgrey;
+    border-radius: var(--border-radius);
+    width: 100%;
 }
 
 button.is-toggled {

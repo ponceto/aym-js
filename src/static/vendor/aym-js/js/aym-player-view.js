@@ -38,6 +38,9 @@ export class AYM_PlayerView {
         this.aymPower   = null;
         this.aymReset   = null;
         this.aymPause   = null;
+        this.aymAnalyse = null;
+        this.aymCanvas  = null;
+        this.aymContext = null;
         window.addEventListener('load', async () => { await this.controller.onLoadWindow(); });
     }
 
@@ -80,10 +83,14 @@ export class AYM_PlayerView {
         this.enableMuteC();
         this.enableReset();
         this.enablePause();
+        this.enableAnalyse();
+        this.enableCanvas();
         this.setDisplay('AYM·Player is On');
     }
 
     async powerOff() {
+        this.disableCanvas();
+        this.disableAnalyse();
         this.disablePause();
         this.disableReset();
         this.disableMuteC();
@@ -114,6 +121,8 @@ export class AYM_PlayerView {
         this.bindPower();
         this.bindReset();
         this.bindPause();
+        this.bindAnalyse();
+        this.bindCanvas();
     }
 
     bindDisplay() {
@@ -232,6 +241,22 @@ export class AYM_PlayerView {
         }
     }
 
+    bindAnalyse() {
+        if(this.aymAnalyse == null) {
+            this.aymAnalyse = this.getElementById('aymAnalyse');
+            this.aymAnalyse.disabled = true;
+            this.aymAnalyse.addEventListener('click', async () => { await this.controller.onClickAnalyse(); });
+        }
+    }
+
+    bindCanvas() {
+        if(this.aymCanvas == null) {
+            this.aymCanvas = this.getElementById('aymCanvas');
+            this.aymCanvas.disabled = true;
+            this.aymContext = this.aymCanvas.getContext('2d');
+        }
+    }
+
     enablePlay() {
         this.enableElement(this.aymPlay);
     }
@@ -334,6 +359,25 @@ export class AYM_PlayerView {
 
     disablePause() {
         this.disableElement(this.aymPause);
+    }
+
+    enableAnalyse() {
+        this.enableElement(this.aymAnalyse);
+    }
+
+    disableAnalyse() {
+        if(this.aymAnalyse != null) {
+            this.aymAnalyse.checked = false;
+        }
+        this.disableElement(this.aymAnalyse);
+    }
+
+    enableCanvas() {
+        this.enableElement(this.aymCanvas);
+    }
+
+    disableCanvas() {
+        this.disableElement(this.aymCanvas);
     }
 
     setPlaying() {
@@ -439,6 +483,48 @@ export class AYM_PlayerView {
             val = (this.aymGain.value | 0);
         }
         return AYM_Utils.clamp_int(val, min, max) / +max;
+    }
+
+    render() {
+        const analyser = this.controller.model.waAnalyser;
+        const canvas   = this.aymCanvas;
+        const context  = this.aymContext;
+        let   data     = null;
+
+        const draw = () => {
+            const width   = canvas.width;
+            const height  = canvas.height;
+            const enabled = this.aymAnalyse.checked;
+
+            if(enabled != false) {
+                analyser.getByteFrequencyData(data);
+                context.fillStyle = '#f8f8f8';
+                context.fillRect(0, 0, width, height);
+                context.fillStyle = '#ff6d6a';
+                const count = data.length;
+                const bw = (width / count);
+                for(let index = 0; index < count; index++) {
+                    const value = data[index];
+                    const bh = ((value * height) / 255);
+                    const bx = (index * bw);
+                    const by = (height - bh);
+                    context.fillRect(bx, by, bw, bh);
+                }
+                requestAnimationFrame(draw);
+            }
+            else {
+                context.clearRect(0, 0, width, height);
+            }
+        };
+
+        if((analyser != null) && (canvas != null) && (context != null)) {
+            const enabled = this.aymAnalyse.checked;
+            if(enabled != false) {
+                analyser.fftSize = 1024;
+                data = new Uint8Array(analyser.frequencyBinCount);
+                requestAnimationFrame(draw);
+            }
+        }
     }
 }
 

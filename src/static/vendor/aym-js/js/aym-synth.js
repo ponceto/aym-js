@@ -98,6 +98,10 @@ export class AYM_Synth {
         this.model.sendPause();
     }
 
+    async onClickAnalyse() {
+        this.view.render();
+    }
+
     async recvPaused(chip_id) {
         this.view.setPaused(chip_id);
     }

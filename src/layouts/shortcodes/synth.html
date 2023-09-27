@@ -32,4 +32,13 @@
             <button id="aymPause"><i class="{{ .Site.Params.Icons.Pause }}"></i><br>{{ .Site.Params.Labels.Pause }}</button>
         </div>
     </fieldset>
+    <fieldset id="aymAnalyserControls">
+        <legend>Analyser</legend>
+        <div class="grid">
+            <div><label for="aymAnalyse"><input id="aymAnalyse" type="checkbox" role="switch"> Enable</label></div>
+        </div>
+        <div class="grid">
+            <canvas id="aymCanvas" width="640" height="200"></canvas>
+        </div>
+    </fieldset>
 </div>
