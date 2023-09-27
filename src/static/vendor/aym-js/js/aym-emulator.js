@@ -19,24 +19,31 @@
 // AY_DAC
 // ---------------------------------------------------------------------------
 
-const AY_DAC = [
-    0.00000000000000,
-    0.00999465934234,
-    0.01445029373620,
-    0.02105745021740,
-    0.03070115205620,
-    0.04554818036160,
-    0.06449988555730,
-    0.10736247806500,
-    0.12658884565500,
-    0.20498970016000,
-    0.29221026932200,
-    0.37283894102400,
-    0.49253070878200,
-    0.63532463569100,
-    0.80558480201400,
-    1.00000000000000,
-];
+const AY_DAC = new Float32Array([
+    0.0000000, 0.0000000, 0.0099947, 0.0099947,
+    0.0144503, 0.0144503, 0.0210575, 0.0210575,
+    0.0307012, 0.0307012, 0.0455482, 0.0455482,
+    0.0644999, 0.0644999, 0.1073625, 0.1073625,
+    0.1265888, 0.1265888, 0.2049897, 0.2049897,
+    0.2922103, 0.2922103, 0.3728389, 0.3728389,
+    0.4925307, 0.4925307, 0.6353246, 0.6353246,
+    0.8055848, 0.8055848, 1.0000000, 1.0000000
+]);
+
+// ---------------------------------------------------------------------------
+// YM_DAC
+// ---------------------------------------------------------------------------
+
+const YM_DAC = new Float32Array([
+    0.0000000, 0.0000000, 0.0046540, 0.0077211,
+    0.0109560, 0.0139620, 0.0169986, 0.0200198,
+    0.0243687, 0.0296941, 0.0350652, 0.0403906,
+    0.0485389, 0.0583352, 0.0680552, 0.0777752,
+    0.0925154, 0.1110857, 0.1297475, 0.1484855,
+    0.1766690, 0.2115511, 0.2463874, 0.2811017,
+    0.3337301, 0.4004273, 0.4673838, 0.5344320,
+    0.6351720, 0.7580072, 0.8799268, 1.0000000
+]);
 
 // ---------------------------------------------------------------------------
 // AYM_State
@@ -224,7 +231,7 @@ class AYM_EnvelopeGenerator {
     }
 
     get_level() {
-        return (this.level >> 1);
+        return this.level;
     }
 }
 
@@ -260,14 +267,14 @@ class AYM_ToneAndNoiseMixer {
     clock(envelope) {
         const level = envelope.get_level();
 
-        if((this.level0 & 0x10) != 0) {
-            this.level0 = ((this.level0 & 0xf0) | (level & 0x0f));
+        if((this.level0 & 0x20) != 0) {
+            this.level0 = ((this.level0 & 0xe0) | (level & 0x1f));
         }
-        if((this.level1 & 0x10) != 0) {
-            this.level1 = ((this.level1 & 0xf0) | (level & 0x0f));
+        if((this.level1 & 0x20) != 0) {
+            this.level1 = ((this.level1 & 0xe0) | (level & 0x1f));
         }
-        if((this.level2 & 0x10) != 0) {
-            this.level2 = ((this.level2 & 0xf0) | (level & 0x0f));
+        if((this.level2 & 0x20) != 0) {
+            this.level2 = ((this.level2 & 0xe0) | (level & 0x1f));
         }
     }
 
@@ -281,15 +288,15 @@ class AYM_ToneAndNoiseMixer {
     }
 
     set_channel0_amplitude(value) {
-        this.level0 = value;
+        this.level0 = ((value << 1) | (value & 0x01));
     }
 
     set_channel1_amplitude(value) {
-        this.level1 = value;
+        this.level1 = ((value << 1) | (value & 0x01));
     }
 
     set_channel2_amplitude(value) {
-        this.level2 = value;
+        this.level2 = ((value << 1) | (value & 0x01));
     }
 }
 
@@ -309,7 +316,17 @@ export class AYM_Emulator {
         this.master_clock = 1000000;
         this.clock_divide = 0;
         this.dac          = AY_DAC;
+        this.set_type(setup.type || 'default');
         this.reset();
+    }
+
+    set_type(type) {
+        if(type == 'AY') {
+            this.dac = AY_DAC;
+        }
+        if(type == 'YM') {
+            this.dac = YM_DAC;
+        }
     }
 
     reset() {
@@ -458,7 +475,7 @@ export class AYM_Emulator {
     get_channel0() {
         const sound = (this.tone0.phase & this.mixer.sound0);
         const noise = (this.noise.phase & this.mixer.noise0);
-        const level = (this.dac[this.mixer.level0 & 0x0f]);
+        const level = (this.dac[this.mixer.level0 & 0x1f]);
 
         return ((sound | noise) * level);
     }
@@ -466,7 +483,7 @@ export class AYM_Emulator {
     get_channel1() {
         const sound = (this.tone1.phase & this.mixer.sound1);
         const noise = (this.noise.phase & this.mixer.noise1);
-        const level = (this.dac[this.mixer.level1 & 0x0f]);
+        const level = (this.dac[this.mixer.level1 & 0x1f]);
 
         return ((sound | noise) * level);
     }
@@ -474,7 +491,7 @@ export class AYM_Emulator {
     get_channel2() {
         const sound = (this.tone2.phase & this.mixer.sound2);
         const noise = (this.noise.phase & this.mixer.noise2);
-        const level = (this.dac[this.mixer.level2 & 0x0f]);
+        const level = (this.dac[this.mixer.level2 & 0x1f]);
 
         return ((sound | noise) * level);
     }
