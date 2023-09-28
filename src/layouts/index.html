@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode | default "en" }}" data-theme="light">
+<html lang="{{ .Site.LanguageCode | default "en" }}">
     <head>
         <title>{{ .Site.Title }} • {{ .Site.Params.tagline }}</title>
         <meta charset="{{ .Site.Params.charset }}">
@@ -12,6 +12,7 @@
         <link rel="preload" as="style" href="{{ "/assets/css/index.css"               | absURL }}">
         <link rel="preload" as="image" href="{{ "/assets/images/header.jpg"           | absURL }}">
         <link rel="preload" as="image" href="{{ "/assets/images/footer.jpg"           | absURL }}">
+        <link rel="modulepreload" href="{{ "/assets/js/index.js"  | absURL }}">
         <link rel="modulepreload" href="{{ "/assets/js/player.js" | absURL }}">
         <link rel="stylesheet" href="{{ "/vendor/fontawesome/css/all.min.css" | absURL }}">
         <link rel="stylesheet" href="{{ "/vendor/picocss/css/pico.min.css"    | absURL }}">
@@ -23,6 +24,7 @@
         {{- partial "navbar.html"  . -}}
         {{- partial "content.html" . -}}
         {{- partial "footer.html"  . -}}
+        <script type="module" src="{{ "/assets/js/index.js"  | absURL }}"></script>
         <script type="module" src="{{ "/assets/js/player.js" | absURL }}"></script>
     </body>
 </html>

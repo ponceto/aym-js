@@ -124,6 +124,14 @@ body > main > article img {
     height: auto;
 }
 
+#theme-switcher {
+    transition: all 0.1s;
+}
+
+#theme-switcher:hover {
+    transform: rotate(180deg) scale(2);
+}
+
 #aymPlayer, #aymSynth {
     border-radius: var(--border-radius);
     max-width: 768px;
