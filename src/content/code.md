@@ -14,7 +14,7 @@ The official source code repository is hosted on a private gitlab-ce server but 
 
 The public git mirrors are available on:
 
-  - [GitHub](https://github.com/ponceto/aym-js)
-  - [GitLab](https://gitlab.com/ponceto/aym-js)
-  - [Bitbucket](https://bitbucket.org/ponceto/aym-js)
+  - {{< fab icon="fa-github"    >}} [GitHub](https://github.com/ponceto/aym-js)
+  - {{< fab icon="fa-gitlab"    >}} [GitLab](https://gitlab.com/ponceto/aym-js)
+  - {{< fab icon="fa-bitbucket" >}} [Bitbucket](https://bitbucket.org/ponceto/aym-js)
 
