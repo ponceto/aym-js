@@ -41,6 +41,7 @@ export class AYM_PlayerView {
         this.aymAnalyse = null;
         this.aymCanvas  = null;
         this.aymContext = null;
+        this.fftData    = null;
         window.addEventListener('load', async () => { await this.controller.onLoadWindow(); });
     }
 
@@ -485,45 +486,56 @@ export class AYM_PlayerView {
         return AYM_Utils.clamp_int(val, min, max) / +max;
     }
 
-    render() {
+    renderFFT() {
         const analyser = this.controller.model.waAnalyser;
         const canvas   = this.aymCanvas;
         const context  = this.aymContext;
-        let   data     = null;
 
-        const draw = () => {
-            const width   = canvas.width;
-            const height  = canvas.height;
-            const enabled = this.aymAnalyse.checked;
+        const fftEnabled = () => {
+            if(this.aymAnalyse != null) {
+                return this.aymAnalyse.checked;
+            }
+            return false;
+        }
 
-            if(enabled != false) {
-                analyser.getByteFrequencyData(data);
+        const canRender = () => {
+            if((analyser != null) && (canvas != null) && (context != null) && (this.fftData == null)) {
+                return true;
+            }
+            return false;
+        }
+
+        const fftRender = () => {
+            const canvas_w = canvas.width;
+            const canvas_h = canvas.height;
+
+            if(fftEnabled() && (this.fftData != null)) {
+                analyser.getByteFrequencyData(this.fftData);
                 context.fillStyle = '#f8f8f8';
-                context.fillRect(0, 0, width, height);
-                context.fillStyle = '#ff6d6a';
-                const count = data.length;
-                const bw = (width / count);
+                context.fillRect(0, 0, canvas_w, canvas_h);
+                context.fillStyle = '#ff5555';
+                const count = this.fftData.length;
+                const bar_w = (canvas_w / count);
                 for(let index = 0; index < count; index++) {
-                    const value = data[index];
-                    const bh = ((value * height) / 255);
-                    const bx = (index * bw);
-                    const by = (height - bh);
-                    context.fillRect(bx, by, bw, bh);
+                    const value = this.fftData[index];
+                    const bar_h = ((value * canvas_h) / 255);
+                    const bar_x = (index * bar_w);
+                    const bar_y = ((canvas_h - bar_h) / 2);
+                    context.fillRect(bar_x, bar_y, bar_w, bar_h);
                 }
-                requestAnimationFrame(draw);
+                context.fillStyle = '#ff4444';
+                context.fillRect(0, (canvas_h / 2) - 1, canvas_w, 2);
+                requestAnimationFrame(fftRender);
             }
             else {
-                context.clearRect(0, 0, width, height);
+                context.clearRect(0, 0, canvas_w, canvas_h);
+                this.fftData = null;
             }
         };
 
-        if((analyser != null) && (canvas != null) && (context != null)) {
-            const enabled = this.aymAnalyse.checked;
-            if(enabled != false) {
-                analyser.fftSize = 1024;
-                data = new Uint8Array(analyser.frequencyBinCount);
-                requestAnimationFrame(draw);
-            }
+        if(fftEnabled() && canRender()) {
+            this.fftData = new Uint8Array(analyser.frequencyBinCount);
+            requestAnimationFrame(fftRender);
         }
     }
 }

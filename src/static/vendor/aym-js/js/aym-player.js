@@ -94,7 +94,7 @@ export class AYM_Player {
     }
 
     async onClickAnalyse() {
-        this.view.render();
+        this.view.renderFFT();
     }
 
     async recvTitle(title) {

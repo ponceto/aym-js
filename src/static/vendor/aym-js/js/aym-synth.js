@@ -99,7 +99,7 @@ export class AYM_Synth {
     }
 
     async onClickAnalyse() {
-        this.view.render();
+        this.view.renderFFT();
     }
 
     async recvPaused(chip_id) {
