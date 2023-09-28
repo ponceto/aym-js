@@ -8,7 +8,7 @@ draft: false
 ---
 ## SOURCE CODE
 
-The official source code repository is hosted on a private gitlab-ce server but some public mirrors are available.
+The official source code repository is hosted on a private [GitLab CE](https://gitlab.com/rluna-gitlab/gitlab-ce) server but some public mirrors are available and synchronized with the official repository.
 
 ### Public git mirrors
 
