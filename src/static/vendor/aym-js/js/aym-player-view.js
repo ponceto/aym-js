@@ -487,9 +487,12 @@ export class AYM_PlayerView {
     }
 
     renderFFT() {
-        const analyser = this.controller.model.waAnalyser;
-        const canvas   = this.aymCanvas;
-        const context  = this.aymContext;
+        const analyser  = this.controller.model.waAnalyser;
+        const canvas    = this.aymCanvas;
+        const context   = this.aymContext;
+        const backcolor = '#e0e0e0';
+        const linecolor = '#ff4444';
+        const barcolor  = '#ff5555';
 
         const fftEnabled = () => {
             if(this.aymAnalyse != null) {
@@ -511,9 +514,9 @@ export class AYM_PlayerView {
 
             if(fftEnabled() && (this.fftData != null)) {
                 analyser.getByteFrequencyData(this.fftData);
-                context.fillStyle = '#f8f8f8';
+                context.fillStyle = backcolor;
                 context.fillRect(0, 0, canvas_w, canvas_h);
-                context.fillStyle = '#ff5555';
+                context.fillStyle = barcolor;
                 const count = this.fftData.length;
                 const bar_w = (canvas_w / count);
                 for(let index = 0; index < count; index++) {
@@ -523,7 +526,7 @@ export class AYM_PlayerView {
                     const bar_y = ((canvas_h - bar_h) / 2);
                     context.fillRect(bar_x, bar_y, bar_w, bar_h);
                 }
-                context.fillStyle = '#ff4444';
+                context.fillStyle = linecolor;
                 context.fillRect(0, (canvas_h / 2) - 1, canvas_w, 2);
                 requestAnimationFrame(fftRender);
             }
