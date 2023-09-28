@@ -10,7 +10,7 @@ draft: false
 
 The official source code repository is hosted on a private gitlab-ce server but some public mirrors are available.
 
-### Public mirrors
+### Public git mirrors
 
 The public git mirrors are available on:
 
