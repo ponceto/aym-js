@@ -65,7 +65,7 @@ export class ThemeSwitcher {
         if(theme != null) {
             this.theme = theme;
         }
-        if(this.theme != null) {
+        if((this.theme != null) && (this.theme != THEME_AUTO)) {
             document.querySelector(this.node_selector).setAttribute(this.node_property, this.theme);
         }
         return this.theme;
