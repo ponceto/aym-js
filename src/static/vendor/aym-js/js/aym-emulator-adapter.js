@@ -31,6 +31,14 @@ export class AYM_EmulatorAdapter {
         return this.emulator;
     }
 
+    set_type_ay() {
+        this.emulator.set_type_ay();
+    }
+
+    set_type_ym() {
+        this.emulator.set_type_ym();
+    }
+
     get_master_clock() {
         return this.emulator.get_master_clock();
     }

@@ -322,11 +322,19 @@ export class AYM_Emulator {
 
     set_type(type) {
         if(type == 'AY') {
-            this.dac = AY_DAC;
+            this.set_type_ay();
         }
         if(type == 'YM') {
-            this.dac = YM_DAC;
+            this.set_type_ym();
         }
+    }
+
+    set_type_ay() {
+        this.dac = AY_DAC;
+    }
+
+    set_type_ym() {
+        this.dac = YM_DAC;
     }
 
     reset() {
