@@ -254,47 +254,69 @@ export class AYM_EmulatorAdapter {
         }
         this.set_register(0x07, mixer_configuration);
     }
+}
+
+// ---------------------------------------------------------------------------
+// AYM_EmulatorAdapterTest
+// ---------------------------------------------------------------------------
+
+export class AYM_EmulatorAdapterTest {
+    constructor(emulator_adapter) {
+        this.chip = emulator_adapter;
+    }
+
+    test_sound_only() {
+        this.chip.reset();
+        this.chip.set_channel0_frequency(330);
+        this.chip.set_channel1_frequency(440);
+        this.chip.set_channel2_frequency(550);
+        this.chip.set_channel0_amplitude(15, false);
+        this.chip.set_channel1_amplitude(15, false);
+        this.chip.set_channel2_amplitude(15, false);
+        this.chip.set_noise_period(0);
+        this.chip.set_mixer_configuration(1, 1, 1, 0, 0, 0);
+        this.chip.set_envelope_period(0);
+        this.chip.set_envelope_shape(0);
+    }
+
+    test_sound_with_noise() {
+        this.chip.reset();
+        this.chip.set_channel0_frequency(330);
+        this.chip.set_channel1_frequency(440);
+        this.chip.set_channel2_frequency(550);
+        this.chip.set_channel0_amplitude(15, false);
+        this.chip.set_channel1_amplitude(15, false);
+        this.chip.set_channel2_amplitude(15, false);
+        this.chip.set_noise_period(7);
+        this.chip.set_mixer_configuration(1, 1, 1, 1, 1, 1);
+        this.chip.set_envelope_period(0);
+        this.chip.set_envelope_shape(0);
+    }
+
+    test_sound_with_noise_and_envelope() {
+        this.chip.reset();
+        this.chip.set_channel0_frequency(220);
+        this.chip.set_channel1_frequency(330);
+        this.chip.set_channel2_frequency(440);
+        this.chip.set_channel0_amplitude(0, true);
+        this.chip.set_channel1_amplitude(0, true);
+        this.chip.set_channel2_amplitude(0, true);
+        this.chip.set_noise_period(7);
+        this.chip.set_mixer_configuration(1, 1, 1, 1, 1, 1);
+        this.chip.set_envelope_period(4096);
+        this.chip.set_envelope_shape(14);
+    }
 
     set_test(test) {
         switch(test) {
             case 'sound-only':
-                this.reset();
-                this.set_channel0_frequency(330);
-                this.set_channel1_frequency(440);
-                this.set_channel2_frequency(550);
-                this.set_channel0_amplitude(15, false);
-                this.set_channel1_amplitude(15, false);
-                this.set_channel2_amplitude(15, false);
-                this.set_noise_period(0);
-                this.set_mixer_configuration(1, 1, 1, 0, 0, 0);
-                this.set_envelope_period(0);
-                this.set_envelope_shape(0);
+                this.test_sound_only();
                 break;
             case 'sound-with-noise':
-                this.reset();
-                this.set_channel0_frequency(330);
-                this.set_channel1_frequency(440);
-                this.set_channel2_frequency(550);
-                this.set_channel0_amplitude(15, false);
-                this.set_channel1_amplitude(15, false);
-                this.set_channel2_amplitude(15, false);
-                this.set_noise_period(7);
-                this.set_mixer_configuration(1, 1, 1, 1, 1, 1);
-                this.set_envelope_period(0);
-                this.set_envelope_shape(0);
+                this.test_sound_with_noise();
                 break;
             case 'sound-with-noise-and-envelope':
-                this.reset();
-                this.set_channel0_frequency(220);
-                this.set_channel1_frequency(330);
-                this.set_channel2_frequency(440);
-                this.set_channel0_amplitude(0, true);
-                this.set_channel1_amplitude(0, true);
-                this.set_channel2_amplitude(0, true);
-                this.set_noise_period(7);
-                this.set_mixer_configuration(1, 1, 1, 1, 1, 1);
-                this.set_envelope_period(4096);
-                this.set_envelope_shape(14);
+                this.test_sound_with_noise_and_envelope();
                 break;
             default:
                 break;
