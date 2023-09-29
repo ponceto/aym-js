@@ -321,11 +321,15 @@ export class AYM_Emulator {
     }
 
     set_type(type) {
-        if(type == 'AY') {
-            this.set_type_ay();
-        }
-        if(type == 'YM') {
-            this.set_type_ym();
+        switch(type) {
+            case 'AY':
+                this.set_type_ay();
+                break;
+            case 'YM':
+                this.set_type_ym();
+                break;
+            default:
+                break;
         }
     }
 

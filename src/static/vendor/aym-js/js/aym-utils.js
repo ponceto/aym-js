@@ -57,6 +57,82 @@ export class AYM_Utils {
     static random() {
         return ((2.0 * Math.random()) - 1.0);
     }
+
+    static getElementById(id, required = true) {
+        const element = document.getElementById(id);
+        if((required != false) && (element == null)) {
+            throw new Error('element <' + id + '> not found');
+        }
+        return element;
+    }
+
+    static getElementsByName(name, required = true) {
+        const elements = document.getElementsByName(name);
+        if((required != false) && ((elements == null) || (elements.length == 0))) {
+            throw new Error('elements <' + name + '> not found');
+        }
+        return elements;
+    }
+
+    static getElementsByClassName(name, required = true) {
+        const elements = document.getElementsByClassName(name);
+        if((required != false) && ((elements == null) || (elements.length == 0))) {
+            throw new Error('elements <' + name + '> not found');
+        }
+        return elements;
+    }
+
+    static enableElement(element) {
+        if(element != null) {
+            element.disabled = false;
+        }
+    }
+
+    static disableElement(element) {
+        if(element != null) {
+            element.disabled = true;
+        }
+    }
+
+    static checkElement(element) {
+        if(element != null) {
+            element.checked = true;
+        }
+    }
+
+    static uncheckElement(element) {
+        if(element != null) {
+            element.checked = false;
+        }
+    }
+
+    static setValue(element, value) {
+        if(element != null) {
+            element.value = value;
+        }
+    }
+
+    static setInnerText(element, text) {
+        if(element != null) {
+            element.innerText = text;
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// DOM selector
+// ---------------------------------------------------------------------------
+
+export function $(identifier, required = true) {
+    const selector = identifier.charAt(0);
+
+    if(selector == '#') {
+        return AYM_Utils.getElementById(identifier.substring(1), required);
+    }
+    if(selector == '.') {
+        return AYM_Utils.getElementsByClassName(identifier.substring(1), required);
+    }
+    return AYM_Utils.getElementsByName(identifier, required);
 }
 
 // ---------------------------------------------------------------------------

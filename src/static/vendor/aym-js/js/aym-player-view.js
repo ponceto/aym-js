@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-import { AYM_Utils } from './aym-utils.js';
+import { AYM_Utils, $ } from './aym-utils.js';
 
 // ---------------------------------------------------------------------------
 // AYM_PlayerView
@@ -43,32 +43,6 @@ export class AYM_PlayerView {
         this.aymContext = null;
         this.fftData    = null;
         window.addEventListener('load', async () => { await this.controller.onLoadWindow(); });
-    }
-
-    getElementById(id) {
-        const element = document.getElementById(id);
-        if(element == null) {
-            throw new Error('element <' + id + '> was not found');
-        }
-        return element;
-    }
-
-    enableElement(element) {
-        if(element != null) {
-            element.disabled = false;
-        }
-    }
-
-    disableElement(element) {
-        if(element != null) {
-            element.disabled = true;
-        }
-    }
-
-    setInnerText(element, text) {
-        if(element != null) {
-            element.innerText = text;
-        }
     }
 
     async powerOn() {
@@ -128,13 +102,13 @@ export class AYM_PlayerView {
 
     bindDisplay() {
         if(this.aymDisplay == null) {
-            this.aymDisplay = this.getElementById('aymDisplay');
+            this.aymDisplay = $('#aymDisplay');
         }
     }
 
     bindPlay() {
         if(this.aymPlay == null) {
-            this.aymPlay = this.getElementById('aymPlay');
+            this.aymPlay = $('#aymPlay');
             this.aymPlay.disabled = true;
             this.aymPlay.addEventListener('click', async () => { await this.controller.onClickPlay(); });
         }
@@ -142,7 +116,7 @@ export class AYM_PlayerView {
 
     bindStop() {
         if(this.aymStop == null) {
-            this.aymStop = this.getElementById('aymStop');
+            this.aymStop = $('#aymStop');
             this.aymStop.disabled = true;
             this.aymStop.addEventListener('click', async () => { await this.controller.onClickStop(); });
         }
@@ -150,7 +124,7 @@ export class AYM_PlayerView {
 
     bindPrev() {
         if(this.aymPrev == null) {
-            this.aymPrev = this.getElementById('aymPrev');
+            this.aymPrev = $('#aymPrev');
             this.aymPrev.disabled = true;
             this.aymPrev.addEventListener('click', async () => { await this.controller.onClickPrev(); });
         }
@@ -158,7 +132,7 @@ export class AYM_PlayerView {
 
     bindNext() {
         if(this.aymNext == null) {
-            this.aymNext = this.getElementById('aymNext');
+            this.aymNext = $('#aymNext');
             this.aymNext.disabled = true;
             this.aymNext.addEventListener('click', async () => { await this.controller.onClickNext(); });
         }
@@ -166,7 +140,7 @@ export class AYM_PlayerView {
 
     bindSeek() {
         if(this.aymSeek == null) {
-            this.aymSeek = this.getElementById('aymSeek');
+            this.aymSeek = $('#aymSeek');
             this.aymSeek.disabled = true;
             this.aymSeek.min = 0;
             this.aymSeek.max = 1000;
@@ -177,7 +151,7 @@ export class AYM_PlayerView {
 
     bindGain() {
         if(this.aymGain == null) {
-            this.aymGain = this.getElementById('aymGain');
+            this.aymGain = $('#aymGain');
             this.aymGain.disabled = true;
             this.aymGain.min = 0;
             this.aymGain.max = 1000;
@@ -188,7 +162,7 @@ export class AYM_PlayerView {
 
     bindChip0() {
         if(this.aymChip0 == null) {
-            this.aymChip0 = this.getElementById('aymChip0');
+            this.aymChip0 = $('#aymChip0');
             this.aymChip0.disabled = true;
             this.aymChip0.addEventListener('click', async () => { await this.controller.onClickChip0(); });
         }
@@ -196,7 +170,7 @@ export class AYM_PlayerView {
 
     bindMuteA() {
         if(this.aymMuteA == null) {
-            this.aymMuteA = this.getElementById('aymMuteA');
+            this.aymMuteA = $('#aymMuteA');
             this.aymMuteA.disabled = true;
             this.aymMuteA.addEventListener('click', async () => { await this.controller.onClickMuteA(); });
         }
@@ -204,7 +178,7 @@ export class AYM_PlayerView {
 
     bindMuteB() {
         if(this.aymMuteB == null) {
-            this.aymMuteB = this.getElementById('aymMuteB');
+            this.aymMuteB = $('#aymMuteB');
             this.aymMuteB.disabled = true;
             this.aymMuteB.addEventListener('click', async () => { await this.controller.onClickMuteB(); });
         }
@@ -212,7 +186,7 @@ export class AYM_PlayerView {
 
     bindMuteC() {
         if(this.aymMuteC == null) {
-            this.aymMuteC = this.getElementById('aymMuteC');
+            this.aymMuteC = $('#aymMuteC');
             this.aymMuteC.disabled = true;
             this.aymMuteC.addEventListener('click', async () => { await this.controller.onClickMuteC(); });
         }
@@ -220,7 +194,7 @@ export class AYM_PlayerView {
 
     bindPower() {
         if(this.aymPower == null) {
-            this.aymPower = this.getElementById('aymPower');
+            this.aymPower = $('#aymPower');
             this.aymPower.disabled = false;
             this.aymPower.addEventListener('click', async () => { await this.controller.onClickPower(); });
         }
@@ -228,7 +202,7 @@ export class AYM_PlayerView {
 
     bindReset() {
         if(this.aymReset == null) {
-            this.aymReset = this.getElementById('aymReset');
+            this.aymReset = $('#aymReset');
             this.aymReset.disabled = true;
             this.aymReset.addEventListener('click', async () => { await this.controller.onClickReset(); });
         }
@@ -236,7 +210,7 @@ export class AYM_PlayerView {
 
     bindPause() {
         if(this.aymPause == null) {
-            this.aymPause = this.getElementById('aymPause');
+            this.aymPause = $('#aymPause');
             this.aymPause.disabled = true;
             this.aymPause.addEventListener('click', async () => { await this.controller.onClickPause(); });
         }
@@ -244,7 +218,7 @@ export class AYM_PlayerView {
 
     bindAnalyse() {
         if(this.aymAnalyse == null) {
-            this.aymAnalyse = this.getElementById('aymAnalyse');
+            this.aymAnalyse = $('#aymAnalyse');
             this.aymAnalyse.disabled = true;
             this.aymAnalyse.addEventListener('click', async () => { await this.controller.onClickAnalyse(); });
         }
@@ -252,133 +226,131 @@ export class AYM_PlayerView {
 
     bindCanvas() {
         if(this.aymCanvas == null) {
-            this.aymCanvas = this.getElementById('aymCanvas');
+            this.aymCanvas = $('#aymCanvas');
             this.aymCanvas.disabled = true;
             this.aymContext = this.aymCanvas.getContext('2d');
         }
     }
 
     enablePlay() {
-        this.enableElement(this.aymPlay);
+        AYM_Utils.enableElement(this.aymPlay);
     }
 
     disablePlay() {
-        this.disableElement(this.aymPlay);
+        AYM_Utils.disableElement(this.aymPlay);
     }
 
     enableStop() {
-        this.enableElement(this.aymStop);
+        AYM_Utils.enableElement(this.aymStop);
     }
 
     disableStop() {
-        this.disableElement(this.aymStop);
+        AYM_Utils.disableElement(this.aymStop);
     }
 
     enablePrev() {
-        this.enableElement(this.aymPrev);
+        AYM_Utils.enableElement(this.aymPrev);
     }
 
     disablePrev() {
-        this.disableElement(this.aymPrev);
+        AYM_Utils.disableElement(this.aymPrev);
     }
 
     enableNext() {
-        this.enableElement(this.aymNext);
+        AYM_Utils.enableElement(this.aymNext);
     }
 
     disableNext() {
-        this.disableElement(this.aymNext);
+        AYM_Utils.disableElement(this.aymNext);
     }
 
     enableSeek() {
-        this.enableElement(this.aymSeek);
+        AYM_Utils.enableElement(this.aymSeek);
     }
 
     disableSeek() {
-        this.disableElement(this.aymSeek);
+        AYM_Utils.disableElement(this.aymSeek);
     }
 
     enableGain() {
-        this.enableElement(this.aymGain);
+        AYM_Utils.enableElement(this.aymGain);
     }
 
     disableGain() {
-        this.disableElement(this.aymGain);
+        AYM_Utils.disableElement(this.aymGain);
     }
 
     enableChip0() {
-        this.enableElement(this.aymChip0);
+        AYM_Utils.enableElement(this.aymChip0);
     }
 
     disableChip0() {
-        this.disableElement(this.aymChip0);
+        AYM_Utils.disableElement(this.aymChip0);
     }
 
     enableMuteA() {
-        this.enableElement(this.aymMuteA);
+        AYM_Utils.enableElement(this.aymMuteA);
     }
 
     disableMuteA() {
-        this.disableElement(this.aymMuteA);
+        AYM_Utils.disableElement(this.aymMuteA);
     }
 
     enableMuteB() {
-        this.enableElement(this.aymMuteB);
+        AYM_Utils.enableElement(this.aymMuteB);
     }
 
     disableMuteB() {
-        this.disableElement(this.aymMuteB);
+        AYM_Utils.disableElement(this.aymMuteB);
     }
 
     enableMuteC() {
-        this.enableElement(this.aymMuteC);
+        AYM_Utils.enableElement(this.aymMuteC);
     }
 
     disableMuteC() {
-        this.disableElement(this.aymMuteC);
+        AYM_Utils.disableElement(this.aymMuteC);
     }
 
     enablePower() {
-        this.enableElement(this.aymPower);
+        AYM_Utils.enableElement(this.aymPower);
     }
 
     disablePower() {
-        this.disableElement(this.aymPower);
+        AYM_Utils.disableElement(this.aymPower);
     }
 
     enableReset() {
-        this.enableElement(this.aymReset);
+        AYM_Utils.enableElement(this.aymReset);
     }
 
     disableReset() {
-        this.disableElement(this.aymReset);
+        AYM_Utils.disableElement(this.aymReset);
     }
 
     enablePause() {
-        this.enableElement(this.aymPause);
+        AYM_Utils.enableElement(this.aymPause);
     }
 
     disablePause() {
-        this.disableElement(this.aymPause);
+        AYM_Utils.disableElement(this.aymPause);
     }
 
     enableAnalyse() {
-        this.enableElement(this.aymAnalyse);
+        AYM_Utils.enableElement(this.aymAnalyse);
     }
 
     disableAnalyse() {
-        if(this.aymAnalyse != null) {
-            this.aymAnalyse.checked = false;
-        }
-        this.disableElement(this.aymAnalyse);
+        AYM_Utils.uncheckElement(this.aymAnalyse);
+        AYM_Utils.disableElement(this.aymAnalyse);
     }
 
     enableCanvas() {
-        this.enableElement(this.aymCanvas);
+        AYM_Utils.enableElement(this.aymCanvas);
     }
 
     disableCanvas() {
-        this.disableElement(this.aymCanvas);
+        AYM_Utils.disableElement(this.aymCanvas);
     }
 
     setPlaying() {
@@ -454,35 +426,30 @@ export class AYM_PlayerView {
     }
 
     setDisplay(message) {
-        this.setInnerText(this.aymDisplay, message);
+        AYM_Utils.setInnerText(this.aymDisplay, message);
     }
 
     setSeekValue(seek) {
-        const val = ((seek * 1000.0) | 0);
         const min = 0;
         const max = 1000;
-        if(this.aymSeek != null) {
-            this.aymSeek.value = AYM_Utils.clamp_int(val, min, max);
-        }
+        const val = ((seek * 1000.0) | 0);
+
+        AYM_Utils.setValue(this.aymSeek, AYM_Utils.clamp_int(val, min, max));
     }
 
     getSeekValue() {
-        let   val = 0;
         const min = 0;
         const max = 1000;
-        if(this.aymSeek != null) {
-            val = (this.aymSeek.value | 0);
-        }
+        const val = (this.aymSeek != null ? (this.aymSeek.value | 0) : 0);
+
         return AYM_Utils.clamp_int(val, min, max) / +max;
     }
 
     getGainValue() {
-        let   val = 0;
         const min = 0;
         const max = 1000;
-        if(this.aymGain != null) {
-            val = (this.aymGain.value | 0);
-        }
+        const val = (this.aymGain != null ? (this.aymGain.value | 0) : 0);
+
         return AYM_Utils.clamp_int(val, min, max) / +max;
     }
 
