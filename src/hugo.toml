@@ -14,6 +14,7 @@ copyright   = 'Copyright © 2001-2023'
 images      = ['assets/images/aym-js-banner.jpg']
 
 [params.links]
+email     = 'mailto:ponceto@free.fr'
 website   = 'https://www.emaxilde.net'
 twitter   = 'https://twitter.com/ponceto91'
 bluesky   = 'https://bsky.app/profile/ponceto91.bsky.social'
@@ -25,6 +26,7 @@ gitlab    = 'https://gitlab.com/ponceto/aym-js'
 bitbucket = 'https://bitbucket.org/ponceto/aym-js'
 
 [params.icons]
+email     = 'fa-solid fa-envelope'
 website   = 'fa-solid fa-square-h'
 twitter   = 'fa-brands fa-square-x-twitter'
 bluesky   = 'fa-solid fa-square'
@@ -48,6 +50,7 @@ muteb     = 'fa-solid fa-volume-xmark'
 mutec     = 'fa-solid fa-volume-xmark'
 
 [params.labels]
+email     = 'send me an email'
 website   = 'My personal website'
 twitter   = 'Follow me on Twitter'
 bluesky   = 'Follow me on Bluesky'
