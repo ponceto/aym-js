@@ -20,10 +20,10 @@
         {{- partial "opengraph.html" . -}}
     </head>
     <body>
-        {{- partial "header.html"  . -}}
-        {{- partial "navbar.html"  . -}}
-        {{- partial "content.html" . -}}
-        {{- partial "footer.html"  . -}}
+        {{- partial "header.html" . -}}
+        {{- partial "navbar.html" . -}}
+        {{- partial "page.html"   . -}}
+        {{- partial "footer.html" . -}}
         <script type="module" src="{{ "/assets/js/index.js"  | absURL }}"></script>
         <script type="module" src="{{ "/assets/js/player.js" | absURL }}"></script>
     </body>

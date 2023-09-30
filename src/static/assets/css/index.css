@@ -123,6 +123,35 @@ body > main > article img {
     height: auto;
 }
 
+button.is-toggled {
+    background: darkred;
+    border-color: red;
+}
+
+.align-left {
+    text-align: left;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.align-right {
+    text-align: right;
+}
+
+.align-justify {
+    text-align: justify;
+}
+
+.to-uppercase {
+    text-transform: uppercase;
+}
+
+.to-lowercase {
+    text-transform: lowercase;
+}
+
 #theme-switcher {
     transition: all 0.1s;
 }
@@ -174,9 +203,4 @@ body > main > article img {
     border: 1px solid lightgrey;
     border-radius: var(--border-radius);
     width: 100%;
-}
-
-button.is-toggled {
-    background: darkred;
-    border-color: red;
 }
