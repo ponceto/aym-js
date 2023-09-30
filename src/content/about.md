@@ -1,13 +1,11 @@
 ---
 title: "About the AY-3-8910 and the YM2149"
 date: 2023-09-21T12:00:00+02:00
-lastmod: 2023-09-25T12:00:00+02:00
+lastmod: 2023-09-30T12:00:00+02:00
 author: Olivier Poncet
 images: ["/assets/images/aym-js-banner.jpg"]
 draft: false
 ---
-## ABOUT
-
 ### The AY-3-8910
 
 The AY-3-8910 is a Programmable Sound Generator (PSG) integrated circuit that was commonly used in various home computers and video game systems during the late 1970s and 1980s. It was manufactured by General Instrument and was known for its ability to produce simple audio tones and noise, making it suitable for generating music and sound effects in early video games and computer systems.

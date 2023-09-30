@@ -1,14 +1,12 @@
 ---
 title: "AYM·Synth • The AY/YM virtual synthetizer"
 date: 2023-09-21T12:00:00+02:00
-lastmod: 2023-09-25T12:00:00+02:00
+lastmod: 2023-09-30T12:00:00+02:00
 author: Olivier Poncet
 images: ["/assets/images/aym-js-banner.jpg"]
 layout: "aym-synth"
 draft: false
 ---
-## AYM·SYNTH
-
 AYM·Synth is a virtual [AY-3-8910 / YM2149](/about/) synthesizer.
 
 The virtual synthesizer is made up of two emulated chips thus offering an instrument with an incredible polyphony of six voices that you can control directly using the [MIDI protocol](https://en.wikipedia.org/wiki/MIDI).

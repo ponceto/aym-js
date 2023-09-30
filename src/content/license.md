@@ -1,13 +1,11 @@
 ---
 title: "License terms"
 date: 2023-09-21T12:00:00+02:00
-lastmod: 2023-09-25T12:00:00+02:00
+lastmod: 2023-09-30T12:00:00+02:00
 author: Olivier Poncet
 images: ["/assets/images/aym-js-banner.jpg"]
 draft: false
 ---
-## LICENSE TERMS
-
 ### AYM·JS
 
 This project is released under the terms of the General Public License version 2.

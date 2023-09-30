@@ -1,14 +1,12 @@
 ---
 title: "AYM·Player • The AY/YM music player"
 date: 2023-09-21T12:00:00+02:00
-lastmod: 2023-09-25T12:00:00+02:00
+lastmod: 2023-09-30T12:00:00+02:00
 author: Olivier Poncet
 images: ["/assets/images/aym-js-banner.jpg"]
 layout: "aym-player"
 draft: false
 ---
-## AYM·PLAYER
-
 AYM·Player is a [AY-3-8910 / YM2149](/about/) music player.
 
 The player is made up of one emulated chip and is capable of playing AY/YM musics.
