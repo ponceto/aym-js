@@ -128,27 +128,27 @@ button.is-toggled {
     border-color: red;
 }
 
-.align-left {
+.text-align-left {
     text-align: left;
 }
 
-.align-center {
+.text-align-center {
     text-align: center;
 }
 
-.align-right {
+.text-align-right {
     text-align: right;
 }
 
-.align-justify {
+.text-align-justify {
     text-align: justify;
 }
 
-.to-uppercase {
+.text-to-uppercase {
     text-transform: uppercase;
 }
 
-.to-lowercase {
+.text-to-lowercase {
     text-transform: lowercase;
 }
 
