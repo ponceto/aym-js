@@ -106,13 +106,13 @@ body > footer p {
 }
 
 body > main fieldset {
-    border: 1px solid lightgrey;
+    border: 1px solid var(--form-element-border-color);
     border-radius: var(--border-radius);
     padding: 1em;
 }
 
 body > main > article img {
-    border: 1px solid lightgrey;
+    border: 1px solid var(--form-element-border-color);
     border-radius: var(--border-radius);
     padding: 1em;
     display: block;
@@ -228,7 +228,7 @@ button.is-toggled {
 }
 
 #aymCanvas {
-    border: 1px solid lightgrey;
+    border: 1px solid var(--form-element-border-color);
     border-radius: var(--border-radius);
     width: 100%;
 }
