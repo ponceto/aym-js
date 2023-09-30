@@ -123,11 +123,6 @@ body > main > article img {
     height: auto;
 }
 
-button.is-toggled {
-    background: darkred;
-    border-color: red;
-}
-
 .text-align-left {
     text-align: left;
 }
@@ -150,6 +145,39 @@ button.is-toggled {
 
 .text-to-lowercase {
     text-transform: lowercase;
+}
+
+.font-size-xx-small {
+    font-size: xx-small;
+}
+
+.font-size-x-small {
+    font-size: x-small;
+}
+
+.font-size-small {
+    font-size: small;
+}
+
+.font-size-medium {
+    font-size: medium;
+}
+
+.font-size-large {
+    font-size: large;
+}
+
+.font-size-x-large {
+    font-size: x-large;
+}
+
+.font-size-xx-large {
+    font-size: xx-large;
+}
+
+button.is-toggled {
+    background: darkred;
+    border-color: red;
 }
 
 #theme-switcher {
