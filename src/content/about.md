@@ -3,7 +3,7 @@ title: "About the AY-3-8910 and the YM2149"
 date: 2023-09-21T12:00:00+02:00
 lastmod: 2023-09-30T12:00:00+02:00
 author: Olivier Poncet
-images: ["/assets/images/aym-js-banner.jpg"]
+images: ["assets/images/banner.jpg"]
 draft: false
 ---
 ### The AY-3-8910

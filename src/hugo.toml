@@ -11,7 +11,7 @@ description = 'AYM·JS is a sound chip emulator written in JavaScript and design
 keywords    = 'AY-3-8910, AY-3-8912, AY-3-8913, YM2149, Programmable Sound Generator, Software-Controlled Sound Generator, Emulator, JavaScript'
 author      = 'Olivier Poncet'
 copyright   = 'Copyright © 2001-2023'
-images      = ['assets/images/aym-js-banner.jpg']
+images      = ['assets/images/banner.jpg']
 
 [params.links]
 email     = 'mailto:ponceto@free.fr'
