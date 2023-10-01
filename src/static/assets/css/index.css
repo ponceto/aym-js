@@ -71,6 +71,7 @@ body > nav {
     padding-left: 1em;
     padding-right: 1em;
     overflow: auto;
+    white-space: nowrap;
 }
 
 body > main {
