@@ -1,0 +1,24 @@
+<!-- list.html -->
+<main class="container">
+    {{ range .Paginator.Pages }}
+    <article>
+        <h2 class="text-to-uppercase"><a href="{{ .Permalink }}" title="Permalink">🏷️</a> {{ .Title }}</h2>
+        <p class="text-align-center">{{ range $key, $value := .Param "images" }}{{ if eq $key 0 }}<img src="{{ $value | absURL }}#cover" alt="cover">{{ end }}{{ end }}<small><a href="{{ .Permalink }}" title="Permalink">🔗</a> published by {{ .Param "author" }} on {{ .Date.Format "Monday, Jan 2, 2006" }} at {{ .Date.Format "15:04" }}</small></p>
+        <p class="text-align-justify">{{ .Summary}}</p>
+        <p class="text-align-center"><a href="{{ .Permalink }}" role="button">🔍 Read this post</a></p>
+    </article>
+    {{ end }}
+    <footer class="container font-size-x-large" style="width: max-content;">
+        {{ if .Paginator.HasPrev }}
+        <a href="{{ .Paginator.Prev.URL }}" title="Prev page"><i class="fa-solid fa-circle-left"></i></a>
+        {{ else }}
+        <i class="fa-solid fa-circle-left"></i>
+        {{ end }}
+        <span>Page {{ .Paginator.PageNumber }} / {{ .Paginator.TotalPages }}</span>
+        {{ if .Paginator.HasNext }}
+        <a href="{{ .Paginator.Next.URL }}" title="Next page"><i class="fa-solid fa-circle-right"></i></a>
+        {{ else }}
+        <i class="fa-solid fa-circle-right"></i>
+        {{ end }}
+    </footer>
+</main>

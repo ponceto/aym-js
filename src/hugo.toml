@@ -14,7 +14,7 @@ copyright   = 'Copyright © 2001-2023'
 images      = ['assets/images/banner.jpg']
 
 [params.links]
-email     = 'mailto:ponceto@free.fr'
+email     = 'mailto:olivier.poncet@emaxilde.net'
 website   = 'https://www.emaxilde.net'
 twitter   = 'https://twitter.com/ponceto91'
 bluesky   = 'https://bsky.app/profile/ponceto91.bsky.social'

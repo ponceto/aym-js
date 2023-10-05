@@ -1,0 +1,14 @@
+<!-- terms.html -->
+<main class="container">
+    <article>
+        <header>
+            <h2 class="text-to-uppercase">{{ .Title }}</h2>
+            <p class="text-align-center">{{ range $key, $value := .Param "images" }}{{ if eq $key 0 }}<img src="{{ $value | absURL }}#cover" alt="cover">{{ end }}{{ end }}</p>
+        </header>
+        <section>
+            <p class="tags">
+                {{ range .Pages }}<code class="tag"><a href="{{ .Permalink }}" title="Permalink">🏷️ {{ .Title }}</a></code>{{ end }}
+            </p>
+        </section>
+    </article>
+</main>

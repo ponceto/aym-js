@@ -121,6 +121,28 @@ body > main article img {
     max-height: auto;
 }
 
+body > main article img[src$="#cover"] {
+    border: 1px solid var(--form-element-border-color);
+    border-radius: calc(var(--border-radius) * 4.0);
+    display: block;
+    margin: 1em auto;
+    padding: 0;
+    width: 640px;
+    max-width: 100%;
+    object-fit: cover;
+}
+
+body > main article img[src$="#full-cover"] {
+    border: 1px solid var(--form-element-border-color);
+    border-radius: calc(var(--border-radius) * 4.0);
+    display: block;
+    margin: 1em auto;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+    object-fit: cover;
+}
+
 .text-align-left {
     text-align: left;
 }
@@ -171,6 +193,15 @@ body > main article img {
 
 .font-size-xx-large {
     font-size: xx-large;
+}
+
+.tags {
+    font-size: small;
+}
+
+.tag {
+    margin: 1em;
+    padding: 1em;
 }
 
 button.is-toggled {

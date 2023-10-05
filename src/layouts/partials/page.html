@@ -7,5 +7,9 @@
         <section>
             {{ .Content }}
         </section>
+        <footer>
+            <p class="text-align-center"><small>Edited by {{ .Param "author" }} • Published on {{ .Date.Format "2006-01-02" }} • Updated on {{ .Lastmod.Format "2006-01-02" }}</small></p>
+            <p class="text-align-center"><small>A typo ? An error ? send me an <a href="{{ .Site.Params.Links.Email }}" title="{{ .Site.Params.Labels.Email }}"><i class="{{ .Site.Params.Icons.Email }}">&nbsp;</i>email</a></small></p>
+        </footer>
     </article>
 </main>
