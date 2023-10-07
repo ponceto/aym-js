@@ -1,6 +1,7 @@
 baseURL = 'https://aym-js.emaxilde.net/'
 languageCode = 'en'
 title = 'AYM·JS'
+enableRobotsTXT = true
 
 [params]
 title       = 'AYM·JS'
