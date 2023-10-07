@@ -9,7 +9,7 @@ images: ["assets/images/banner.jpg"]
 layout: "aym-player"
 draft: false
 ---
-AYM·Player is a [AY-3-8910 / YM2149](/about/) music player.
+AYM·Player is a [AY-3-8910 / YM2149]({{< ref "/about.md" >}}) music player.
 
 The player is made up of one emulated chip and is capable of playing AY/YM musics.
 
