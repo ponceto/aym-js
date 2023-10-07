@@ -1,0 +1,16 @@
+<!-- head.html -->
+<title>{{ .Site.Title }} • {{ .Title }}</title>
+<meta charset="{{ .Site.Params.Charset }}">
+<meta name="{{ "viewport"    }}" content="{{ .Site.Params.Viewport    }}">
+<meta name="{{ "description" }}" content="{{ .Site.Params.Description }}">
+<meta name="{{ "keywords"    }}" content="{{ .Site.Params.Keywords    }}">
+<meta name="{{ "author"      }}" content="{{ .Site.Params.Author      }}">
+<link rel="{{ "preload" }}" as="{{ "style" }}" href="{{ "vendor/fontawesome/css/all.min.css" | absURL }}">
+<link rel="{{ "preload" }}" as="{{ "style" }}" href="{{ "vendor/picocss/css/pico.min.css"    | absURL }}">
+<link rel="{{ "preload" }}" as="{{ "style" }}" href="{{ "assets/css/index.css"               | absURL }}">
+<link rel="{{ "preload" }}" as="{{ "image" }}" href="{{ "assets/images/header.jpg"           | absURL }}">
+<link rel="{{ "preload" }}" as="{{ "image" }}" href="{{ "assets/images/footer.jpg"           | absURL }}">
+<link rel="{{ "modulepreload"              }}" href="{{ "assets/js/index.js"                 | absURL }}">
+<link rel="{{ "stylesheet"                 }}" href="{{ "vendor/fontawesome/css/all.min.css" | absURL }}">
+<link rel="{{ "stylesheet"                 }}" href="{{ "vendor/picocss/css/pico.min.css"    | absURL }}">
+<link rel="{{ "stylesheet"                 }}" href="{{ "assets/css/index.css"               | absURL }}">

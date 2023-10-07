@@ -7,9 +7,13 @@
 {{ end }}
 
 {{ define "content" }}
-{{- partial "terms.html" . -}}
+{{ partial "terms.html"  . }}
 {{ end }}
 
 {{ define "footer" }}
 {{ partial "footer.html" . }}
+{{ end }}
+
+{{ define "script" }}
+{{ partial "script.html" . }}
 {{ end }}
