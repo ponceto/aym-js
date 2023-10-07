@@ -1,19 +1,24 @@
+{{ define "head" }}
+{{- partial "head.html"      . -}}
+{{- partial "opengraph.html" . -}}
+{{ end }}
+
 {{ define "header" }}
-{{ partial "header.html" . }}
+{{- partial "header.html" . -}}
 {{ end }}
 
 {{ define "navbar" }}
-{{ partial "navbar.html" . }}
+{{- partial "navbar.html" . -}}
 {{ end }}
 
 {{ define "content" }}
-{{ partial "list.html"   . }}
+{{- partial "list.html"   . -}}
 {{ end }}
 
 {{ define "footer" }}
-{{ partial "footer.html" . }}
+{{- partial "footer.html" . -}}
 {{ end }}
 
 {{ define "script" }}
-{{ partial "script.html" . }}
+{{- partial "script.html" . -}}
 {{ end }}

@@ -1,15 +1,25 @@
-<!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode | default "en" }}">
-    <head>
-        {{- partial "head.html"      . -}}
-        {{- partial "opengraph.html" . -}}
-    </head>
-    <body>
-        {{- partial "header.html" . -}}
-        {{- partial "navbar.html" . -}}
-        {{- partial "home.html"   . -}}
-        {{- partial "footer.html" . -}}
-        {{- partial "script.html" . -}}
-        <script type="{{ "module" }}" src="{{ "assets/js/player.js" | absURL }}"></script>
-    </body>
-</html>
+{{ define "head" }}
+{{- partial "head.html"      . -}}
+{{- partial "opengraph.html" . -}}
+{{ end }}
+
+{{ define "header" }}
+{{- partial "header.html" . -}}
+{{ end }}
+
+{{ define "navbar" }}
+{{- partial "navbar.html" . -}}
+{{ end }}
+
+{{ define "content" }}
+{{- partial "home.html"   . -}}
+{{ end }}
+
+{{ define "footer" }}
+{{- partial "footer.html" . -}}
+{{ end }}
+
+{{ define "script" }}
+{{- partial "script.html" . -}}
+<script type="{{ "module" }}" src="{{ "assets/js/player.js" | absURL }}"></script>
+{{ end }}
