@@ -43,7 +43,19 @@ sudo apt install hugo make
 
 There is a `Makefile` to do most of the tasks. You just have to type `make` with the following targets.
 
-### BUILD
+### MAKE SERVE
+
+The `make serve` command calls the `bin/hugo-serve.sh` script in order to starts the builtin webserver.
+
+After running this command, open your web browser and go to [http://localhost:1313](http://localhost:1313).
+
+Example:
+
+```
+make serve
+```
+
+### MAKE BUILD
 
 The `make` or `make all` or `make build` command calls the `bin/hugo-build.sh` script in order to build the project.
 
@@ -67,7 +79,7 @@ or
 make build
 ```
 
-### CLEAN
+### MAKE CLEAN
 
 The `make clean` command calls the `bin/hugo-clean.sh` script in order to clean the project.
 
@@ -79,19 +91,7 @@ Example:
 make clean
 ```
 
-### SERVE
-
-The `make serve` command calls the `bin/hugo-serve.sh` script in order to starts the builtin webserver.
-
-After running this command, open your web browser and go to [http://localhost:1313](http://localhost:1313).
-
-Example:
-
-```
-make serve
-```
-
-### DEPLOY
+### MAKE DEPLOY
 
 The `make deploy` command calls the `bin/hugo-deploy.sh` script in order to deploy the project on your server.
 
