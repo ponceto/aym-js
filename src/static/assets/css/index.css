@@ -70,7 +70,6 @@ body > nav {
     box-shadow: var(--card-box-shadow);
     padding-left: 1em;
     padding-right: 1em;
-    overflow: auto;
     white-space: nowrap;
 }
 
@@ -202,6 +201,62 @@ body > main article img[src$="#full-cover"] {
 .tag {
     margin: 1em;
     padding: 1em;
+}
+
+.desktop-menu {
+    display: none;
+}
+
+@media (min-width: 576px) {
+    .desktop-menu {
+        display: none;
+    }
+}
+
+@media (min-width: 768px) {
+    .desktop-menu {
+        display: none;
+    }
+}
+
+@media (min-width: 992px) {
+    .desktop-menu {
+        display: flex;
+    }
+}
+
+@media (min-width: 1200px) {
+    .desktop-menu {
+        display: flex;
+    }
+}
+
+details.burger > summary {
+    font-size: x-large;
+}
+
+details.burger > summary:after {
+    background-image: none;
+    content: none;
+}
+
+details.burger > ul {
+    background: var(--card-background-color);
+    box-shadow: var(--card-box-shadow);
+    font-size: large;
+    display: block;
+    position: absolute;
+    width: fit-content;
+    z-index: 100;
+}
+
+details.burger > ul > li {
+    display: block;
+    padding: 0.5em;
+}
+
+details.burger > ul > li > i.fa-fw {
+    margin-right: 0.5em;
 }
 
 button.is-toggled {

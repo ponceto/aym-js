@@ -2,8 +2,9 @@
 <main class="container">
     {{ range .Paginator.Pages }}
     <article>
-        <h2 class="text-to-uppercase"><a href="{{ .Permalink }}" title="Permalink">🏷️</a> {{ .Title }}</h2>
+        <h2 class="text-to-uppercase">{{ .Title }}</h2>
         <p class="text-align-center">{{ range $key, $value := .Param "images" }}{{ if eq $key 0 }}<img src="{{ $value | absURL }}#cover" alt="cover">{{ end }}{{ end }}<small><a href="{{ .Permalink }}" title="Permalink">🔗</a> published by {{ .Param "author" }} on {{ .Date.Format "Monday, Jan 2, 2006" }} at {{ .Date.Format "15:04" }}</small></p>
+        <p class="text-align-center tags">{{ range $key, $value := .Param "tags" }}<code class="tag">🏷️ {{ $value }}</code>{{ end }}</p>
         <p class="text-align-justify">{{ .Summary}}</p>
         <p class="text-align-center"><a href="{{ .Permalink }}" role="button">🔍 Read this post</a></p>
     </article>
