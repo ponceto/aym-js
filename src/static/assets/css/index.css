@@ -231,32 +231,34 @@ body > main article img[src$="#full-cover"] {
     }
 }
 
-details.burger > summary {
-    font-size: x-large;
+div.burger-menu {
+    background: #191004;
+    margin: 0;
+    padding: 1em;
 }
 
-details.burger > summary:after {
-    background-image: none;
+div.burger-menu > details {
+    color: white;
+    margin: 0;
+    padding: 0;
+    border-bottom: none;
+}
+
+div.burger-menu > details > summary {
+    color: white;
+}
+
+div.burger-menu > details > summary:after {
     content: none;
 }
-
-details.burger > ul {
-    background: var(--card-background-color);
-    box-shadow: var(--card-box-shadow);
-    font-size: large;
-    display: block;
-    position: absolute;
-    width: fit-content;
-    z-index: 100;
+div.burger-menu > details > ul {
+    background: var(--background-color);
+    list-style: none;
+    padding: 1em;
 }
 
-details.burger > ul > li {
-    display: block;
-    padding: 0.5em;
-}
-
-details.burger > ul > li > i.fa-fw {
-    margin-right: 0.5em;
+div.burger-menu > details > ul > li {
+    list-style: none;
 }
 
 button.is-toggled {
