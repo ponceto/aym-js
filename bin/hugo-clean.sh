@@ -23,6 +23,7 @@
 prefix="$(pwd)"
 bindir="${prefix}/bin"
 srcdir="${prefix}/src"
+pubdir="${prefix}/src/public"
 
 # ----------------------------------------------------------------------------
 # debug
@@ -40,9 +41,7 @@ cd "${srcdir}"                                                       || exit 1
 # clean
 # ----------------------------------------------------------------------------
 
-rm -rf "./public"                                                    || exit 1
-mkdir "./public"                                                     || exit 1
-touch "./public/.gitkeep"                                            || exit 1
+rm -rf "${pubdir}"                                                   || exit 1
 
 # ----------------------------------------------------------------------------
 # End-Of-File

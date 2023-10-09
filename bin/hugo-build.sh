@@ -23,6 +23,7 @@
 prefix="$(pwd)"
 bindir="${prefix}/bin"
 srcdir="${prefix}/src"
+pubdir="${prefix}/src/public"
 
 # ----------------------------------------------------------------------------
 # debug
@@ -46,7 +47,7 @@ hugo --verbose --cleanDestinationDir                                 || exit 1
 # cleanup
 # ----------------------------------------------------------------------------
 
-find "./public" -type f -name ".gitkeep" -exec rm -f {} \;           || exit 1
+find "${pubdir}" -type f -name '.gitkeep' -exec rm -f {} \;          || exit 1
 
 # ----------------------------------------------------------------------------
 # End-Of-File

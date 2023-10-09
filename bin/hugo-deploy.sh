@@ -23,6 +23,7 @@
 prefix="$(pwd)"
 bindir="${prefix}/bin"
 srcdir="${prefix}/src"
+pubdir="${prefix}/src/public"
 
 # ----------------------------------------------------------------------------
 # some useful variables
