@@ -1,7 +1,7 @@
 ---
 title: "License terms"
 date: 2023-09-21T12:00:00+02:00
-lastmod: 2023-09-30T12:00:00+02:00
+lastmod: 2024-03-25T12:00:00+02:00
 author: Olivier Poncet
 categories: ["Pages"]
 tags: ["Page", "License", "FontAwesome", "PicoCSS", "Musics"]
@@ -13,7 +13,7 @@ draft: false
 This project is released under the terms of the General Public License version 2.
 
 ```
-aym-js - Copyright (c) 2001-2023 - Olivier Poncet
+aym-js - Copyright (c) 2001-2024 - Olivier Poncet
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

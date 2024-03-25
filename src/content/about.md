@@ -1,7 +1,7 @@
 ---
 title: "About the AY-3-8910 and the YM2149"
 date: 2023-09-21T12:00:00+02:00
-lastmod: 2023-09-30T12:00:00+02:00
+lastmod: 2024-03-25T12:00:00+02:00
 author: Olivier Poncet
 categories: ["Pages"]
 tags: ["Page", "About", "AY-3-8910", "AY-3-8912", "AY-3-8913", "YM2149"]

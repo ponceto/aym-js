@@ -1,7 +1,7 @@
 ---
 title: "AYM·JS • A soundchip emulator written in JavaScript"
 date: 2023-09-13T12:00:00+02:00
-lastmod: 2023-09-30T12:00:00+02:00
+lastmod: 2024-03-25T12:00:00+02:00
 author: Olivier Poncet
 categories: ["Pages"]
 tags: ["Page", "Home", "Player", "Synth"]
