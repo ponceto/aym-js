@@ -7,7 +7,7 @@
         </header>
         <section>
             <p class="tags">
-                {{ range .Pages }}<code class="tag"><a href="{{ .Permalink }}" title="Permalink">🏷️ {{ .Title }}</a></code>{{ end }}
+                {{ range .Pages }}<code class="tag">🏷️ <a href="{{ .Permalink }}" title="Permalink">{{ .Title }}</a></code>{{ end }}
             </p>
         </section>
     </article>
