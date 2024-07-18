@@ -380,8 +380,7 @@ export class AYM_PlayerProcessor extends AudioWorkletProcessor {
                 if((this.chip_flags & AYM_FLAG_MUTEC) == 0) {
                     output += channel_c[sample];
                 }
-                output /= 3.0;
-                channel[sample] = ((output * 2.0) - 1.0);
+                channel[sample] = (output / 3.0);
             }
         };
 
@@ -401,10 +400,8 @@ export class AYM_PlayerProcessor extends AudioWorkletProcessor {
                     output1 += (channel_c[sample] * 0.25);
                     output2 += (channel_c[sample] * 0.75);
                 }
-                output1 /= 1.5;
-                output2 /= 1.5;
-                channel1[sample] = ((output1 * 2.0) - 1.0);
-                channel2[sample] = ((output2 * 2.0) - 1.0);
+                channel1[sample] = (output1 / 1.5);
+                channel2[sample] = (output2 / 1.5);
             }
         };
 
