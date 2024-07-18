@@ -291,15 +291,15 @@ class AYM_ToneAndNoiseMixer {
     }
 
     set_channel0_amplitude(value) {
-        this.level0 = ((value << 1) | (value & 0x01));
+        this.level0 = (((value << 1) & 0x3e) | ((value >> 3) & 0x01));
     }
 
     set_channel1_amplitude(value) {
-        this.level1 = ((value << 1) | (value & 0x01));
+        this.level1 = (((value << 1) & 0x3e) | ((value >> 3) & 0x01));
     }
 
     set_channel2_amplitude(value) {
-        this.level2 = ((value << 1) | (value & 0x01));
+        this.level2 = (((value << 1) & 0x3e) | ((value >> 3) & 0x01));
     }
 }
 
