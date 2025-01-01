@@ -1,5 +1,5 @@
 /*
- * default.js - Copyright (c) 2001-2024 - Olivier Poncet
+ * default.js - Copyright (c) 2001-2025 - Olivier Poncet
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 export const Music = {
     title: 'Default',
     author: 'Olivier Poncet',
-    comments: 'Copyright (c) 2001-2024 - Olivier Poncet',
+    comments: 'Copyright (c) 2001-2025 - Olivier Poncet',
     frequency: 1000000,
     framerate: 50,
     length: 50,
