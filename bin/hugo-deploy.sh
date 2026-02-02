@@ -20,10 +20,9 @@
 # some useful variables
 # ----------------------------------------------------------------------------
 
-prefix="$(pwd)"
-bindir="${prefix}/bin"
-srcdir="${prefix}/src"
-pubdir="${prefix}/src/public"
+curdir="$(pwd)"
+srcdir="${curdir}/src"
+pubdir="${srcdir}/public"
 
 # ----------------------------------------------------------------------------
 # some useful variables

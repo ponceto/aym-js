@@ -20,10 +20,9 @@
 # some useful variables
 # ----------------------------------------------------------------------------
 
-prefix="$(pwd)"
-bindir="${prefix}/bin"
-srcdir="${prefix}/src"
-pubdir="${prefix}/src/public"
+curdir="$(pwd)"
+srcdir="${curdir}/src"
+pubdir="${srcdir}/public"
 
 # ----------------------------------------------------------------------------
 # debug
@@ -41,7 +40,7 @@ cd "${srcdir}"                                                       || exit 1
 # build
 # ----------------------------------------------------------------------------
 
-hugo --verbose --cleanDestinationDir                                 || exit 1
+hugo --cleanDestinationDir                                           || exit 1
 
 # ----------------------------------------------------------------------------
 # cleanup

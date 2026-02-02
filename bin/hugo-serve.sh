@@ -20,10 +20,9 @@
 # some useful variables
 # ----------------------------------------------------------------------------
 
-prefix="$(pwd)"
-bindir="${prefix}/bin"
-srcdir="${prefix}/src"
-pubdir="${prefix}/src/public"
+curdir="$(pwd)"
+srcdir="${curdir}/src"
+pubdir="${srcdir}/public"
 
 # ----------------------------------------------------------------------------
 # debug
@@ -41,7 +40,7 @@ cd "${srcdir}"                                                       || exit 1
 # serve
 # ----------------------------------------------------------------------------
 
-hugo --verbose --cleanDestinationDir -D -F server                    || exit 1
+hugo --cleanDestinationDir -D -F server                              || exit 1
 
 # ----------------------------------------------------------------------------
 # End-Of-File
