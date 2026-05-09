@@ -1,6 +1,5 @@
-#!/bin/sh
 #
-# hugo-deploy.sh - Copyright (c) 2001-2026 - Olivier Poncet
+# gitlab-ci.yml - Copyright (c) 2001-2026 - Olivier Poncet
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,44 +16,35 @@
 #
 
 # ----------------------------------------------------------------------------
-# no debug
+# default
 # ----------------------------------------------------------------------------
 
-set +x
+default:
+  image: debian:stable
 
 # ----------------------------------------------------------------------------
-# some useful variables
+# stages
 # ----------------------------------------------------------------------------
 
-prefix="$(pwd)"
-bindir="${prefix}/bin"
-srcdir="${prefix}/src"
-pubdir="${srcdir}/public"
-tarball="${prefix}/website.tar.gz"
+stages:
+  - build-and-deploy
 
 # ----------------------------------------------------------------------------
-# some useful variables
+# build and deploy website
 # ----------------------------------------------------------------------------
 
-SSH='ssh'
-SSH_OPTS='-t'
-SSH_HOSTS='aym-js-emaxilde-net'
-SSH_CMD='/usr/local/bin/deploy-aym-js.sh'
-
-# ----------------------------------------------------------------------------
-# debug
-# ----------------------------------------------------------------------------
-
-set -x
-
-# ----------------------------------------------------------------------------
-# deploy
-# ----------------------------------------------------------------------------
-
-for SSH_HOST in ${SSH_HOSTS}
-do
-    ${SSH} ${SSH_OPTS} "${SSH_HOST}" "${SSH_CMD}"                    || exit 1
-done
+build-and-deploy-website:
+  stage: build-and-deploy
+  tags:
+    - docker
+    - amd64
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+  before_script:
+    - ./.ci/ci-setup-debian.sh
+  script:
+    - ./.ci/ci-build-website.sh
+    - ./.ci/ci-deploy-website.sh
 
 # ----------------------------------------------------------------------------
 # End-Of-File

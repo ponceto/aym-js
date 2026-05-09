@@ -1,5 +1,6 @@
+#!/bin/sh
 #
-# Makefile - Copyright (c) 2001-2026 - Olivier Poncet
+# ci-build-website.sh - Copyright (c) 2001-2026 - Olivier Poncet
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,70 +17,50 @@
 #
 
 # ----------------------------------------------------------------------------
-# global targets
+# no debug
 # ----------------------------------------------------------------------------
 
-all: build
-
-build: hugo-build
-	@echo "=== $@ done ==="
-
-clean: hugo-clean
-	@echo "=== $@ done ==="
-
-serve: hugo-serve
-	@echo "=== $@ done ==="
-
-mrproper: clean git-clean
-	@echo "=== $@ done ==="
-
-fix: fix-source-tree
-	@echo "=== $@ done ==="
+set +x
 
 # ----------------------------------------------------------------------------
-# hugo targets
+# some useful variables
 # ----------------------------------------------------------------------------
 
-hugo-build:
-	./bin/hugo-build.sh
-
-hugo-clean:
-	./bin/hugo-clean.sh
-
-hugo-serve:
-	./bin/hugo-serve.sh
+prefix="$(pwd)"
+bindir="${prefix}/bin"
+srcdir="${prefix}/src"
+pubdir="${srcdir}/public"
+tarball="${prefix}/website.tar.gz"
 
 # ----------------------------------------------------------------------------
-# git targets
+# debug
 # ----------------------------------------------------------------------------
 
-git-status:
-	git status --verbose
-
-git-pull:
-	git pull --verbose --all
-
-git-push:
-	git push --verbose
-
-git-clean:
-	git clean -f -d -x
+set -x
 
 # ----------------------------------------------------------------------------
-# fix targets
+# move to sources
 # ----------------------------------------------------------------------------
 
-fix-source-tree: fix-empty-folders fix-folder-permissions fix-file-permissions
-	true
+cd "${srcdir}"                                                       || exit 1
 
-fix-empty-folders:
-	find ./src -type d -empty -exec touch {}/.gitkeep \;
+# ----------------------------------------------------------------------------
+# build
+# ----------------------------------------------------------------------------
 
-fix-folder-permissions:
-	find ./src -type d -exec chmod 755 {} \;
+hugo --cleanDestinationDir                                           || exit 1
 
-fix-file-permissions:
-	find ./src -type f -exec chmod 644 {} \;
+# ----------------------------------------------------------------------------
+# cleanup
+# ----------------------------------------------------------------------------
+
+find "${pubdir}" -type f -name '.gitkeep' -exec rm -f {} \;          || exit 1
+
+# ----------------------------------------------------------------------------
+# tarball
+# ----------------------------------------------------------------------------
+
+tar cvzf "${tarball}" "public"                                       || exit 1
 
 # ----------------------------------------------------------------------------
 # End-Of-File

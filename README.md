@@ -91,18 +91,6 @@ Example:
 make clean
 ```
 
-### MAKE DEPLOY
-
-The `make deploy` command calls the `bin/hugo-deploy.sh` script in order to deploy the project on your server.
-
-After running this command, the project will be available on your server.
-
-Example:
-
-```
-make deploy
-```
-
 ## LICENSE TERMS
 
 ### AYM·JS
