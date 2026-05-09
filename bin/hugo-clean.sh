@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# hugo-clean.sh - Copyright (c) 2001-2025 - Olivier Poncet
+# hugo-clean.sh - Copyright (c) 2001-2026 - Olivier Poncet
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,12 +17,20 @@
 #
 
 # ----------------------------------------------------------------------------
+# no debug
+# ----------------------------------------------------------------------------
+
+set +x
+
+# ----------------------------------------------------------------------------
 # some useful variables
 # ----------------------------------------------------------------------------
 
-curdir="$(pwd)"
-srcdir="${curdir}/src"
+prefix="$(pwd)"
+bindir="${prefix}/bin"
+srcdir="${prefix}/src"
 pubdir="${srcdir}/public"
+tarball="${prefix}/website.tar.gz"
 
 # ----------------------------------------------------------------------------
 # debug
@@ -40,6 +48,7 @@ cd "${srcdir}"                                                       || exit 1
 # clean
 # ----------------------------------------------------------------------------
 
+rm -f "${tarball}"                                                   || exit 1
 rm -rf "${pubdir}"                                                   || exit 1
 
 # ----------------------------------------------------------------------------

@@ -1,5 +1,5 @@
 #
-# Makefile - Copyright (c) 2001-2025 - Olivier Poncet
+# Makefile - Copyright (c) 2001-2026 - Olivier Poncet
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,72 +19,72 @@
 # global targets
 # ----------------------------------------------------------------------------
 
-all : build
+all: build
 
-build : hugo-build
+build: hugo-build
 	@echo "=== $@ done ==="
 
-clean : hugo-clean
+clean: hugo-clean
 	@echo "=== $@ done ==="
 
-serve : hugo-serve
+serve: hugo-serve
 	@echo "=== $@ done ==="
 
-deploy : hugo-deploy
+deploy: hugo-deploy
 	@echo "=== $@ done ==="
 
-mrproper : git-clean
+mrproper: git-clean
 	@echo "=== $@ done ==="
 
-fix : fix-source-tree
+fix: fix-source-tree
 	@echo "=== $@ done ==="
 
 # ----------------------------------------------------------------------------
 # hugo targets
 # ----------------------------------------------------------------------------
 
-hugo-build :
+hugo-build:
 	./bin/hugo-build.sh
 
-hugo-clean :
+hugo-clean:
 	./bin/hugo-clean.sh
 
-hugo-serve :
+hugo-serve:
 	./bin/hugo-serve.sh
 
-hugo-deploy :
+hugo-deploy:
 	./bin/hugo-deploy.sh
 
 # ----------------------------------------------------------------------------
 # git targets
 # ----------------------------------------------------------------------------
 
-git-status :
+git-status:
 	git status --verbose
 
-git-pull :
+git-pull:
 	git pull --verbose --all
 
-git-push :
+git-push:
 	git push --verbose
 
-git-clean :
+git-clean:
 	git clean -f -d -x
 
 # ----------------------------------------------------------------------------
 # fix targets
 # ----------------------------------------------------------------------------
 
-fix-source-tree : fix-empty-folders fix-folder-permissions fix-file-permissions
+fix-source-tree: fix-empty-folders fix-folder-permissions fix-file-permissions
 	true
 
-fix-empty-folders :
+fix-empty-folders:
 	find ./src -type d -empty -exec touch {}/.gitkeep \;
 
-fix-folder-permissions :
+fix-folder-permissions:
 	find ./src -type d -exec chmod 755 {} \;
 
-fix-file-permissions :
+fix-file-permissions:
 	find ./src -type f -exec chmod 644 {} \;
 
 # ----------------------------------------------------------------------------

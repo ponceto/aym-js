@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# hugo-build.sh - Copyright (c) 2001-2025 - Olivier Poncet
+# hugo-build.sh - Copyright (c) 2001-2026 - Olivier Poncet
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -17,12 +17,20 @@
 #
 
 # ----------------------------------------------------------------------------
+# no debug
+# ----------------------------------------------------------------------------
+
+set +x
+
+# ----------------------------------------------------------------------------
 # some useful variables
 # ----------------------------------------------------------------------------
 
-curdir="$(pwd)"
-srcdir="${curdir}/src"
+prefix="$(pwd)"
+bindir="${prefix}/bin"
+srcdir="${prefix}/src"
 pubdir="${srcdir}/public"
+tarball="${prefix}/website.tar.gz"
 
 # ----------------------------------------------------------------------------
 # debug
@@ -47,6 +55,12 @@ hugo --cleanDestinationDir                                           || exit 1
 # ----------------------------------------------------------------------------
 
 find "${pubdir}" -type f -name '.gitkeep' -exec rm -f {} \;          || exit 1
+
+# ----------------------------------------------------------------------------
+# tarball
+# ----------------------------------------------------------------------------
+
+tar cvzf "${tarball}" "public"                                       || exit 1
 
 # ----------------------------------------------------------------------------
 # End-Of-File
