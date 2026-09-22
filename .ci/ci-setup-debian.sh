@@ -28,7 +28,7 @@ set +x
 
 arg_packages="
 build-essential
-ssh-client
+openssh-client
 wget
 "
 
