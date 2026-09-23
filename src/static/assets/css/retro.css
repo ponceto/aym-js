@@ -1,0 +1,321 @@
+/*
+ * retro.css - Copyright (c) 2001-2026 - Olivier Poncet
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/* =============================================================
+   aym-js.emaxilde.net — light re-skin on top of the shared emaxilde
+   design system (main.css, processed by Hugo Pipes). Served verbatim
+   from static/ and loaded via a plain <link> AFTER the design system
+   in head.html.
+
+   Two responsibilities:
+   - the accent token, moved to the lime/amber range of the AY-3-8910
+     firmware palette,
+   - the whole emulator user interface (the player and synth panels
+     emitted by the "player" and "synth" shortcodes), which used to be
+     dressed implicitly by Pico·CSS.
+
+   It deliberately lives outside the pipeline, like Font Awesome, so
+   that the theme's design system stays byte-identical to the one of
+   the sibling xcpc-emulator site.
+   ============================================================= */
+
+/* ---------- ACCENT (AY-3-8910 lime) ---------- */
+
+:root {
+    --accent: #65A30D;
+    --accent-fg: #ffffff;
+    --accent-muted: rgba(101, 163, 13, 0.12);
+}
+
+[data-theme="dark"] {
+    --accent: #A3E635;          /* brighter for contrast on dark surfaces */
+    --accent-fg: #1A2E05;
+    --accent-muted: rgba(163, 230, 53, 0.18);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --accent: #A3E635;
+        --accent-fg: #1A2E05;
+        --accent-muted: rgba(163, 230, 53, 0.18);
+    }
+}
+
+/* ---------- EMULATOR PANEL ---------- */
+
+#aymPlayer,
+#aymSynth {
+    max-width: 768px;
+    margin: 32px auto;
+    font-size: 14px;
+}
+
+#aymPlayer fieldset,
+#aymSynth fieldset {
+    margin: 0 0 20px;
+    padding: 16px 20px 20px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    background: var(--bg-elev);
+}
+
+#aymPlayer fieldset:last-child,
+#aymSynth fieldset:last-child {
+    margin-bottom: 0;
+}
+
+#aymPlayer legend,
+#aymSynth legend {
+    padding: 0 8px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-label);
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-muted);
+}
+
+/* ---------- GRID (replaces the Pico·CSS one) ---------- */
+
+#aymPlayer .grid,
+#aymSynth .grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    gap: 12px;
+    margin: 0 0 12px;
+}
+
+#aymPlayer .grid:last-child,
+#aymSynth .grid:last-child {
+    margin-bottom: 0;
+}
+
+/* ---------- BUTTONS ---------- */
+/* The view classes assign `element.className = 'is-toggled'`, which wipes
+   any class set in the markup: buttons must therefore be styled by element,
+   never by a class coming from the shortcode. */
+
+#aymPlayer button,
+#aymSynth button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px 8px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-caption);
+    line-height: 1.3;
+    color: var(--fg);
+    background: var(--bg-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background-color var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+
+#aymPlayer button i,
+#aymSynth button i {
+    font-size: 18px;
+    line-height: 1;
+}
+
+#aymPlayer button br,
+#aymSynth button br {
+    display: none;
+}
+
+#aymPlayer button:hover:not(:disabled),
+#aymSynth button:hover:not(:disabled) {
+    border-color: var(--border-strong);
+    background: var(--bg);
+}
+
+#aymPlayer button:disabled,
+#aymSynth button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+#aymPlayer button.is-toggled,
+#aymSynth button.is-toggled {
+    color: var(--accent-fg);
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+/* ---------- RANGE SLIDERS ---------- */
+
+#aymPlayer label,
+#aymSynth label {
+    display: block;
+    margin: 0 0 6px;
+    font-family: var(--font-mono);
+    font-size: var(--fs-caption);
+    color: var(--fg-muted);
+}
+
+#aymPlayer input[type="range"],
+#aymSynth input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    margin: 6px 0;
+    background: var(--bg-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+}
+
+#aymPlayer input[type="range"]:disabled,
+#aymSynth input[type="range"]:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+#aymPlayer input[type="range"]::-webkit-slider-thumb,
+#aymSynth input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background: var(--accent);
+    border: 0;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+}
+
+#aymPlayer input[type="range"]::-moz-range-thumb,
+#aymSynth input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background: var(--accent);
+    border: 0;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+}
+
+/* ---------- SWITCH (replaces the Pico·CSS role="switch") ---------- */
+
+#aymPlayer input[type="checkbox"][role="switch"],
+#aymSynth input[type="checkbox"][role="switch"] {
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    top: 3px;
+    width: 34px;
+    height: 18px;
+    margin: 0 8px 0 0;
+    background: var(--bg-muted);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: background-color var(--t-fast), border-color var(--t-fast);
+}
+
+#aymPlayer input[type="checkbox"][role="switch"]::after,
+#aymSynth input[type="checkbox"][role="switch"]::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 12px;
+    height: 12px;
+    background: var(--fg-subtle);
+    border-radius: var(--radius-pill);
+    transition: transform var(--t-fast), background-color var(--t-fast);
+}
+
+#aymPlayer input[type="checkbox"][role="switch"]:checked,
+#aymSynth input[type="checkbox"][role="switch"]:checked {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+#aymPlayer input[type="checkbox"][role="switch"]:checked::after,
+#aymSynth input[type="checkbox"][role="switch"]:checked::after {
+    background: var(--accent-fg);
+    transform: translateX(16px);
+}
+
+#aymPlayer input[type="checkbox"][role="switch"]:disabled,
+#aymSynth input[type="checkbox"][role="switch"]:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* ---------- DISPLAY ---------- */
+/* Dark green text on a phosphor-green panel, echoing the classic
+   Amstrad CPC green monitor. */
+
+#aymDisplay {
+    margin: 0;
+    padding: 10px 12px;
+    background: hsl(80, 60%, 60%);
+    color: hsl(80, 65%, 20%);
+    border: 1px solid hsl(80, 80%, 35%);
+    border-radius: var(--radius);
+    font-family: var(--font-mono);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ---------- SPECTRUM ANALYSER ---------- */
+
+#aymCanvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    background: var(--bg-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+/* ---------- RESPONSIVE ---------- */
+
+@media (max-width: 520px) {
+    #aymPlayer,
+    #aymSynth {
+        font-size: 13px;
+    }
+
+    #aymPlayer fieldset,
+    #aymSynth fieldset {
+        padding: 12px 14px 16px;
+    }
+
+    #aymPlayer .grid,
+    #aymSynth .grid {
+        gap: 8px;
+    }
+
+    #aymPlayer button,
+    #aymSynth button {
+        padding: 8px 4px;
+    }
+
+    #aymPlayer button i,
+    #aymSynth button i {
+        font-size: 16px;
+    }
+}

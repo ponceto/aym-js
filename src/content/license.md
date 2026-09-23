@@ -1,11 +1,10 @@
 ---
 title: "License terms"
 date: 2023-09-21T12:00:00+02:00
-lastmod: 2024-03-25T12:00:00+02:00
+lastmod: 2026-09-23T12:00:00+02:00
 author: Olivier Poncet
 categories: ["Pages"]
-tags: ["Page", "License", "FontAwesome", "PicoCSS", "Musics"]
-images: ["assets/images/banner.jpg"]
+tags: ["Page", "License", "FontAwesome", "Musics"]
 draft: false
 ---
 ### AYM·JS
@@ -39,34 +38,6 @@ Font Awesome Free License
 Font Awesome Free is free, open source, and GPL friendly. You can use it for
 commercial projects, open source projects, or really almost whatever you want.
 Full Font Awesome Free license: https://fontawesome.com/license/free.
-```
-
-### Pico·CSS
-
-This project is bundled with [pico·css](https://picocss.com), a tiny and elegant css library.
-
-```
-MIT License
-
-Copyright (c) 2019-2023 Pico
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 ```
 
 ### Musics

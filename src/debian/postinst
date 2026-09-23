@@ -1,0 +1,172 @@
+#!/bin/sh
+
+set -e
+
+# ----------------------------------------------------------------------------
+# arguments
+# ----------------------------------------------------------------------------
+
+arg_webdir='/var/www/html/public'
+arg_owners='www-data:www-data'
+arg_a2mod_ssl='not-set'
+arg_a2mod_expires='not-set'
+arg_a2mod_headers='not-set'
+arg_a2mod_rewrite='not-set'
+arg_a2mod_remoteip='not-set'
+arg_a2site_website='not-set'
+arg_a2conf_website='not-set'
+arg_adjust_permissions='not-set'
+arg_restart_apache2='not-set'
+
+# ----------------------------------------------------------------------------
+# parse arguments
+# ----------------------------------------------------------------------------
+
+case "${1}" in
+    configure)
+        arg_a2mod_ssl='enable'
+        arg_a2mod_expires='enable'
+        arg_a2mod_headers='enable'
+        arg_a2mod_rewrite='enable'
+        arg_a2mod_remoteip='enable'
+        arg_a2site_website='enable'
+        arg_a2conf_website='enable'
+        arg_adjust_permissions='yes'
+        arg_restart_apache2='yes'
+        ;;
+    abort-upgrade)
+        ;;
+    abort-remove)
+        ;;
+    abort-deconfigure)
+        ;;
+    *)
+        echo "postinst called with unknown argument '$1'" >&2
+        exit 1
+        ;;
+esac
+
+# ----------------------------------------------------------------------------
+# ssl module
+# ----------------------------------------------------------------------------
+
+case "${arg_a2mod_ssl}" in
+    enable)
+        a2enmod  'ssl'
+        ;;
+    disable)
+        a2dismod 'ssl'
+        ;;
+esac
+
+# ----------------------------------------------------------------------------
+# expires module
+# ----------------------------------------------------------------------------
+
+case "${arg_a2mod_expires}" in
+    enable)
+        a2enmod  'expires'
+        ;;
+    disable)
+        a2dismod 'expires'
+        ;;
+esac
+
+# ----------------------------------------------------------------------------
+# headers module
+# ----------------------------------------------------------------------------
+
+case "${arg_a2mod_headers}" in
+    enable)
+        a2enmod  'headers'
+        ;;
+    disable)
+        a2dismod 'headers'
+        ;;
+esac
+
+# ----------------------------------------------------------------------------
+# rewrite module
+# ----------------------------------------------------------------------------
+
+case "${arg_a2mod_rewrite}" in
+    enable)
+        a2enmod  'rewrite'
+        ;;
+    disable)
+        a2dismod 'rewrite'
+        ;;
+esac
+
+# ----------------------------------------------------------------------------
+# remoteip module
+# ----------------------------------------------------------------------------
+
+case "${arg_a2mod_remoteip}" in
+    enable)
+        a2enmod  'remoteip'
+        ;;
+    disable)
+        a2dismod 'remoteip'
+        ;;
+esac
+
+# ----------------------------------------------------------------------------
+# website site
+# ----------------------------------------------------------------------------
+
+case "${arg_a2site_website}" in
+    enable)
+        a2dissite '000-default' 'default-ssl'
+        a2ensite  'zzz-website' 'zzz-website-ssl'
+        ;;
+    disable)
+        a2ensite  '000-default' 'default-ssl'
+        a2dissite 'zzz-website' 'zzz-website-ssl'
+        ;;
+esac
+
+# ----------------------------------------------------------------------------
+# website configuration
+# ----------------------------------------------------------------------------
+
+case "${arg_a2conf_website}" in
+    enable)
+        a2enconf  'zzz-website'
+        ;;
+    disable)
+        a2disconf 'zzz-website'
+        ;;
+esac
+
+# ----------------------------------------------------------------------------
+# adjust permissions
+# ----------------------------------------------------------------------------
+
+if [ "${arg_adjust_permissions}" = 'yes' ]
+then
+    find "${arg_webdir}" -type d -exec chmod 755 {} \;
+    find "${arg_webdir}" -type f -exec chmod 644 {} \;
+    chown -R "${arg_owners}" "${arg_webdir}"
+fi
+
+# ----------------------------------------------------------------------------
+# restart apache2 service
+# ----------------------------------------------------------------------------
+
+if [ "${arg_restart_apache2}" = 'yes' ]
+then
+    systemctl restart apache2.service
+fi
+
+# ----------------------------------------------------------------------------
+# debian helper
+# ----------------------------------------------------------------------------
+
+#DEBHELPER#
+
+exit 0
+
+# ----------------------------------------------------------------------------
+# End-Of-File
+# ----------------------------------------------------------------------------

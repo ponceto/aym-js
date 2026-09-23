@@ -1,0 +1,29 @@
+{{- $err := .Site.Params.err404 -}}
+<main id="main">
+    <article class="post" aria-labelledby="err-title">
+        <header class="post-header">
+            <div class="container-reading">
+                <p class="kicker">{{ $err.kicker | default "Error 404" }}</p>
+                <h1 id="err-title">{{ $err.title | default "Page not found" }}<span class="caret" aria-hidden="true"></span></h1>
+            </div>
+        </header>
+
+        <div class="post-cover">
+            <figure>
+                <img src="{{ "assets/images/err404.jpg" | absURL }}" alt="Error 404" loading="eager">
+            </figure>
+        </div>
+
+        <div class="container-reading">
+            <div class="post-content">
+                <p>{{ $err.lede | default "The requested page could not be found." }}</p>
+                <p>
+                    Try going back to the
+                    <a href="#" onclick="history.back(); return false;">previous page</a>
+                    or head over to the
+                    <a href="{{ "/" | absURL }}">home page</a>.
+                </p>
+            </div>
+        </div>
+    </article>
+</main>

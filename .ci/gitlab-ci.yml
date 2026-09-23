@@ -45,7 +45,11 @@ build-and-deploy-website:
     - ./.ci/ci-setup-debian.sh
   script:
     - ./.ci/ci-build-website.sh
-    - ./.ci/ci-deploy-website.sh
+    - ./.ci/ci-build-archive.sh
+    - ./.ci/ci-build-package.sh
+    - ./.ci/ci-deploy-archive.sh
+  after_script:
+    - ./.ci/ci-cleanup.sh
 
 # ----------------------------------------------------------------------------
 # End-Of-File

@@ -1,0 +1,44 @@
+{{- $plural := .Data.Plural -}}
+{{- $terms := .Data.Terms.Alphabetical -}}
+{{- if eq $plural "categories" -}}
+    {{- $terms = .Data.Terms.ByCount -}}
+{{- end -}}
+{{- $scratch := newScratch -}}
+{{- range site.RegularPages -}}
+    {{- range (index .Params $plural) -}}
+        {{- $key := urlize . -}}
+        {{- if not ($scratch.Get $key) -}}
+            {{- $scratch.Set $key . -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}
+<main id="main">
+
+    {{- with .Content }}
+    <div class="index-intro">{{ . }}</div>
+    {{- end }}
+
+    <section class="page-section archive-section" aria-labelledby="terms-title">
+        <div class="container">
+            <h2 id="terms-title" class="visually-hidden">List of terms</h2>
+            <ul class="chip-grid">
+                {{- range $terms }}
+                                {{- $slug := urlize .Name -}}
+                {{- $label := "" -}}
+                                {{- with .Page -}}
+                    {{- if .File }}{{ $label = .Title }}{{ end -}}
+                {{- end -}}
+                                {{- $got := $scratch.Get $slug -}}
+                {{- if and (not $label) $got }}{{ $label = $got }}{{ end -}}
+                                {{- if not $label }}{{ $label = replaceRE "-" " " .Name }}{{ end -}}
+                <li>
+                    <a href="{{ (print "/" $plural "/" $slug ".html") | absURL }}" class="chip">
+                        {{ $label }}
+                        <span class="count">{{ .Count }}</span>
+                    </a>
+                </li>
+                {{- end }}
+            </ul>
+        </div>
+    </section>
+</main>

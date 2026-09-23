@@ -22,13 +22,13 @@
 
 case "$(uname -m 2>/dev/null)" in
     x86_64)
-        opt_architecture="amd64"
+        arg_architecture='amd64'
         ;;
     aarch64)
-        opt_architecture="arm64"
+        arg_architecture='arm64'
         ;;
     *)
-        opt_architecture="unknown"
+        arg_architecture='not-set'
         ;;
 esac
 
@@ -36,21 +36,31 @@ esac
 # options
 # ----------------------------------------------------------------------------
 
-opt_version="${1:-not-set}"
-opt_architecture="${opt_architecture:-not-set}"
-opt_package="hugo_${opt_version}_linux-${opt_architecture}.deb"
-opt_repository="https://github.com/gohugoio/hugo"
-opt_package_url="${opt_repository}/releases/download/v${opt_version}/${opt_package}"
-opt_tmpdir="/tmp"
-opt_installed="$(dpkg -l 'hugo' | grep '^ii' | awk '{print $3}')"
+arg_version="${1:-not-set}"
+arg_architecture="${arg_architecture:-not-set}"
+arg_package="hugo_${arg_version}_linux-${arg_architecture}.deb"
+arg_repository="https://github.com/gohugoio/hugo"
+arg_package_url="${arg_repository}/releases/download/v${arg_version}/${arg_package}"
+arg_tmpdir="/tmp"
+arg_installed="$(dpkg -l 'hugo' | grep '^ii' | awk '{print $3}')"
 
 # ----------------------------------------------------------------------------
-# check options
+# check version
 # ----------------------------------------------------------------------------
 
-if [ "${opt_version}" = 'not-set' ]
+if [ "${arg_version}" = 'not-set' ]
 then
     echo "*** please specify a version ***"
+    exit 1
+fi
+
+# ----------------------------------------------------------------------------
+# check architecture
+# ----------------------------------------------------------------------------
+
+if [ "${arg_architecture}" = 'not-set' ]
+then
+    echo "*** unsupported architecture ***"
     exit 1
 fi
 
@@ -58,9 +68,9 @@ fi
 # check if already installed
 # ----------------------------------------------------------------------------
 
-if [ "${opt_installed}" = "${opt_version}" ]
+if [ "${arg_installed}" = "${arg_version}" ]
 then
-    echo "=== hugo v${opt_version} is already installed ==="
+    echo "=== hugo v${arg_version} is already installed ==="
     exit 0
 fi
 
@@ -74,11 +84,11 @@ set -x
 # deploy
 # ----------------------------------------------------------------------------
 
-rm -f "${opt_tmpdir}/${opt_package}"                                 || exit 1
-cd "${opt_tmpdir}"                                                   || exit 1
-wget "${opt_package_url}"                                            || exit 1
-apt install "${opt_tmpdir}/${opt_package}"                           || exit 1
-rm -f "${opt_tmpdir}/${opt_package}"                                 || exit 1
+rm -f "${arg_tmpdir}/${arg_package}"                                 || exit 1
+cd "${arg_tmpdir}"                                                   || exit 1
+wget "${arg_package_url}"                                            || exit 1
+apt-get install "${arg_tmpdir}/${arg_package}"                       || exit 1
+rm -f "${arg_tmpdir}/${arg_package}"                                 || exit 1
 
 # ----------------------------------------------------------------------------
 # End-Of-File

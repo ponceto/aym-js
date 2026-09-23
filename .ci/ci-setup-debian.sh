@@ -35,6 +35,12 @@ apt_clean='yes'
 
 apt_packages="
 build-essential
+devscripts
+debhelper
+fakeroot
+dh-make
+dh-exec
+equivs
 openssh-client
 wget
 "

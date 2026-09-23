@@ -1,0 +1,104 @@
+{{- /* This site has no "posts" section: paginate every page of the current list,
+       otherwise the category and tag pages would all render empty. */ -}}
+{{- $paginator := .Paginate .Pages -}}
+<main id="main">
+
+    {{- with .Content }}
+    <div class="index-intro">{{ . }}</div>
+    {{- end }}
+
+    <section class="page-section archive-section" aria-labelledby="posts-section-title">
+        <div class="container">
+            <h2 id="posts-section-title" class="visually-hidden">List of pages</h2>
+
+            <div class="listing-toolbar">
+                <div class="listing-actions">
+                    <a href="{{ "/categories/" | absURL }}" class="toolbar-link" title="All categories">
+                        <i class="fa-solid fa-folder" aria-hidden="true"></i>
+                        <span>Categories</span>
+                    </a>
+                    <a href="{{ "/tags/" | absURL }}" class="toolbar-link" title="All tags">
+                        <i class="fa-solid fa-tags" aria-hidden="true"></i>
+                        <span>Tags</span>
+                    </a>
+                    <a href="{{ "/index.xml" | absURL }}" class="toolbar-link rss-link" rel="alternate" type="application/rss+xml" title="Subscribe to the RSS feed">
+                        <i class="fa-solid fa-rss" aria-hidden="true"></i>
+                        <span>RSS feed</span>
+                    </a>
+                </div>
+            </div>
+
+            {{- with $paginator.Pages }}
+            <ol class="article-teasers">
+                {{- range . }}
+                {{- $cover := "" -}}
+                {{- with .Params.images }}{{ $cover = index . 0 | absURL }}{{ end -}}
+                <li>
+                    <article class="article-teaser">
+                        <figure class="cover">
+                            {{- if $cover }}
+                            <img src="{{ $cover }}" alt="Thumbnail: {{ .Title }}" loading="lazy">
+                            {{- end }}
+                            <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time>
+                        </figure>
+                        <div class="teaser-body">
+                            <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+                            <p class="excerpt">{{ .Summary | plainify | truncate 220 }}</p>
+                            {{- with .Params.tags }}
+                            <ul class="tags" aria-label="Tags">
+                                {{- range first 10 . }}
+                                <li><a href="{{ (print "/tags/" (urlize .) ".html") | absURL }}">{{ . }}</a></li>
+                                {{- end }}
+                            </ul>
+                            {{- end }}
+                        </div>
+                    </article>
+                </li>
+                {{- end }}
+            </ol>
+            {{- else }}
+            <p class="lede" style="text-align: center;">No pages yet.</p>
+            {{- end }}
+
+            {{- if gt $paginator.TotalPages 1 }}
+            <nav class="pagination" aria-label="Pagination">
+                {{- if $paginator.HasPrev }}
+                <a href="{{ $paginator.Prev.URL }}" class="page-nav prev" aria-label="Previous page">
+                    <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                    <span>Previous</span>
+                </a>
+                {{- else }}
+                <span class="page-nav prev disabled" aria-disabled="true">
+                    <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+                    <span>Previous</span>
+                </span>
+                {{- end }}
+                <ol class="page-numbers" aria-label="Page numbers">
+                    {{- range $paginator.Pagers }}
+                    {{- $pg := .PageNumber }}
+                    {{- if or (eq $pg 1) (eq $pg $paginator.TotalPages) (and (ge $pg (sub $paginator.PageNumber 1)) (le $pg (add $paginator.PageNumber 1))) }}
+                    <li>
+                        <a href="{{ .URL }}"{{ if eq $pg $paginator.PageNumber }} aria-current="page"{{ end }} aria-label="Page {{ $pg }}">{{ $pg }}</a>
+                    </li>
+                    {{- else if or (eq $pg 2) (eq $pg (sub $paginator.TotalPages 1)) }}
+                    <li><span class="gap" aria-hidden="true">…</span></li>
+                    {{- end }}
+                    {{- end }}
+                </ol>
+                <p class="page-indicator" aria-hidden="true">Page <strong>{{ $paginator.PageNumber }}</strong> of <strong>{{ $paginator.TotalPages }}</strong></p>
+                {{- if $paginator.HasNext }}
+                <a href="{{ $paginator.Next.URL }}" class="page-nav next" aria-label="Next page">
+                    <span>Next</span>
+                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                </a>
+                {{- else }}
+                <span class="page-nav next disabled" aria-disabled="true">
+                    <span>Next</span>
+                    <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                </span>
+                {{- end }}
+            </nav>
+            {{- end }}
+        </div>
+    </section>
+</main>

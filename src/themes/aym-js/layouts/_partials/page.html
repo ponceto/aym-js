@@ -1,0 +1,36 @@
+{{- $kicker := "Page" -}}
+{{- with .Params.categories -}}
+    {{- $first := index . 0 -}}
+    {{- if ne $first "Pages" }}{{ $kicker = strings.TrimSuffix "s" $first }}{{ end -}}
+{{- end -}}
+{{- $cover := "" -}}
+{{- with .Params.images }}{{ $cover = index . 0 | absURL }}{{ end -}}
+<main id="main">
+    <article class="post" aria-labelledby="page-title">
+        <header class="post-header">
+            <div class="container-reading">
+                <p class="kicker">{{ $kicker }}</p>
+                <h1 id="page-title">{{ .Title }}<span class="caret" aria-hidden="true"></span></h1>
+                {{- if not .Lastmod.IsZero }}
+                <p class="post-meta">
+                    <span>Updated on <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2 Jan 2006" }}</time></span>
+                </p>
+                {{- end }}
+            </div>
+        </header>
+
+        {{- with $cover }}
+        <div class="post-cover">
+            <figure>
+                <img src="{{ . }}" alt="{{ $.Title }}" loading="eager">
+            </figure>
+        </div>
+        {{- end }}
+
+        <div class="container-reading">
+            <div class="post-content">
+                {{ .Content }}
+            </div>
+        </div>
+    </article>
+</main>

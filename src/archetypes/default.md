@@ -3,7 +3,8 @@ title: "{{ replace .Name "-" " " | title }}"
 date: {{ .Date }}
 lastmod: {{ .Date }}
 author: Olivier Poncet
-images: ["assets/images/banner.jpg"]
+categories: ["Pages"]
+tags: ["Page"]
 draft: true
 ---
 

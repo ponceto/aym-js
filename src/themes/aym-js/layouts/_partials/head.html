@@ -1,0 +1,70 @@
+{{- $siteName := site.Params.home.heroTitle | default site.Title -}}
+{{- $tagline := site.Params.home.heroRole -}}
+{{- $description := "" -}}
+{{- if .IsHome -}}
+    {{- $description = .Params.description | default site.Params.description -}}
+{{- else -}}
+    {{- $description = .Params.description | default (.Summary | plainify | truncate 200) | default site.Params.description -}}
+{{- end -}}
+{{- $title := "" -}}
+{{- with .Params.seoTitle -}}
+    {{- $title = . -}}
+{{- else -}}
+    {{- $title = cond .IsHome (printf "%s — %s" $siteName $tagline) (printf "%s — %s" .Title $siteName) -}}
+{{- end -}}
+{{- $isErrPage := or (eq .Kind "404") (eq .Layout "err403") -}}
+{{- $canonical := .Permalink -}}
+{{- if not .IsPage -}}
+    {{- $canonical = strings.TrimSuffix "index.html" $canonical -}}
+{{- end -}}
+{{- if or (eq .Kind "section") (eq .Kind "term") -}}
+    {{- $pager := .Paginate .Pages -}}
+    {{- if gt $pager.PageNumber 1 -}}
+        {{- $canonical = strings.TrimSuffix "index.html" ($pager.URL | absURL) -}}
+    {{- end -}}
+{{- end -}}
+<meta charset="{{ site.Params.charset | default "utf-8" }}">
+<meta name="viewport" content="{{ site.Params.viewport | default "width=device-width, initial-scale=1" }}">
+{{- if $isErrPage }}
+<meta name="robots" content="noindex, follow">
+{{- else }}
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+{{- end }}
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $description }}">
+<meta name="keywords" content="{{ site.Params.keywords }}">
+<meta name="author" content="{{ site.Params.author }}">
+<link rel="canonical" href="{{ $canonical }}">
+<link rel="alternate" type="application/rss+xml" title="{{ $siteName }} RSS feed" href="{{ "/index.xml" | absURL }}">
+<link rel="icon" href="{{ "/favicon.ico" | absURL }}">
+
+{{- /* IndieAuth / rel=me bidirectionnel : permet à Google de relier les profils sociaux à l'entité */ -}}
+{{- range $key, $url := site.Params.Links -}}
+{{- if and $url (ne $key "email") }}
+<link rel="me" href="{{ $url }}">
+{{- end -}}
+{{- end }}
+
+{{- partial "opengraph.html" . -}}
+{{- partial "jsonld.html" . -}}
+
+<script>
+    (() => {
+        try {
+            const stored = localStorage.getItem("theme");
+            if (stored === "light" || stored === "dark") {
+                document.documentElement.setAttribute("data-theme", stored);
+            }
+        } catch (e) {}
+    })();
+</script>
+
+<link rel="preload" as="style" href="{{ "vendor/fontawesome/css/all.min.css" | relURL }}">
+<link rel="stylesheet" href="{{ "vendor/fontawesome/css/all.min.css" | relURL }}">
+
+{{ partialCached "head/css.html" . }}
+
+{{- /* Retro re-skin (AY-3-8910 lime accent + the whole emulator user interface).
+       Served static, outside the pipeline, so that the theme's design system
+       stays byte-identical to the one of the sibling xcpc-emulator site. */ -}}
+<link rel="stylesheet" href="{{ "assets/css/retro.css" | relURL }}">

@@ -1,0 +1,499 @@
+/*
+ * post.css - Copyright (c) 2001-2026 - Olivier Poncet
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/* =============================================================
+   emaxilde.net — styles spécifiques aux pages de type article.
+
+   S'applique à : single posts, pages statiques (/about, /resume,
+   /private/*), et 404 (qui reprend le même gabarit visuel).
+
+   Contient : containers de lecture, post-header, post-cover,
+   post-content (typographie éditoriale, traitement des suffixes
+   d'image Markdown), video-embed (iframe YouTube), project-card.
+   ============================================================= */
+
+/* ---------- CONTAINERS DE LECTURE ---------- */
+
+.container-reading {
+    max-width: var(--mw-reading);
+    margin: 0 auto;
+    padding: 0 32px;
+}
+
+/* ---------- POST WRAPPER ---------- */
+
+.post {
+    padding-top: 48px;
+    padding-bottom: 48px;
+}
+
+/* ---------- POST HEADER ---------- */
+
+.post-header {
+    padding: 24px 0 48px;
+    position: relative;
+}
+
+.post-header .kicker {
+    justify-content: center;
+}
+
+.post-header .kicker::after {
+    content: "";
+    width: 14px;
+    height: 1px;
+    background: var(--accent);
+}
+
+.post-header > .container-reading {
+    text-align: center;
+}
+
+.post-header h1 {
+    font-size: clamp(34px, 5vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+    margin: 0 0 24px;
+    color: var(--fg);
+}
+
+.post-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--fg-muted);
+    margin: 0 0 24px;
+}
+
+.post-meta time {
+    color: var(--fg);
+    font-weight: 500;
+}
+
+.post-meta .dot {
+    color: var(--fg-subtle);
+}
+
+.post-meta .author {
+    color: var(--fg-muted);
+}
+
+.post-meta .author strong {
+    color: var(--fg);
+    font-weight: 500;
+}
+
+.post-header .tags {
+    justify-content: center;
+}
+
+/* ---------- POST COVER ---------- */
+
+.post-cover {
+    margin: 0 auto 56px;
+    max-width: var(--mw-reading);
+    padding: 0 32px;
+}
+
+.post-cover figure {
+    margin: 0;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.18), 0 8px 16px -8px rgba(0, 0, 0, 0.08);
+    background: var(--bg-muted);
+}
+
+[data-theme="dark"] .post-cover figure {
+    box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.6), 0 8px 16px -8px rgba(0, 0, 0, 0.4);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .post-cover figure {
+        box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.6), 0 8px 16px -8px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.post-cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+}
+
+/* ---------- POST CONTENT (typographie éditoriale) ---------- */
+
+.post-content {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--fg);
+}
+
+.post-content > p,
+.post-content > ul,
+.post-content > ol,
+.post-content > blockquote,
+.post-content > pre,
+.post-content section > p,
+.post-content section > ul,
+.post-content section > ol {
+    margin: 0 0 20px;
+}
+
+.post-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Premier paragraphe : variante lede avec border-left accent */
+.post-content > p:first-of-type {
+    font-size: 20px;
+    line-height: 1.6;
+    color: var(--fg);
+    font-weight: 400;
+    margin: 0 0 24px;
+    padding-left: 20px;
+    border-left: 2px solid var(--accent);
+}
+
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6 {
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--fg);
+    scroll-margin-top: 96px;
+}
+
+.post-content h2 {
+    font-size: 30px;
+    margin: 48px 0 20px;
+}
+
+.post-content h3 {
+    font-size: 26px;
+    margin: 48px 0 20px;
+}
+
+.post-content h4 {
+    font-size: 20px;
+    margin: 32px 0 12px;
+    letter-spacing: -0.015em;
+}
+
+.post-content h5 {
+    font-size: 17px;
+    margin: 24px 0 10px;
+}
+
+.post-content h6 {
+    font-size: 15px;
+    margin: 20px 0 8px;
+    color: var(--fg-muted);
+}
+
+.post-content a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color var(--t-fast);
+}
+
+.post-content a:hover {
+    border-bottom-color: var(--accent);
+}
+
+.post-content strong {
+    color: var(--fg);
+    font-weight: 600;
+}
+
+.post-content em {
+    font-style: italic;
+}
+
+.post-content ul,
+.post-content ol {
+    padding-left: 24px;
+    list-style: disc;
+}
+
+.post-content ol {
+    list-style: decimal;
+}
+
+.post-content li {
+    margin: 0 0 6px;
+}
+
+.post-content li > ul,
+.post-content li > ol {
+    margin: 6px 0;
+}
+
+.post-content blockquote {
+    margin: 0 0 20px;
+    padding: 12px 20px;
+    border-left: 3px solid var(--border-strong);
+    background: var(--bg-muted);
+    color: var(--fg-muted);
+    border-radius: 0 var(--radius) var(--radius) 0;
+    font-style: italic;
+}
+
+.post-content blockquote p {
+    margin: 0 0 8px;
+}
+
+.post-content blockquote p:last-child {
+    margin-bottom: 0;
+}
+
+.post-content code {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    padding: 2px 6px;
+    background: var(--bg-muted);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--fg);
+}
+
+.post-content pre {
+    padding: 16px 20px;
+    background: var(--bg-muted);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow-x: auto;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.post-content pre code {
+    padding: 0;
+    background: none;
+    border: 0;
+    border-radius: 0;
+    font-size: inherit;
+}
+
+.post-content hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 40px 0;
+}
+
+/* Images dans le post : stylées par render-image.html (figure + classe) */
+.post-content figure {
+    margin: 24px 0;
+    text-align: center;
+}
+
+.post-content figure img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    background: var(--bg-muted);
+}
+
+.post-content figure figcaption {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-subtle);
+    letter-spacing: 0.02em;
+}
+
+/* Variantes correspondant aux suffixes Markdown #cover / #thumbnail / #portrait / #full-cover / #tiny-thumbnail */
+.post-content figure.img-cover img {
+    width: 640px;
+    max-width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.post-content figure.img-full-cover img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.post-content figure.img-thumbnail img {
+    width: 768px;
+    max-width: 100%;
+    height: auto;
+    padding: 12px;
+    background: var(--bg-elev);
+}
+
+.post-content figure.img-tiny-thumbnail img {
+    width: 384px;
+    max-width: 100%;
+    padding: 8px;
+    background: var(--bg-elev);
+}
+
+/* ---------- LIENS EXTERNES DANS LE CONTENU (render-link.html) ---------- */
+
+.post-content a.external::after {
+    content: "\2197"; /* ↗ */
+    display: inline-block;
+    margin-left: 2px;
+    font-size: 0.85em;
+    color: var(--fg-subtle);
+    transition: color var(--t-fast);
+}
+
+.post-content a.external:hover::after {
+    color: var(--accent);
+}
+
+/* ---------- VIDEO EMBED (iframe YouTube 16/9, généré par le shortcode youtube.html) ---------- */
+
+.video-embed {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin: 20px 0 8px;
+    background: #000;
+    box-shadow: var(--shadow-md);
+}
+
+.video-embed iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+/* ---------- CARD PROJECTS (shortcodes card-* pour /about/) ---------- */
+/* Ces cards apparaissent dans about.md via les shortcodes {{< card-xxx >}} ;
+   rendu compact et moderne cohérent avec le design system. */
+.project-card {
+    margin: 24px 0;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+}
+
+.project-card .icon {
+    font-size: 40px;
+    color: var(--accent);
+    line-height: 1;
+}
+
+.project-card .title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--fg);
+    margin: 0;
+}
+
+.project-card .description {
+    font-size: 14px;
+    color: var(--fg-muted);
+    margin: 0;
+    line-height: 1.55;
+}
+
+.project-card .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 8px;
+    padding: 10px 18px;
+    background: var(--fg);
+    color: var(--bg);
+    border-radius: var(--radius);
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
+    transition: opacity var(--t-fast);
+}
+
+.project-card .cta:hover {
+    opacity: 0.88;
+    color: var(--bg);
+}
+
+/* ---------- RESPONSIVE POST ---------- */
+
+@media (max-width: 900px) {
+    .post-header {
+        padding: 16px 0 40px;
+    }
+    .post-cover {
+        margin-bottom: 40px;
+    }
+    .post-content {
+        font-size: 16px;
+        line-height: 1.7;
+    }
+    .post-content h2 {
+        font-size: 24px;
+    }
+    .post-content h3 {
+        font-size: 22px;
+    }
+    .post-content > p:first-of-type {
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 520px) {
+    .container-reading {
+        padding: 0 20px;
+    }
+    .post-cover {
+        padding: 0 20px;
+    }
+    .post {
+        padding-top: 24px;
+        padding-bottom: 24px;
+    }
+    .post-header {
+        padding: 8px 0 32px;
+    }
+    .post-meta {
+        font-size: 12px;
+        gap: 8px;
+    }
+    .post-content > p:first-of-type {
+        font-size: 17px;
+        padding-left: 16px;
+    }
+}

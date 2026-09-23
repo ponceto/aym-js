@@ -26,11 +26,10 @@ set +x
 # some useful variables
 # ----------------------------------------------------------------------------
 
-prefix="$(pwd)"
-bindir="${prefix}/bin"
-srcdir="${prefix}/src"
-pubdir="${srcdir}/public"
-tarball="${prefix}/website.tar.gz"
+arg_prefix="$(pwd)"
+arg_bindir="${arg_prefix}/bin"
+arg_srcdir="${arg_prefix}/src"
+arg_pubdir="${arg_srcdir}/public"
 
 # ----------------------------------------------------------------------------
 # debug
@@ -42,7 +41,7 @@ set -x
 # move to sources
 # ----------------------------------------------------------------------------
 
-cd "${srcdir}"                                                       || exit 1
+cd "${arg_srcdir}"                                                   || exit 1
 
 # ----------------------------------------------------------------------------
 # build
@@ -54,13 +53,13 @@ hugo --cleanDestinationDir                                           || exit 1
 # cleanup
 # ----------------------------------------------------------------------------
 
-find "${pubdir}" -type f -name '.gitkeep' -exec rm -f {} \;          || exit 1
+find "${arg_pubdir}" -type f -name '.gitkeep' -exec rm -f {} \;      || exit 1
 
 # ----------------------------------------------------------------------------
-# tarball
+# cleanup
 # ----------------------------------------------------------------------------
 
-tar cvzf "${tarball}" "public"                                       || exit 1
+rm -f ".hugo_build.lock"                                             || exit 1
 
 # ----------------------------------------------------------------------------
 # End-Of-File

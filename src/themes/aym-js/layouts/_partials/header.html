@@ -1,0 +1,38 @@
+{{- /* Trim the "index.html" suffix (uglyurls) so the "/" Home entry matches on the home page. */ -}}
+{{- $currentURL := .RelPermalink | strings.TrimSuffix "index.html" -}}
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<nav class="site-header" aria-label="Main navigation">
+    <div class="container">
+        <a href="{{ "/" | absURL }}" class="brand" aria-label="{{ site.Title }}, home">
+            <span class="mark" aria-hidden="true"></span>
+            <span>aym<span class="domain">·js</span></span>
+        </a>
+        <ul class="primary-nav">
+            {{- range site.Menus.main }}
+            {{- $href := .URL | absURL -}}
+            {{- $isActive := or (eq $currentURL .URL) (and (ne .URL "/") (hasPrefix $currentURL .URL)) -}}
+            <li><a href="{{ $href }}"{{ if $isActive }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+            {{- end }}
+        </ul>
+        <div class="nav-actions">
+            <button class="button icon theme-toggle" type="button" title="Toggle theme" aria-label="Toggle light and dark theme">
+                <i class="fa-solid fa-sun icon-sun" aria-hidden="true"></i>
+                <i class="fa-solid fa-moon icon-moon" aria-hidden="true"></i>
+            </button>
+            <details class="mobile-menu">
+                <summary class="button icon" title="Menu" aria-label="Open menu">
+                    <i class="fa-solid fa-bars icon-open" aria-hidden="true"></i>
+                    <i class="fa-solid fa-xmark icon-close" aria-hidden="true"></i>
+                </summary>
+                <ul>
+                    {{- range site.Menus.main }}
+                    {{- $href := .URL | absURL -}}
+                    {{- $isActive := or (eq $currentURL .URL) (and (ne .URL "/") (hasPrefix $currentURL .URL)) -}}
+                    <li><a href="{{ $href }}"{{ if $isActive }} aria-current="page"{{ end }}>{{ .Name }}</a></li>
+                    {{- end }}
+                </ul>
+            </details>
+        </div>
+    </div>
+</nav>

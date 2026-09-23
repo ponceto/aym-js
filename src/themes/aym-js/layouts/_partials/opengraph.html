@@ -1,0 +1,69 @@
+{{- $description := "" -}}
+{{- if .IsHome -}}
+    {{- $description = .Params.description | default site.Params.description -}}
+{{- else -}}
+    {{- $description = .Params.description | default (.Summary | plainify | truncate 200) | default site.Params.description -}}
+{{- end -}}
+{{- $title := "" -}}
+{{- with .Params.seoTitle -}}
+    {{- $title = . -}}
+{{- else -}}
+    {{- $title = cond .IsHome (printf "%s — %s" site.Title site.Params.home.heroRole) .Title -}}
+{{- end -}}
+{{- $ogType := cond (and (eq .Kind "page") (eq .Section "posts")) "article" "website" -}}
+{{- $image := "" -}}
+{{- $isSiteImage := false -}}
+{{- with .Params.images -}}
+    {{- $first := index . 0 -}}
+    {{- $image = $first | absURL -}}
+{{- else -}}
+    {{- with site.Params.images -}}
+        {{- $first := index . 0 -}}
+        {{- $image = $first | absURL -}}
+        {{- $isSiteImage = true -}}
+    {{- end -}}
+{{- end -}}
+{{- $imageAlt := cond $isSiteImage (site.Params.imageAlt | default (printf "%s — %s" site.Params.author site.Params.home.heroRole)) .Title -}}
+{{- $imageWidth := site.Params.imageWidth | default 1500 -}}
+{{- $imageHeight := site.Params.imageHeight | default 500 -}}
+
+<meta property="og:type" content="{{ $ogType }}">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+{{- with $image }}
+<meta property="og:image" content="{{ . }}">
+<meta property="og:image:alt" content="{{ $imageAlt }}">
+{{- if $isSiteImage }}
+<meta property="og:image:width" content="{{ $imageWidth }}">
+<meta property="og:image:height" content="{{ $imageHeight }}">
+{{- end }}
+{{- end }}
+{{- if eq $ogType "article" }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05-07:00" }}">
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}">
+<meta property="article:author" content="{{ .Params.author | default site.Params.author }}">
+{{- with .Params.categories }}
+{{- range . }}
+<meta property="article:section" content="{{ . }}">
+{{- end }}
+{{- end }}
+{{- with .Params.tags }}
+{{- range . }}
+<meta property="article:tag" content="{{ . }}">
+{{- end }}
+{{- end }}
+{{- end }}
+
+<meta name="twitter:card" content="{{ cond (ne $image "") "summary_large_image" "summary" }}">
+{{- with site.Params.Links.twitter }}
+<meta name="twitter:creator" content="@{{ path.Base . }}">
+{{- end }}
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
+{{- with $image }}
+<meta name="twitter:image" content="{{ . }}">
+<meta name="twitter:image:alt" content="{{ $imageAlt }}">
+{{- end }}

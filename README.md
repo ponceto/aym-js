@@ -13,11 +13,11 @@ AYM·JS is designed to emulate these venerable and famous sound chips directly i
 
 This project respects the [KISS](https://en.wikipedia.org/wiki/KISS_principle) principle and is just based on the [Hugo static website generator](https://gohugo.io) and the `make` utility.
 
-No `node`, `npm` or whatever... Just plain HTML and vanilla JavaScript, [FontAwesome](https://fontawesome.com/) and [Pico·CSS](https://picocss.com/).
+No `node`, `npm` or whatever... Just plain HTML, vanilla JavaScript, a hand-written CSS design system and [FontAwesome](https://fontawesome.com/).
 
-Somme old musics are shipped with this project. These musics are converted from the [ym file format](http://leonard.oxg.free.fr/ymformat.html) to JavaScript with a custom tool written in C++ which will be released later.
+Some old musics are shipped with this project. These musics are converted from the [ym file format](http://leonard.oxg.free.fr/ymformat.html) to JavaScript with a custom tool written in C++ which will be released later.
 
-Custom playlists and support the ym file format for the player are planned and will be added later to this project.
+Custom playlists and support for the ym file format in the player are planned and will be added later to this project.
 
 ## SOURCES
 
@@ -29,7 +29,7 @@ The emulator can be used in any project as long as the terms of the GPL-v2 licen
 
 ## DEPENDENCIES
 
-This project requires `hugo` v0.110.0 or higher and `make`.
+This project requires `hugo` v0.146.0 or higher and `make`.
 
 On Linux based systems you just have to install the dependencies with your favorite package manager.
 
@@ -98,7 +98,7 @@ make clean
 This project is released under the terms of the General Public License version 2.
 
 ```
-aym-js - Copyright (c) 2001-2025 - Olivier Poncet
+aym-js - Copyright (c) 2001-2026 - Olivier Poncet
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -124,34 +124,6 @@ Font Awesome Free License
 Font Awesome Free is free, open source, and GPL friendly. You can use it for
 commercial projects, open source projects, or really almost whatever you want.
 Full Font Awesome Free license: https://fontawesome.com/license/free.
-```
-
-### PICO·CSS
-
-This project is distributed with [pico·css](https://picocss.com/), a tiny and elegant css library.
-
-```
-MIT License
-
-Copyright (c) 2019-2023 Pico
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
 ```
 
 ### MUSICS

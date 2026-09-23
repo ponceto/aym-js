@@ -1,0 +1,35 @@
+Source: aym-js-website
+Section: web
+Priority: optional
+Maintainer: Olivier Poncet <ponceto@free.fr>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13),
+Standards-Version: 4.6.2
+Homepage: https://aym-js.emaxilde.net/
+
+Package: aym-js-website
+Architecture: all
+Multi-Arch: foreign
+Depends:
+ apache2,
+ ${misc:Depends},
+Description: aym-js website
+ This package provides the static website of AYM·JS, a sound chip emulator
+ written in plain JavaScript and based on the Web Audio API.
+ .
+ AYM·JS emulates the AY-3-8910 PSG (Programmable Sound Generator) and the
+ YM2149 SSG (Software-Controlled Sound Generator), two venerable sound chips
+ widely used in the home computers, arcade boards and game consoles of the
+ 1980s. The emulation runs entirely in the web browser, with no plugin and no
+ server-side component.
+ .
+ The website hosts two interactive applications built on top of the emulator:
+ AYM·Player, a music player for tunes converted from the YM file format, and
+ AYM·Synth, a virtual synthesizer made of two emulated chips offering a
+ six-voice polyphony driven through the Web MIDI protocol. It also provides
+ the documentation of the emulated chips and the license terms of the project.
+ .
+ The site is generated with the Hugo static website generator and is served by
+ Apache. Installing this package deploys the generated site under
+ /var/www/html/public and the matching Apache configuration under /etc/apache2.

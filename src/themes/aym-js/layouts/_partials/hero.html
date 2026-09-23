@@ -1,0 +1,77 @@
+{{- if .IsHome -}}
+{{- $home := .Site.Params.home -}}
+<header class="page-hero" aria-labelledby="hero-title">
+    <div class="container">
+        {{- with $home.heroKicker }}
+        <p class="kicker">{{ . }}</p>
+        {{- end }}
+        <h1 id="hero-title">
+            <span>{{ $home.heroTitle }}</span><br>
+            <span class="role">{{ $home.heroRole }}<span class="caret" aria-hidden="true"></span></span>
+        </h1>
+        <p class="lede">{{ $home.heroLede | safeHTML }}</p>
+        {{- with $home.heroButtons }}
+        <div class="actions">
+            {{- range . }}
+            <a href="{{ .url }}" class="button{{ if .primary }} primary{{ end }}"{{ if hasPrefix .url "http" }} rel="me noopener external" target="_blank"{{ end }}>
+                {{- with .icon }}<i class="{{ . }}" aria-hidden="true"></i>{{ end }}
+                {{ .label }}
+            </a>
+            {{- end }}
+        </div>
+        {{- end }}
+    </div>
+</header>
+{{- else if or (eq .Kind "section") (eq .Kind "taxonomy") (eq .Kind "term") -}}
+{{- $kicker := .Title -}}
+{{- $title := .Title -}}
+{{- $lede := .Description -}}
+{{- if eq .Kind "section" -}}
+    {{- $kicker = "Pages" -}}
+    {{- $title = "All the pages" -}}
+    {{- $lede = "Every page of this site,<br>from the most recent to the oldest." -}}
+{{- else if eq .Kind "taxonomy" -}}
+    {{- if eq .Data.Plural "categories" -}}
+        {{- $kicker = "Categories" -}}
+        {{- $title = "All categories" -}}
+        {{- $lede = "Thematic classification of the pages." -}}
+    {{- else -}}
+        {{- $kicker = "Tags" -}}
+        {{- $title = "All tags" -}}
+        {{- $lede = "Keywords associated with the pages." -}}
+    {{- end -}}
+{{- else if eq .Kind "term" -}}
+    {{- $prefix := "tagged" -}}
+    {{- if eq .Data.Plural "categories" -}}
+        {{- $kicker = "Category" -}}
+        {{- $prefix = "in the category" -}}
+    {{- else -}}
+        {{- $kicker = "Tag" -}}
+    {{- end -}}
+        {{- if .Page.File | not -}}
+        {{- $labelScratch := newScratch -}}
+        {{- $plural := .Data.Plural -}}
+        {{- $slug := urlize .Name -}}
+        {{- range site.RegularPages -}}
+            {{- range (index .Params $plural) -}}
+                {{- if and (eq (urlize .) $slug) (not ($labelScratch.Get "v")) -}}
+                    {{- $labelScratch.Set "v" . -}}
+                {{- end -}}
+            {{- end -}}
+        {{- end -}}
+        {{- with $labelScratch.Get "v" }}{{ $title = . }}{{ end -}}
+    {{- end -}}
+    {{- if not $lede -}}
+        {{- $lede = printf "All pages %s <strong>%s</strong>." $prefix $title -}}
+    {{- end -}}
+{{- end -}}
+<header class="page-hero compact" aria-labelledby="archive-title">
+    <div class="container">
+        <p class="kicker">{{ $kicker }}</p>
+        <h1 id="archive-title">{{ $title }}<span class="caret" aria-hidden="true"></span></h1>
+        {{- with $lede }}
+        <p class="lede">{{ . | safeHTML }}</p>
+        {{- end }}
+    </div>
+</header>
+{{- end -}}

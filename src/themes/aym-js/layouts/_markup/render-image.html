@@ -1,0 +1,15 @@
+{{- $parts := split .Destination "#" -}}
+{{- $src := index $parts 0 -}}
+{{- $anchor := "" -}}
+{{- if gt (len $parts) 1 }}{{ $anchor = index $parts 1 }}{{ end -}}
+{{- $class := "" -}}
+{{- if eq $anchor "cover"          }}{{ $class = "img-cover"          }}{{ end -}}
+{{- if eq $anchor "full-cover"     }}{{ $class = "img-full-cover"     }}{{ end -}}
+{{- if eq $anchor "thumbnail"      }}{{ $class = "img-thumbnail"      }}{{ end -}}
+{{- if eq $anchor "tiny-thumbnail" }}{{ $class = "img-tiny-thumbnail" }}{{ end -}}
+<figure{{ with $class }} class="{{ . }}"{{ end }}>
+    <img src="{{ $src | safeURL }}" alt="{{ .PlainText }}"{{ with .Title }} title="{{ . }}"{{ end }} loading="lazy">
+    {{- with .Title }}
+    <figcaption>{{ . }}</figcaption>
+    {{- end }}
+</figure>

@@ -1,0 +1,201 @@
+{{- $personId := printf "%s#me" .Site.BaseURL -}}
+{{- $appId := printf "%s#app" .Site.BaseURL -}}
+{{- $siteImage := "" -}}
+{{- with site.Params.images -}}{{- $siteImage = index . 0 | absURL -}}{{- end -}}
+{{- if .IsHome -}}
+{{- /* Person : author entity, identified by a stable @id reused by the other schemas */ -}}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": "{{ $personId }}",
+    "name": "{{ site.Params.author }}",
+    "alternateName": "ponceto",
+    "url": "{{ site.BaseURL }}",
+    {{- with site.Params.Links.email }}
+    "email": "{{ . }}",
+    {{- end }}
+    "sameAs": [
+        {{- $links := site.Params.Links -}}
+        {{- $entries := slice $links.github $links.gitlab $links.bitbucket $links.twitch $links.youtube $links.bluesky $links.twitter $links.linkedin $links.website -}}
+        {{- $nonEmpty := slice -}}
+        {{- range $entries -}}{{- if . -}}{{- $nonEmpty = $nonEmpty | append . -}}{{- end -}}{{- end -}}
+        {{- $nonEmpty = $nonEmpty | append "https://www.emaxilde.net/#me" -}}
+        {{- range $i, $u := $nonEmpty -}}
+        {{- if $i }},{{ end }}
+        "{{ $u }}"
+        {{- end }}
+    ]
+}
+</script>
+
+{{- /* WebSite : the official site of the emulator */ -}}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "{{ site.BaseURL }}#website",
+    "name": "{{ site.Title }}",
+    "url": "{{ site.BaseURL }}",
+    "description": "{{ site.Params.description }}",
+    "inLanguage": "en",
+    "publisher": {"@id": "{{ $personId }}"}
+}
+</script>
+
+{{- /* SoftwareApplication : the AYM·JS emulator itself */ -}}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": "{{ $appId }}",
+    "name": "{{ site.Title }}",
+    "description": "{{ site.Params.description }}",
+    "applicationCategory": "https://schema.org/UtilitiesApplication",
+    "applicationSubCategory": "Emulator",
+    "operatingSystem": "Any (web browser)",
+    "url": "{{ site.BaseURL }}",
+    {{- with site.Params.software.version }}
+    "softwareVersion": "{{ . }}",
+    {{- end }}
+    {{- with site.Params.software.releaseDate }}
+    "datePublished": "{{ . }}",
+    {{- end }}
+    {{- with $siteImage }}
+    "image": "{{ . }}",
+    {{- end }}
+    {{- with site.Params.software.screenshot }}
+    "screenshot": "{{ . | absURL }}",
+    {{- end }}
+    "downloadUrl": "{{ "/code.html" | absURL }}",
+    {{- with site.Params.Links.github }}
+    "codeRepository": "{{ . }}",
+    {{- end }}
+    "isAccessibleForFree": true,
+    "license": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html",
+    "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "EUR"
+    },
+    "author": {"@id": "{{ $personId }}"},
+    "publisher": {"@id": "{{ $personId }}"},
+    "isPartOf": {"@id": "{{ site.BaseURL }}#website"}
+}
+</script>
+{{- else if or (eq .Kind "section") (eq .Kind "taxonomy") (eq .Kind "term") -}}
+{{- /* Blog : index of the posts */ -}}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "{{ .Title }} — {{ site.Title }}",
+    "description": "{{ .Description | default site.Params.description }}",
+    "url": "{{ .Permalink }}",
+    "inLanguage": "en",
+    "author": {"@id": "{{ $personId }}"},
+    "publisher": {"@id": "{{ $personId }}"}
+}
+</script>
+
+{{- /* BreadcrumbList for archive pages */ -}}
+{{- $crumbs := slice (dict "name" "Home" "item" site.BaseURL) -}}
+{{- if eq .Kind "section" -}}
+    {{- $crumbs = $crumbs | append (dict "name" .Title "item" .Permalink) -}}
+{{- else if eq .Kind "taxonomy" -}}
+    {{- $crumbs = $crumbs | append (dict "name" .Title "item" .Permalink) -}}
+{{- else if eq .Kind "term" -}}
+    {{- $tx := .Data.Plural -}}
+    {{- $txTitle := cond (eq $tx "categories") "Categories" "Tags" -}}
+    {{- $txURL := printf "%s%s/" site.BaseURL $tx -}}
+    {{- $crumbs = $crumbs | append (dict "name" $txTitle "item" $txURL) -}}
+    {{- $crumbs = $crumbs | append (dict "name" .Title "item" .Permalink) -}}
+{{- end -}}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{{ range $i, $c := $crumbs }}{{ if $i }}, {{ end }}{"@type": "ListItem", "position": {{ add $i 1 }}, "name": "{{ $c.name }}", "item": "{{ $c.item }}"}{{ end }}]
+}
+</script>
+{{- else if and (eq .Kind "page") (ne .Section "posts") (ne .Layout "err403") -}}
+{{- /* Non-post pages: documentation, download, license, contact, etc. */ -}}
+{{- $pageType := "WebPage" -}}
+{{- if .File -}}
+    {{- if eq .File.BaseFileName "contact" }}{{ $pageType = "ContactPage" }}{{ end -}}
+{{- end -}}
+{{- $image := "" -}}
+{{- with .Params.images -}}{{- $image = index . 0 | absURL -}}{{- end -}}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "{{ $pageType }}",
+    "name": "{{ .Title }}",
+    "description": "{{ .Description | default .Params.description | default site.Params.description }}",
+    "url": "{{ .Permalink }}",
+    {{- with $image }}
+    "image": "{{ . }}",
+    {{- end }}
+    "inLanguage": "en",
+    "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}",
+    "about": {"@id": "{{ $appId }}"},
+    "isPartOf": {"@id": "{{ site.BaseURL }}#website"}
+}
+</script>
+
+{{- /* BreadcrumbList for these pages */ -}}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "Home", "item": "{{ site.BaseURL }}"},
+        {"@type": "ListItem", "position": 2, "name": "{{ .Title }}", "item": "{{ .Permalink }}"}
+    ]
+}
+</script>
+{{- else if and (eq .Kind "page") (eq .Section "posts") -}}
+{{- /* Article : single post */ -}}
+{{- $image := "" -}}
+{{- with .Params.images -}}{{- $image = index . 0 | absURL -}}{{- end -}}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "{{ .Title }}",
+    "description": "{{ .Description | default .Summary }}",
+    {{- with $image }}
+    "image": "{{ . }}",
+    {{- end }}
+    "datePublished": "{{ .Date.Format "2006-01-02T15:04:05-07:00" }}",
+    "dateModified": "{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" }}",
+    "inLanguage": "en",
+    "url": "{{ .Permalink }}",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "{{ .Permalink }}"
+    },
+    "author": {"@id": "{{ $personId }}"},
+    "publisher": {"@id": "{{ $personId }}"},
+    "about": {"@id": "{{ $appId }}"}
+    {{- with .Params.tags }},
+    "keywords": [{{- range $i, $t := . }}{{ if $i }}, {{ end }}"{{ $t }}"{{- end }}]
+    {{- end }}
+}
+</script>
+
+{{- /* BreadcrumbList for single posts. No year level: Hugo generates no
+       /posts/<year>/ index page, and every breadcrumb item must be a real URL. */ -}}
+{{- $crumbs := slice
+    (dict "name" "Home" "item" site.BaseURL)
+    (dict "name" "News" "item" (printf "%sposts/" site.BaseURL))
+    (dict "name" .Title "item" .Permalink)
+-}}
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [{{ range $i, $c := $crumbs }}{{ if $i }}, {{ end }}{"@type": "ListItem", "position": {{ add $i 1 }}, "name": "{{ $c.name }}", "item": "{{ $c.item }}"}{{ end }}]
+}
+</script>
+{{- end -}}

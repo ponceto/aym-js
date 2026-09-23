@@ -1,0 +1,67 @@
+{{- $links := .Site.Params.Links -}}
+{{- $icons := .Site.Params.Icons -}}
+{{- $labels := .Site.Params.Labels -}}
+{{- $colophon := .Site.Params.colophon | default "Made with ❤ — free software, distributed under the GNU GPL." -}}
+<footer class="site-footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="colophon">
+                <p class="brand">
+                    <span class="mark" aria-hidden="true"></span>
+                    <span>aym<span class="domain">·js</span></span>
+                </p>
+                <p>{{ $colophon | safeHTML }}</p>
+            </div>
+            <nav aria-label="Sitemap">
+                <p>Site</p>
+                <ul>
+                    {{- range site.Menus.main }}
+                    <li><a href="{{ .URL | absURL }}">{{ .Name }}</a></li>
+                    {{- end }}
+                </ul>
+            </nav>
+            <nav aria-label="Source code">
+                <p>Code</p>
+                <ul>
+                    {{- with $links.github }}
+                    <li><a href="{{ . }}" rel="me noopener external" title="{{ $labels.github }}"><i class="{{ $icons.github }}" aria-hidden="true"></i>GitHub</a></li>
+                    {{- end }}
+                    {{- with $links.gitlab }}
+                    <li><a href="{{ . }}" rel="me noopener external" title="{{ $labels.gitlab }}"><i class="{{ $icons.gitlab }}" aria-hidden="true"></i>GitLab</a></li>
+                    {{- end }}
+                    {{- with $links.bitbucket }}
+                    <li><a href="{{ . }}" rel="me noopener external" title="{{ $labels.bitbucket }}"><i class="{{ $icons.bitbucket }}" aria-hidden="true"></i>Bitbucket</a></li>
+                    {{- end }}
+                </ul>
+            </nav>
+            <nav aria-label="Social networks">
+                <p>Social</p>
+                <ul>
+                    {{- with $links.twitter }}
+                    <li><a href="{{ . }}" rel="me noopener external" title="{{ $labels.twitter }}"><i class="{{ $icons.twitter }}" aria-hidden="true"></i>X / Twitter</a></li>
+                    {{- end }}
+                    {{- with $links.bluesky }}
+                    <li><a href="{{ . }}" rel="me noopener external" title="{{ $labels.bluesky }}"><i class="{{ $icons.bluesky }}" aria-hidden="true"></i>Bluesky</a></li>
+                    {{- end }}
+                    {{- with $links.linkedin }}
+                    <li><a href="{{ . }}" rel="me noopener external" title="{{ $labels.linkedin }}"><i class="{{ $icons.linkedin }}" aria-hidden="true"></i>LinkedIn</a></li>
+                    {{- end }}
+                    {{- with $links.youtube }}
+                    <li><a href="{{ . }}" rel="me noopener external" title="{{ $labels.youtube }}"><i class="{{ $icons.youtube }}" aria-hidden="true"></i>YouTube</a></li>
+                    {{- end }}
+                    {{- with $links.twitch }}
+                    <li><a href="{{ . }}" rel="me noopener external" title="{{ $labels.twitch }}"><i class="{{ $icons.twitch }}" aria-hidden="true"></i>Twitch</a></li>
+                    {{- end }}
+                </ul>
+            </nav>
+        </div>
+        <div class="footer-bottom">
+            <p>{{ .Site.Params.copyright }} — {{ .Site.Params.author }}</p>
+            {{- with $links.email }}
+            <address>
+                <a href="{{ . }}" title="{{ $labels.email }}"><i class="{{ $icons.email }}" aria-hidden="true"></i>{{ replace . "mailto:" "" }}</a>
+            </address>
+            {{- end }}
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,8 @@
+{{ define "main" }}
+{{- partial "hero.html" . -}}
+{{- if eq .Section "posts" -}}
+{{- partial "post.html" . -}}
+{{- else -}}
+{{- partial "page.html" . -}}
+{{- end -}}
+{{ end }}

@@ -1,19 +1,19 @@
 ---
 title: "AYM·Player • The AY/YM music player"
 date: 2023-09-21T12:00:00+02:00
-lastmod: 2024-03-25T12:00:00+02:00
+lastmod: 2026-09-24T12:00:00+02:00
 author: Olivier Poncet
 categories: ["Pages"]
 tags: ["Page", "Player"]
-images: ["assets/images/banner.jpg"]
-layout: "aym-player"
 draft: false
 ---
-AYM·Player is a [AY-3-8910 / YM2149]({{< ref "/about.md" >}}) music player.
+AYM·Player is an [AY-3-8910 / YM2149]({{< ref "/about.md" >}}) music player.
 
-The player is made up of one emulated chip and is capable of playing AY/YM musics.
+<!--more-->
 
-It is based on the AYM·JS emulator and the [Web Audio API](https://developer.mozilla.org/fr/docs/Web/API/Web_Audio_API).
+The player is made up of one emulated chip and is capable of playing AY/YM music.
+
+It is based on the AYM·JS emulator and the [Web Audio API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API).
 
 ### The player
 

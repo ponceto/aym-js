@@ -2,7 +2,41 @@
 # error documents
 # ----------------------------------------------------------------------------
 
+ErrorDocument 403 /403.html
 ErrorDocument 404 /404.html
+
+# ----------------------------------------------------------------------------
+# redirect
+# ----------------------------------------------------------------------------
+
+Redirect 301 "/player/" "/player.html"
+Redirect 301 "/synth/" "/synth.html"
+Redirect 301 "/about/" "/about.html"
+Redirect 301 "/code/" "/code.html"
+Redirect 301 "/license/" "/license.html"
+
+# ----------------------------------------------------------------------------
+# mod_expires
+# ----------------------------------------------------------------------------
+
+# <IfModule mod_expires.c>
+# ExpiresActive On
+# ExpiresDefault "access plus 1 day"
+# ExpiresByType text/html "access plus 1 day"
+# ExpiresByType text/css "access plus 1 month"
+# ExpiresByType application/javascript "access plus 1 month"
+# ExpiresByType image/gif "access plus 2 months"
+# ExpiresByType image/ico "access plus 2 months"
+# ExpiresByType image/jpeg "access plus 2 months"
+# ExpiresByType image/png "access plus 2 months"
+# ExpiresByType image/svg+xml "access plus 2 months"
+# ExpiresByType font/woff "access plus 6 months"
+# ExpiresByType application/font-woff "access plus 6 month"
+# ExpiresByType application/x-font-woff "access plus 6 month"
+# ExpiresByType font/woff2 "access plus 6 months"
+# ExpiresByType application/font-woff2 "access plus 6 month"
+# ExpiresByType application/x-font-woff2 "access plus 6 month"
+# </IfModule>
 
 # ----------------------------------------------------------------------------
 # End-Of-File

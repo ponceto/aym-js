@@ -1,0 +1,48 @@
+{{- $kicker := "Post" -}}
+{{- with .Params.categories -}}
+    {{- $first := index . 0 -}}
+    {{- if eq $first "Releases" }}{{ $kicker = "Release" }}{{ end -}}
+    {{- if eq $first "Pages"    }}{{ $kicker = "Page"    }}{{ end -}}
+{{- end -}}
+{{- $cover := "" -}}
+{{- with .Params.images }}{{ $cover = index . 0 | absURL }}{{ end -}}
+<main id="main">
+    <article class="post" aria-labelledby="post-title">
+        <header class="post-header">
+            <div class="container-reading">
+                <p class="kicker">{{ $kicker }}</p>
+                <h1 id="post-title">{{ .Title }}<span class="caret" aria-hidden="true"></span></h1>
+                <p class="post-meta">
+                    <span class="author">by <strong>{{ .Params.author | default .Site.Params.author }}</strong></span>
+                    <span class="dot" aria-hidden="true">·</span>
+                    <span>Published on <time datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "2 Jan 2006" }}</time></span>
+                    {{- if and (not .Lastmod.IsZero) (ne (.Lastmod.Format "2006-01-02") (.Date.Format "2006-01-02")) }}
+                    <span class="dot" aria-hidden="true">·</span>
+                    <span>Updated on <time datetime="{{ .Lastmod.Format "2006-01-02" }}">{{ .Lastmod.Format "2 Jan 2006" }}</time></span>
+                    {{- end }}
+                </p>
+                {{- with .Params.tags }}
+                <ul class="tags" aria-label="Tags">
+                    {{- range . }}
+                    <li><a href="{{ (print "/tags/" (urlize .) ".html") | absURL }}">{{ . }}</a></li>
+                    {{- end }}
+                </ul>
+                {{- end }}
+            </div>
+        </header>
+
+        {{- with $cover }}
+        <div class="post-cover">
+            <figure>
+                <img src="{{ . }}" alt="{{ $.Title }}" loading="eager">
+            </figure>
+        </div>
+        {{- end }}
+
+        <div class="container-reading">
+            <div class="post-content">
+                {{ .Content }}
+            </div>
+        </div>
+    </article>
+</main>

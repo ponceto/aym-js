@@ -1,0 +1,11 @@
+{{- with hugo.Data.social }}
+<nav class="social-grid" aria-label="Réseaux sociaux">
+    {{- range . }}
+    <a class="social-card {{ .key }}" href="{{ .url }}" rel="me noopener external">
+        <i class="{{ .icon }}" aria-hidden="true"></i>
+        <strong>{{ .label }}</strong>
+        <small>{{ .handle }}</small>
+    </a>
+    {{- end }}
+</nav>
+{{- end }}

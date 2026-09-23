@@ -1,0 +1,566 @@
+/*
+ * home.css - Copyright (c) 2001-2026 - Olivier Poncet
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/* =============================================================
+   emaxilde.net — styles spécifiques à la page d'accueil.
+
+   Contient : hero plein format, tech-marquee, project-showcase,
+   article-teasers (variante home avec vignette photo latérale),
+   info-panel/expertise-list (section expertise de la page à
+   propos), venues, social-grid.
+   ============================================================= */
+
+/* ---------- HERO (plein format) ---------- */
+
+.page-hero {
+    padding: 120px 0 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.page-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(var(--border) 1px, transparent 1px),
+        linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 56px 56px;
+    mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, #000 30%, transparent 70%);
+    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 30%, #000 30%, transparent 70%);
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+.page-hero > .container {
+    position: relative;
+    text-align: center;
+    margin: 0 auto;
+}
+
+.page-hero > .container .lede {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.page-hero h1 {
+    font-size: clamp(44px, 7vw, 88px);
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    font-weight: 600;
+    margin: 0 0 24px;
+}
+
+.page-hero h1 .role {
+    display: inline-block;
+    color: var(--accent);
+    position: relative;
+}
+
+.lede {
+    font-size: 20px;
+    color: var(--fg-muted);
+    max-width: var(--mw-lede);
+    margin: 0 0 36px;
+    line-height: 1.55;
+}
+
+.lede strong {
+    color: var(--fg);
+    font-weight: 500;
+}
+
+.page-hero .actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 32px;
+}
+
+/* ---------- TECH MARQUEE ---------- */
+
+.tech-marquee {
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    overflow: hidden;
+    mask-image: linear-gradient(90deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 80px, #000 calc(100% - 80px), transparent 100%);
+}
+
+.tech-marquee-inner {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    animation-name: tech-scroll;
+    animation-duration: 60s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+.tech-track {
+    display: flex;
+    flex-shrink: 0;
+    gap: 8px;
+    padding-right: 8px;
+    margin: 0;
+    list-style: none;
+}
+
+.tech-track li {
+    flex-shrink: 0;
+    padding: 6px 14px;
+    background: var(--bg-elev);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-muted);
+    white-space: nowrap;
+}
+
+@keyframes tech-scroll {
+    0% {
+        transform: translate3d(0, 0, 0);
+    }
+    100% {
+        transform: translate3d(-50%, 0, 0);
+    }
+}
+
+.tech-marquee:hover .tech-marquee-inner {
+    animation-play-state: paused;
+}
+
+/* ---------- PROJECT SHOWCASE (conférences + projets) ---------- */
+
+.project-showcase {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.project-showcase > li {
+    display: block;
+    min-width: 0;
+}
+
+.project {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.project > .retro-display {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 28px 24px;
+    min-height: 140px;
+    border-bottom: 1px solid var(--border);
+}
+
+.project > .retro-display > h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+    color: var(--on-dark);
+}
+
+.project > .cover {
+    margin: 0;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-muted);
+}
+
+.project > .cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--t-slow);
+}
+
+.project:hover > .cover img {
+    transform: scale(1.04);
+}
+
+.project .body {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.project .body > h3 {
+    margin: 0 0 10px;
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+    color: var(--fg);
+}
+
+.project .body > p {
+    font-size: 14px;
+    color: var(--fg-muted);
+    margin: 0 0 16px;
+    line-height: 1.55;
+    flex: 1;
+}
+
+.project footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-subtle);
+}
+
+.project footer:has(> .link-arrow:only-child) {
+    justify-content: flex-end;
+}
+
+/* ---------- ARTICLE TEASERS (variante home : 3 colonnes avec vignette photo latérale) ---------- */
+
+.blog-section .article-teasers {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.blog-section .article-teasers > li {
+    display: block;
+}
+
+.blog-section .article-teaser {
+    display: grid;
+    grid-template-columns: 140px 1fr auto;
+    gap: 0;
+    align-items: stretch;
+    margin: 0;
+}
+
+.blog-section .article-teaser:hover h3 a {
+    color: var(--accent);
+}
+
+.blog-section .article-teaser > .cover {
+    position: relative;
+    margin: 0;
+    height: 100%;
+    min-height: 100px;
+    overflow: hidden;
+    border-right: 1px solid var(--border);
+    background: var(--bg-muted);
+}
+
+.blog-section .article-teaser > .cover img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--t-slow);
+}
+
+.blog-section .article-teaser:hover > .cover img {
+    transform: scale(1.04);
+}
+
+.blog-section .article-teaser > .cover > time {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    z-index: 2;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: var(--on-dark);
+    padding: 5px 10px;
+    background: var(--overlay-darker);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 6px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    white-space: nowrap;
+}
+
+.blog-section .teaser-body,
+.blog-section .article-teaser > .meta {
+    padding: 20px 24px;
+    align-self: center;
+}
+
+.blog-section .article-teaser h3 {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.015em;
+    margin: 0 0 4px;
+}
+
+.blog-section .article-teaser h3 a {
+    color: var(--fg);
+    transition: color var(--t-fast);
+    text-decoration: none;
+}
+
+.blog-section .article-teaser h3 a:hover {
+    color: var(--accent);
+}
+
+.blog-section .article-teaser .excerpt {
+    color: var(--fg-muted);
+    font-size: 14px;
+    margin: 0;
+}
+
+.blog-section .article-teaser .meta {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--fg-subtle);
+    margin: 0;
+}
+
+.info-panel {
+    padding: 28px;
+}
+
+.info-panel > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.info-panel > header h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* ---------- VENUES (paragraphe conférences) ---------- */
+
+.venues {
+    margin-top: 28px;
+    font-size: 13px;
+    font-family: var(--font-mono);
+    letter-spacing: 0.03em;
+    line-height: 1.9;
+}
+
+.venues a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--t-fast);
+}
+
+.venues a:hover {
+    color: var(--accent);
+}
+
+.venues em {
+    font-style: italic;
+}
+
+/* ---------- EXPERTISE LIST ---------- */
+
+.expertise-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+}
+
+.expertise-list > div {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 16px;
+    align-items: baseline;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+}
+
+.expertise-list > div:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.expertise-list dt {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--fg-subtle);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+}
+
+.expertise-list dd {
+    margin: 0;
+    font-size: 14px;
+    color: var(--fg);
+    line-height: 1.55;
+}
+
+/* ---------- SOCIAL GRID ---------- */
+
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.social-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 24px;
+    height: 100%;
+    border-radius: var(--radius-lg);
+    color: var(--on-dark);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+.social-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    opacity: 0;
+    transition: opacity var(--t-base);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.social-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.social-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.25);
+}
+
+.social-card:hover::after {
+    opacity: 0.18;
+}
+
+.social-card i {
+    font-size: 28px;
+    line-height: 1;
+    color: var(--on-dark);
+}
+
+.social-card strong {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--on-dark);
+}
+
+.social-card small {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.social-card.twitter {
+    background: linear-gradient(135deg, #18181b 0%, #000000 100%);
+}
+
+.social-card.bluesky {
+    background: linear-gradient(135deg, #0085FF 0%, #003d73 100%);
+}
+
+.social-card.linkedin {
+    background: linear-gradient(135deg, #0A66C2 0%, #053866 100%);
+}
+
+.social-card.youtube {
+    background: linear-gradient(135deg, #FF0000 0%, #8b0000 100%);
+}
+
+.social-card.twitch {
+    background: linear-gradient(135deg, #9146FF 0%, #5a2a9e 100%);
+}
+
+/* ---------- RESPONSIVE HOME ---------- */
+
+@media (max-width: 900px) {
+    .blog-section .article-teaser {
+        grid-template-columns: 110px 1fr;
+    }
+    .blog-section .article-teaser .meta {
+        display: none;
+    }
+    .social-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .expertise-list > div {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+}
+
+@media (max-width: 520px) {
+    .page-hero {
+        padding: 72px 0 56px;
+    }
+    .blog-section .article-teaser {
+        grid-template-columns: 88px 1fr;
+    }
+    .blog-section .article-teaser .teaser-body {
+        padding: 16px;
+    }
+    .blog-section .article-teaser > .cover > time {
+        font-size: 10px;
+        padding: 4px 7px;
+        left: 8px;
+        bottom: 8px;
+    }
+    .social-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .social-card {
+        padding: 18px;
+    }
+    .social-card i {
+        font-size: 22px;
+    }
+}
