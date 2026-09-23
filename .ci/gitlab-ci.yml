@@ -36,8 +36,9 @@ stages:
 build-and-deploy-website:
   stage: build-and-deploy
   tags:
-    - docker
+    - linux
     - amd64
+    - docker
   rules:
     - if: $CI_COMMIT_BRANCH == "master"
   before_script:

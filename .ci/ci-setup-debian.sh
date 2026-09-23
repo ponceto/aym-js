@@ -26,13 +26,18 @@ set +x
 # some useful variables
 # ----------------------------------------------------------------------------
 
-arg_packages="
+apt_update='yes'
+apt_dist_upgrade='yes'
+apt_install_packages='yes'
+apt_install_hugo='yes'
+apt_autoremove='yes'
+apt_clean='yes'
+
+apt_packages="
 build-essential
 openssh-client
 wget
 "
-
-arg_hugo_version="0.161.1"
 
 # ----------------------------------------------------------------------------
 # debug
@@ -51,37 +56,55 @@ export DEBIAN_PRIORITY="critical"
 # update the package manager
 # ----------------------------------------------------------------------------
 
-apt-get update                                                       || exit 1
+if [ "${apt_update:-no}" = 'yes' ]
+then
+    apt-get update                                                   || exit 1
+fi
 
 # ----------------------------------------------------------------------------
 # upgrade the whole system
 # ----------------------------------------------------------------------------
 
-apt-get dist-upgrade -y                                              || exit 1
+if [ "${apt_dist_upgrade:-no}" = 'yes' ]
+then
+    apt-get dist-upgrade -y                                          || exit 1
+fi
 
 # ----------------------------------------------------------------------------
 # install the dependencies
 # ----------------------------------------------------------------------------
 
-apt-get install -y ${arg_packages}                                   || exit 1
+if [ "${apt_install_packages:-no}" = 'yes' ]
+then
+    apt-get install -y ${apt_packages}                               || exit 1
+fi
 
 # ----------------------------------------------------------------------------
 # install hugo
 # ----------------------------------------------------------------------------
 
-./bin/install-hugo.sh "${arg_hugo_version}"                          || exit 1
+if [ "${apt_install_hugo:-no}" = 'yes' ]
+then
+    ./bin/install-hugo.sh "${HUGO_VERSION:-not-set}"                 || exit 1
+fi
 
 # ----------------------------------------------------------------------------
 # remove packages that are no longer needed
 # ----------------------------------------------------------------------------
 
-apt-get autoremove --purge -y                                        || exit 1
+if [ "${apt_autoremove:-no}" = 'yes' ]
+then
+    apt-get autoremove --purge -y                                    || exit 1
+fi
 
 # ----------------------------------------------------------------------------
 # clean the local repository
 # ----------------------------------------------------------------------------
 
-apt-get clean                                                        || exit 1
+if [ "${apt_clean:-no}" = 'yes' ]
+then
+    apt-get clean                                                    || exit 1
+fi
 
 # ----------------------------------------------------------------------------
 # End-Of-File
