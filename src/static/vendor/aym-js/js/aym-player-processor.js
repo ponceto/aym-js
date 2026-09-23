@@ -15,6 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+import { AYM_Utils    } from './aym-utils.js';
 import { AYM_Emulator } from './aym-emulator.js';
 import { AYM_Playlist } from './aym-playlist.js';
 
@@ -48,6 +49,8 @@ export class AYM_PlayerProcessor extends AudioWorkletProcessor {
         this.channel_a   = null;
         this.channel_b   = null;
         this.channel_c   = null;
+        this.dcb_input   = new Float32Array(2);
+        this.dcb_output  = new Float32Array(2);
         this.port.onmessage = (message) => {
             this.recvMessage(message);
         };
@@ -307,11 +310,21 @@ export class AYM_PlayerProcessor extends AudioWorkletProcessor {
         this.chip.reset();
     }
 
+    dcBlock(stream, input) {
+        const attenuation = 0.999;
+        const output = (input - this.dcb_input[stream]) + (attenuation * this.dcb_output[stream]);
+        this.dcb_input[stream]  = input;
+        this.dcb_output[stream] = output;
+        return output;
+    }
+
     hasReset() {
         if((this.chip_flags & AYM_FLAG_RESET) != 0) {
             this.chip_flags &= ~AYM_FLAG_RESET;
             this.chip_ticks &= 0;
             this.chip.reset();
+            this.dcb_input.fill(0.0);
+            this.dcb_output.fill(0.0);
             return true;
         }
         return false;
@@ -380,7 +393,7 @@ export class AYM_PlayerProcessor extends AudioWorkletProcessor {
                 if((this.chip_flags & AYM_FLAG_MUTEC) == 0) {
                     output += channel_c[sample];
                 }
-                channel[sample] = (output / 3.0);
+                channel[sample] = AYM_Utils.clamp_flt(this.dcBlock(0, (output / 3.0)), -1.0, +1.0);
             }
         };
 
@@ -400,8 +413,8 @@ export class AYM_PlayerProcessor extends AudioWorkletProcessor {
                     output1 += (channel_c[sample] * 0.25);
                     output2 += (channel_c[sample] * 0.75);
                 }
-                channel1[sample] = (output1 / 1.5);
-                channel2[sample] = (output2 / 1.5);
+                channel1[sample] = AYM_Utils.clamp_flt(this.dcBlock(0, (output1 / 1.5)), -1.0, +1.0);
+                channel2[sample] = AYM_Utils.clamp_flt(this.dcBlock(1, (output2 / 1.5)), -1.0, +1.0);
             }
         };
 
@@ -435,15 +448,24 @@ export class AYM_PlayerProcessor extends AudioWorkletProcessor {
 
         const clockChip = () => {
             for(let sample = 0; sample < samples; ++sample) {
-                channel_a[sample] = this.chip.get_channel0();
-                channel_b[sample] = this.chip.get_channel1();
-                channel_c[sample] = this.chip.get_channel2();
+                let acc0  = 0.0;
+                let acc1  = 0.0;
+                let acc2  = 0.0;
+                let count = 0;
                 while(this.chip_ticks < this.chip_clock) {
                     this.chip_ticks += sampleRate;
                     this.chip.clock();
                     clockMusic();
+                    acc0 += this.chip.get_channel0();
+                    acc1 += this.chip.get_channel1();
+                    acc2 += this.chip.get_channel2();
+                    ++count;
                 }
                 this.chip_ticks -= this.chip_clock;
+                const scale = (count != 0 ? (1.0 / count) : 0.0);
+                channel_a[sample] = (acc0 * scale);
+                channel_b[sample] = (acc1 * scale);
+                channel_c[sample] = (acc2 * scale);
             }
             for(const output of outputs) {
                 if(output.length >= 2) {

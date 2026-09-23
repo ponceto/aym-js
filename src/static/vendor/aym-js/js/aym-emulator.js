@@ -319,6 +319,9 @@ export class AYM_Emulator {
         this.master_clock = 1000000;
         this.clock_divide = 0;
         this.dac          = AY_DAC;
+        this.channel0     = 0.0;
+        this.channel1     = 0.0;
+        this.channel2     = 0.0;
         this.set_type(setup.type || 'default');
         this.reset();
     }
@@ -354,6 +357,9 @@ export class AYM_Emulator {
         this.mixer.reset();
         this.master_clock |= 0;
         this.clock_divide &= 0;
+        this.channel0 = 0.0;
+        this.channel1 = 0.0;
+        this.channel2 = 0.0;
         for(let index = 0; index < 16; ++index) {
             this.set_register_index(index);
             this.set_register_value(0);
@@ -371,7 +377,21 @@ export class AYM_Emulator {
             this.noise.clock();
             this.envel.clock();
             this.mixer.clock(this.envel);
+            this.output();
         }
+    }
+
+    output() {
+        const get_output = (tone, has_sound, has_noise, level) => {
+            const sig_sound = (has_sound != 0 ? tone.phase : 1);
+            const sig_noise = (has_noise != 0 ? this.noise.phase : 1);
+            const amplitude = this.dac[level & 0x1f];
+
+            return ((sig_sound & sig_noise) * amplitude);
+        };
+        this.channel0 = get_output(this.tone0, this.mixer.sound0, this.mixer.noise0, this.mixer.level0);
+        this.channel1 = get_output(this.tone1, this.mixer.sound1, this.mixer.noise1, this.mixer.level1);
+        this.channel2 = get_output(this.tone2, this.mixer.sound2, this.mixer.noise2, this.mixer.level2);
     }
 
     fixup_tones() {
@@ -512,54 +532,15 @@ export class AYM_Emulator {
     }
 
     get_channel0() {
-        const has_sound = this.mixer.sound0;
-        const has_noise = this.mixer.noise0;
-        const sig_sound = (this.tone0.phase != 0 ? +1 : -1);
-        const sig_noise = (this.noise.phase != 0 ? +1 : -1);
-        const amplitude = this.dac[this.mixer.level0 & 0x1f];
-        let   output    = 0;
-
-        if(has_sound != 0) {
-            output |= sig_sound;
-        }
-        if(has_noise != 0) {
-            output |= sig_noise;
-        }
-        return output * amplitude;
+        return this.channel0;
     }
 
     get_channel1() {
-        const has_sound = this.mixer.sound1;
-        const has_noise = this.mixer.noise1;
-        const sig_sound = (this.tone1.phase != 0 ? +1 : -1);
-        const sig_noise = (this.noise.phase != 0 ? +1 : -1);
-        const amplitude = this.dac[this.mixer.level1 & 0x1f];
-        let   output    = 0;
-
-        if(has_sound != 0) {
-            output |= sig_sound;
-        }
-        if(has_noise != 0) {
-            output |= sig_noise;
-        }
-        return output * amplitude;
+        return this.channel1;
     }
 
     get_channel2() {
-        const has_sound = this.mixer.sound2;
-        const has_noise = this.mixer.noise2;
-        const sig_sound = (this.tone2.phase != 0 ? +1 : -1);
-        const sig_noise = (this.noise.phase != 0 ? +1 : -1);
-        const amplitude = this.dac[this.mixer.level2 & 0x1f];
-        let   output    = 0;
-
-        if(has_sound != 0) {
-            output |= sig_sound;
-        }
-        if(has_noise != 0) {
-            output |= sig_noise;
-        }
-        return output * amplitude;
+        return this.channel2;
     }
 }
 
