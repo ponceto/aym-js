@@ -50,9 +50,15 @@ then
     exit 1
 fi
 
-if [ "${SSH_CMD:-not-set}" = 'not-set' ]
+# ----------------------------------------------------------------------------
+# resolve package file
+# ----------------------------------------------------------------------------
+
+pkg_path="$(ls -1 "${arg_prefix}/${arg_basename}"_*_all.deb 2>/dev/null | tail -n 1)"
+
+if [ "${pkg_path:-not-set}" = 'not-set' ] || [ ! -f "${pkg_path}" ]
 then
-    echo "*** SSH_CMD is not set ***"
+    echo "*** package file not found ***"
     exit 1
 fi
 
@@ -68,7 +74,8 @@ ssh_host="${SSH_HOST}"
 ssh_user="${SSH_USER}"
 ssh_priv="${SSH_PRIV}"
 ssh_dest="${ssh_user}@${ssh_host}"
-ssh_cmd="/usr/local/bin/deploy-package.sh"
+pkg_file="$(basename "${pkg_path}")"
+ssh_cmd="export DEBIAN_FRONTEND=\"noninteractive\"; export DEBIAN_PRIORITY=\"critical\"; apt-get install -y \"/tmp/${pkg_file}\" && rm -f \"/tmp/${pkg_file}\""
 
 # ----------------------------------------------------------------------------
 # create ssh directory if needed
@@ -102,7 +109,7 @@ set -x
 # copy to destination server
 # ----------------------------------------------------------------------------
 
-scp ${ssh_options} -i "${ssh_identity}" "${arg_package}" "${ssh_dest}:/tmp/" || exit 1
+scp ${ssh_options} -i "${ssh_identity}" "${pkg_path}" "${ssh_dest}:/tmp/" || exit 1
 
 # ----------------------------------------------------------------------------
 # deploy

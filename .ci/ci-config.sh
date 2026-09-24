@@ -24,8 +24,7 @@ arg_prefix="$(pwd)"
 arg_bindir="${arg_prefix}/bin"
 arg_srcdir="${arg_prefix}/src"
 arg_pubdir="${arg_srcdir}/public"
-arg_archive="${arg_prefix}/aym-js-website.tar.gz"
-arg_package="${arg_prefix}/aym-js-website_1.0.0_all.deb"
+arg_basename='aym-js-website'
 
 # ----------------------------------------------------------------------------
 # End-Of-File

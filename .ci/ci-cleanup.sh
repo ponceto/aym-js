@@ -50,13 +50,15 @@ cd "${arg_srcdir}"                                                   || exit 1
 # clean archive
 # ----------------------------------------------------------------------------
 
-rm -f "${arg_archive}"                                               || exit 1
+rm -f "${arg_prefix}/${arg_basename}.tar.gz"                         || exit 1
 
 # ----------------------------------------------------------------------------
 # clean package
 # ----------------------------------------------------------------------------
 
-rm -f "${arg_package}"                                               || exit 1
+rm -f "${arg_prefix}/${arg_basename}"_*_all.deb                      || exit 1
+rm -f "${arg_prefix}/${arg_basename}"_*.buildinfo                    || exit 1
+rm -f "${arg_prefix}/${arg_basename}"_*.changes                      || exit 1
 
 # ----------------------------------------------------------------------------
 # End-Of-File

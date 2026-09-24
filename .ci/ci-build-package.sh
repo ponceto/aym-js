@@ -41,6 +41,39 @@ set -x
 cd "${arg_srcdir}"                                                   || exit 1
 
 # ----------------------------------------------------------------------------
+# create public directory
+# ----------------------------------------------------------------------------
+
+mkdir -p "${arg_pubdir}"                                             || exit 1
+
+# ----------------------------------------------------------------------------
+# create index.html if necessary
+# ----------------------------------------------------------------------------
+
+touch "${arg_pubdir}/index.html"                                     || exit 1
+
+# ----------------------------------------------------------------------------
+# bump package version (ci only)
+# ----------------------------------------------------------------------------
+
+if [ "${CI:-not-set}" != 'not-set' ]
+then
+    pkg_version="1.0.0+$(date '+%Y%m%d%H%M%S')"
+    pkg_changelog='debian/changelog'
+    pkg_tmpfile='debian/changelog.tmp'
+    {
+        echo "${arg_basename} (${pkg_version}) stable; urgency=medium"
+        echo ''
+        echo '  * Automated CI build.'
+        echo ''
+        echo " -- Olivier Poncet <ponceto@free.fr>  $(date -R)"
+        echo ''
+        cat "${pkg_changelog}"
+    } > "${pkg_tmpfile}"                                             || exit 1
+    mv "${pkg_tmpfile}" "${pkg_changelog}"                           || exit 1
+fi
+
+# ----------------------------------------------------------------------------
 # build package
 # ----------------------------------------------------------------------------
 

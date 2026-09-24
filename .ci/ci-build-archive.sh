@@ -44,7 +44,7 @@ cd "${arg_srcdir}"                                                   || exit 1
 # build archive
 # ----------------------------------------------------------------------------
 
-tar czf "${arg_archive}" "public"                                    || exit 1
+tar czf "${arg_prefix}/${arg_basename}.tar.gz" "public"              || exit 1
 
 # ----------------------------------------------------------------------------
 # End-Of-File

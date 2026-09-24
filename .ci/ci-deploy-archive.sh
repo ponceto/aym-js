@@ -50,9 +50,15 @@ then
     exit 1
 fi
 
-if [ "${SSH_CMD:-not-set}" = 'not-set' ]
+# ----------------------------------------------------------------------------
+# check archive file
+# ----------------------------------------------------------------------------
+
+tar_path="${arg_prefix}/${arg_basename}.tar.gz"
+
+if [ ! -f "${tar_path}" ]
 then
-    echo "*** SSH_CMD is not set ***"
+    echo "*** archive file not found ***"
     exit 1
 fi
 
@@ -68,7 +74,10 @@ ssh_host="${SSH_HOST}"
 ssh_user="${SSH_USER}"
 ssh_priv="${SSH_PRIV}"
 ssh_dest="${ssh_user}@${ssh_host}"
-ssh_cmd="/usr/local/bin/deploy-archive.sh"
+tar_file="$(basename "${tar_path}")"
+web_root="/var/www/html"
+web_dir="${web_root}/public"
+ssh_cmd="rm -rf \"${web_dir}\" && mkdir -p \"${web_root}\" && tar -xzf \"/tmp/${tar_file}\" -C \"${web_root}\" && find \"${web_dir}\" -type d -exec chmod 755 {} + && find \"${web_dir}\" -type f -exec chmod 644 {} + && chown -R www-data:www-data \"${web_dir}\" && rm -f \"/tmp/${tar_file}\""
 
 # ----------------------------------------------------------------------------
 # create ssh directory if needed
@@ -102,7 +111,7 @@ set -x
 # copy to destination server
 # ----------------------------------------------------------------------------
 
-scp ${ssh_options} -i "${ssh_identity}" "${arg_archive}" "${ssh_dest}:/tmp/" || exit 1
+scp ${ssh_options} -i "${ssh_identity}" "${tar_path}" "${ssh_dest}:/tmp/" || exit 1
 
 # ----------------------------------------------------------------------------
 # deploy
